@@ -20,15 +20,11 @@ Proveer un panel administrativo, con estadísticas y gestión centralizada.
 
 🛠️ Tecnologías utilizadas
 
-Frontend: React + Vite/CRA, TailwindCSS / Material UI (según decisión de diseño).
+Frontend: React + Vite/CRA
 
 Backend: Node.js + Express.
 
-Base de Datos: MongoDB (con Mongoose).
-
-Autenticación: JWT / OAuth (según implementación).
-
-Despliegue: Heroku / Vercel / Render / Railway (o el servicio que se elija).
+Base de Datos: MongoDB 
 
 👥 Roles de usuario
 
