@@ -1,4 +1,4 @@
-# OUR-S.A.D
+# SOCIEDAD DEPORTIVA ANONIMA
 
 📌 Descripción
 
