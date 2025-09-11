@@ -38,8 +38,8 @@
 
 .navList li {
   cursor: pointer;
+  font-weight: 500;
 }
-
 
 .authButtons {
   display: flex;
