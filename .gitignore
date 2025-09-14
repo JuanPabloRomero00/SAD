@@ -29,3 +29,14 @@ dist-ssr
 *.sln
 *.sw?
 backend/node_modules
+
+# dependencies
+**/node_modules
+
+# env files
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
