@@ -98,7 +98,7 @@ app.patch('/users/:id/deactivate', async (req, res) => {
       { new: true }
     );
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
-    res.json({ message: "Usuario dado de baja lógicamente", user });
+    res.json({ message: "Usuario dado de baja.", user });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -115,6 +115,41 @@ app.get('/users/inactive', async (req, res) => {
 });
 
 
+// Obtener todas las credenciales (GET /credentials)
+app.get('/credentials', async (req, res) => {
+  try { 
+    const credentials = await Credential.find();
+    res.json(credentials);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
+
+//Baja logica de credencial
+app.patch('/credentials/:id/deactivate', async (req, res) => {
+  try {
+    const credential = await Credential.findByIdAndUpdate(
+      req.params.id,
+      { active: false },
+      { new: true }
+    );
+    if (!credential) return res.status(404).json({ error: "Credencial no encontrada" });
+    res.json({ message: "Credencial dada de baja.", credential });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+
+// Obtener solo las credenciales dadas de baja
+app.get('/credentials/inactive', async (req, res) => {
+  try {
+    const credentials = await Credential.find({ active: false });
+    res.json(credentials);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
