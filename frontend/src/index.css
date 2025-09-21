@@ -13,9 +13,8 @@
 }
 
 a {
-  font-weight: 500;
-  color: #ffffff;
-  text-decoration: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 body {

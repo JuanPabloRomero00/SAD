@@ -1,18 +1,19 @@
 import React from 'react'
 import "./Header.css";
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
     <>
       <nav className='navbar'>
         <h1 className="logoContainer">
-          <a className='logoLink' href="/">
+          <Link className='logoLink' to={"/"}>
             <img alt="AD" className="logoImg" src="/img/ad.ico" />
             Asociación Deportiva
-          </a>
+          </Link>
         </h1>
         <ul className='navList'>
-          <li>Inicio</li>
+          <li><Link to={"/"}>Inicio </Link></li>
           <li>Actividades</li>
           <li>Historia</li>
           <li>Contácto</li>
@@ -22,7 +23,9 @@ function Header() {
             Ingresar
           </button>
           <button className='signButton'>
-            Asociate
+            <Link to="/signup">
+              Asociate
+            </Link>
           </button>
         </div>
       </nav>
