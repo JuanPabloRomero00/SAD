@@ -29,7 +29,6 @@ function Login() {
     </div>
      </div>
     <p className='formReturn'> ¿No tenés cuenta? <Link className='toLogin'> Asociate al club. </Link>para crear tu usuario</p>
-    
 
     </>
   )
