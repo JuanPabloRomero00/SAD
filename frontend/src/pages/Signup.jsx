@@ -16,7 +16,7 @@ const plans = [
     ]
   },
   {
-    id: 'premium', name: 'Plan Premium', price: 12000, description: [
+    id: 'premium', name: 'Plan Premium', price: 16000, description: [
       'Acceso a todas las actividades.',
       'Carnet digital.',
       '15% de descuento.'
@@ -98,8 +98,8 @@ const Step2 = ({ data, handleChange, selectedPlan, onPlanSelect }) => {
 
   return (
     <>
-      <div>
-        <h3 className='subTitle'>Elegí tu plan ideal</h3>
+      <div className='planContainer'>
+        <h3 className='subTitlePlan'>Elegí tu plan</h3>
         <div className='planCardsContainer'>
           {plans.map((plan) => (
             <div
@@ -117,17 +117,18 @@ const Step2 = ({ data, handleChange, selectedPlan, onPlanSelect }) => {
             </div>
           ))}
         </div>
-
-        <div className='formGroup'>
-          <label className='formLabel' htmlFor='password'>Contraseña</label>
-          <input id='password' className='formInput' placeholder='Genere su contraseña' type='text'
-            value={data.password}
-            onChange={(e) => handleChange('password', e.target.value)}
-          />
-        </div>
-        <div className='formGroup'>
-          <label className='formLabel' htmlFor='passConfirm'>Confirmar contraseña</label>
-          <input id='passConfirm' className='formInput' placeholder='Reingrese la contraseña' type='text' />
+        <div className='passContainer'>
+          <div className='formGroup'>
+            <label className='formLabel' htmlFor='password'>Contraseña</label>
+            <input id='password' className='formInput' placeholder='Genere su contraseña' type='text'
+              value={data.password}
+              onChange={(e) => handleChange('password', e.target.value)}
+            />
+          </div>
+          <div className='formGroup'>
+            <label className='formLabel' htmlFor='passConfirm'>Confirmar contraseña</label>
+            <input id='passConfirm' className='formInput' placeholder='Reingrese la contraseña' type='text' />
+          </div>
         </div>
       </div>
     </>
