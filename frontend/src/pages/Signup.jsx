@@ -43,11 +43,11 @@ const Step1 = () => {
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='direccion'>Dirección</label>
-        <input id='direccion' className='formInput' type='text' />
+        <input id='direccion' className='formInput' placeholder='Calle del domicilio' type='text' />
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='altura'>Altura</label>
-        <input id='altura' className='formInput' type='number' onKeyDown={preventArrows} />
+        <input id='altura' className='formInput' type='number' placeholder='Numeración del domicilio' onKeyDown={preventArrows} />
       </div>
     </>
   );
@@ -70,19 +70,16 @@ const Step2 = () => {
   );
 };
 
-// --- PASO 3: REVISIÓN (EJEMPLO) ---
 const Step3 = () => {
   return (
     <div>
       <h3 className='subTitle'>Revisá tus datos</h3>
       <p>Por favor, confirmá que toda la información ingresada sea correcta antes de finalizar.</p>
-      {/* Aquí podrías mostrar un resumen de los datos del estado global */}
+      {}
     </div>
   );
 };
 
-
-// --- COMPONENTE PRINCIPAL ---
 function Signup() {
   const [step, setStep] = useState(1);
 
@@ -90,7 +87,6 @@ function Signup() {
     if (step < 3) {
       setStep(step + 1);
     } else {
-      // Aquí iría la lógica para enviar el formulario
       alert("¡Asociación completada con éxito!");
     }
   };
