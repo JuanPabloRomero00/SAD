@@ -12,6 +12,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -60,33 +72,47 @@ button:focus-visible {
   }
 } */
 
-/*Estilo SignUp.jsx*/
-
-.formContainer {
-
+.appContainer {
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin: 0 auto;
-  max-width: 600px;
-  
-  
+  height: 100%;
 }
+
+.mainContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+/*Estilo SignUp.jsx*/
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;  
+  max-width: 680px;  
+  min-width: 680px;
+}
+
 .formTitle{
   font-size: 35px;
   margin: 20px;
 }
+
 .subTitle{
   font-size: 22px;
 }
+
 .formStep {
   display: flex;
   justify-content: space-between;
   height: 60px;
 }
+
  .formData {
   background-color: #1e1e1e;
-  height: 400px;
+  height: 460px;
   border-radius: 15px;
   display: flex;
   flex-direction: row;
@@ -94,53 +120,75 @@ button:focus-visible {
   justify-content: space-evenly;
   width: 100%;
   align-content: center;
-  
+  min-width: 680px;
 }
+
 .formGroup {
-  height: 70px;
+  height: 80px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
-    
 }
+
 .formLabel {
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 500;
 }
+
 .formButton {
   display: flex;
   justify-content: space-around;
   width: 100%;
   height: 68px;
-  align-items: center;
-  
+  align-items: flex-end;
+  align-self: flex-end;
 }
+
 .stepButton {
   color: white;
-  font-size: 11px;
+  font-size: 12px;
   background-color: #1e1e1e;
   text-align: center;
-  width: 180px;
+  width: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 28px;
+  height: 32px;
   border-radius: 12px;
+  border: none;
+  outline: none;
+}
+
+.stepButton.active {
+  background-color: #00FF09;
+  color: #000000;
+}
+
+
+.stepButton:focus{
+  outline: none;
+  border: none;
 }
 
 .formInput {
   box-sizing: border-box;
-  height: 28px;
-  max-width: 220px;
+  height: 38px;
+  max-width: 260px;
   padding: 0 14px;
   color: white;
   background-color: #757575;
-  width: 240px;
+  width: 260px;
   border-radius: 25px;
   font-size: 12px;
   outline: none;
   border: none;
 }
+
+.formInput::placeholder {
+  color: #bbbbbb;
+}
+
 .backButton {
   background-color: #000000;
   color: white;
@@ -149,6 +197,7 @@ button:focus-visible {
   align-items: center;
   border-radius: 3px;
 }
+
 .nextButton {
   background-color: #00ff09;
   display: flex;
@@ -156,9 +205,11 @@ button:focus-visible {
   align-items: center;
   border-radius: 3px;
 }
+
 .formReturn{
   font-weight: 500;
 }
+
 .toLogin {
   color: #00ff09;
 }
@@ -219,3 +270,60 @@ button:focus-visible {
   border-radius: 3px;
 }
 
+
+.planCardsContainer {
+  display: flex;
+  flex-direction: column; /* Apila las cards verticalmente */
+  gap: 15px; /* Espacio entre las cards */
+  margin-top: 20px;
+}
+
+/* Estilo base de cada card */
+.planCard {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+}
+
+/* Efecto al pasar el mouse sobre una card no seleccionada */
+.planCard:not(.selected):hover {
+  border-color: #aaa;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Estilo de la card CUANDO ESTÁ SELECCIONADA */
+.planCard.selected {
+  background-color: #e7f3ff; /* Un fondo azulado muy suave */
+  border-color: #3498db;     /* Borde azul más fuerte */
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+  transform: scale(1.02); /* La hace un poquito más grande */
+}
+
+/* Estilos para el texto dentro de las cards */
+.planName {
+  margin: 0 0 5px 0;
+  color: #333;
+}
+
+.planPrice {
+  margin: 0 0 10px 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* El precio cambia de color en la card seleccionada */
+.planCard.selected .planPrice {
+  color: #3498db;
+}
+
+.planDescription {
+  margin: 0;
+  text-align: left;
+  font-size: 0.9em;
+  color: #777;
+}
