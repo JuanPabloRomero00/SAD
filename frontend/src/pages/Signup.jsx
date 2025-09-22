@@ -35,7 +35,7 @@ const Step1 = () => {
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='telefono'>Teléfono</label>
-        <input id='telefono' className='formInput' placeholder='11 1234 5678' maxLength="15" type='tel' onKeyDown={preventArrows} />
+        <input id='telefono' className='formInput' placeholder='11 1234 5678' maxLength="15" type='tel' />
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='fechaNacimiento'>Fecha de Nacimiento</label>

@@ -160,6 +160,12 @@ button:focus-visible {
   outline: none;
 }
 
+.stepButton.active {
+  background-color: #00FF09;
+  color: #000000;
+}
+
+
 .stepButton:focus{
   outline: none;
   border: none;
