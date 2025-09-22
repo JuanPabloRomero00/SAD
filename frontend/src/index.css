@@ -12,6 +12,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 /* Chrome, Safari, Edge, Opera */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -71,6 +77,47 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+
+/* Home */
+.home-section h2{
+  font-size: 60px;
+  font-weight: 700;
+  color: white;
+  text-align: left;
+}
+
+.home-section .home-title-green{
+  color: #00FF09;
+}
+
+.home-section .home-content p {
+  font-size: px;
+  text-align: left;
+  font-weight: 400;
+}
+
+.home-buttons {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.home-buttons button {
+  width: 240px;
+  height: 57px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.home-buttons .btn-primary{
+  background-color: #00FF09;
+  color: black;
+}
+
+/* ======================= */
 
 .appContainer {
   display: flex;
