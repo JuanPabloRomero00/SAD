@@ -154,8 +154,8 @@ const Step3 = ({ data, plans }) => {
           </ul>
           <div className='planDetail'>
             <h4>Plan Seleccionado</h4>
-            <p><strong>Plan: </strong>&nbsp; {planSeleccionado ? planSeleccionado.name : 'No seleccionado'}</p>
-            <p><strong>Precio: </strong>&nbsp; {planSeleccionado ? `${'$' + planSeleccionado.price}` : 'No seleccionado'}</p>
+            <p><strong>Plan: </strong>&nbsp;{planSeleccionado ? planSeleccionado.name : 'No seleccionado.'}</p>
+            <p><strong>Precio: </strong>&nbsp;{planSeleccionado ? `${'$' + planSeleccionado.price}` : 'No seleccionado.'}</p>
             <p><strong>Medio de Pago: </strong>&nbsp;Sede</p>
           </div>
         </div>
