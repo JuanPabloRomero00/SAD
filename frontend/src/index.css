@@ -570,3 +570,123 @@ button:focus-visible {
   background: #420000;
   margin-top: 10%;
 }
+
+/* Estilos de actividades */
+.activities-container {
+  background: #000;
+  color: #fff;
+  padding: 40px;
+  min-height: 100vh;
+}
+
+.activities-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.activities-subtitle {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+.activities-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.activity-card {
+  background: #1c1c1c;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 calc(50% - 30px);
+  max-width: calc(50% - 30px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.category {
+  background: #3a3a3a;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.level {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: #bbb;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.card-info .card-box {
+  width: 40%;
+}
+
+.info-box {
+  background: #2a2a2a;
+  padding: 10px 15px;
+  border-radius: 12px;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.info-box:last-child {
+  margin-right: 0;
+}
+
+.info-box p {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin: 0 0 5px;
+}
+
+.info-box span {
+  font-weight: bold;
+}
+
+.details-btn {
+  width: 150px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  background: #3a3a3a;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.details-btn:hover {
+  background: #555;
+}
