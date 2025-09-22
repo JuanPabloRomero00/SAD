@@ -152,11 +152,8 @@ const Step3 = ({ data, plans }) => {
   );
 };
 
-
-// --- OFICINA CENTRAL ---
 function Signup() {
   const [step, setStep] = useState(1);
-  // El tesoro está centralizado aquí
   const [formData, setFormData] = useState({
     dni: '',
     nombre: '',
@@ -170,7 +167,6 @@ function Signup() {
     password: ''
   });
 
-  // La función para que los trabajadores actualicen el tesoro
   const handleChange = (field, value) => {
     setFormData(prevData => ({
       ...prevData,
@@ -182,7 +178,6 @@ function Signup() {
     if (step < 3) {
       setStep(step + 1);
     } else {
-      // Ahora sí tenemos todos los datos para enviar
       console.log("Enviando al backend:", formData);
       alert("¡Asociación completada con éxito!");
     }
