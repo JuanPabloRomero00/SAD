@@ -317,7 +317,7 @@ button:focus-visible {
   box-sizing: border-box;
   border-radius: 15px;
   width: 360px;
-  height: 180px;
+  height: 200px;
   display: flex;
   flex-wrap: wrap;
   padding: 0 14px;
@@ -335,6 +335,7 @@ button:focus-visible {
 .newUserDetail strong{
   align-content: start;
   color: #000000;
+  font-size: 14px;
 }
 
 .newUserDetail li{
@@ -348,7 +349,7 @@ button:focus-visible {
 .planDetail{
   list-style: none;
   width: 240px;
-  height: 180px;
+  height: 200px;
   background-color: #757575;
   border-radius: 15px;
 }
