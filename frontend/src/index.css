@@ -245,6 +245,7 @@ button:focus-visible {
   box-sizing: border-box;
   height: 38px;
   max-width: 350px;
+  min-height: 38px;
   padding: 0 14px;
   color: white;
   background-color: #757575;
@@ -261,7 +262,7 @@ button:focus-visible {
 }
 
 
-.loginButton {
+.logeoButton {
   background-color: #00ff08;
   width: 350px;
   display: flex;

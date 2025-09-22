@@ -23,8 +23,8 @@ function Login() {
     <input className='loginInput' label="Altura" type='string' />
   </div>
    
-    <div className='loginButton'>
-        <button className='loginButton'>Ingresar</button>
+    <div >
+        <button className='logeoButton'>Ingresar</button>
     </div>
     </div>
      </div>
