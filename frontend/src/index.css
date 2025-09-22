@@ -213,3 +213,60 @@ button:focus-visible {
 .toLogin {
   color: #00ff09;
 }
+
+.planCardsContainer {
+  display: flex;
+  flex-direction: column; /* Apila las cards verticalmente */
+  gap: 15px; /* Espacio entre las cards */
+  margin-top: 20px;
+}
+
+/* Estilo base de cada card */
+.planCard {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+}
+
+/* Efecto al pasar el mouse sobre una card no seleccionada */
+.planCard:not(.selected):hover {
+  border-color: #aaa;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Estilo de la card CUANDO ESTÁ SELECCIONADA */
+.planCard.selected {
+  background-color: #e7f3ff; /* Un fondo azulado muy suave */
+  border-color: #3498db;     /* Borde azul más fuerte */
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+  transform: scale(1.02); /* La hace un poquito más grande */
+}
+
+/* Estilos para el texto dentro de las cards */
+.planName {
+  margin: 0 0 5px 0;
+  color: #333;
+}
+
+.planPrice {
+  margin: 0 0 10px 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* El precio cambia de color en la card seleccionada */
+.planCard.selected .planPrice {
+  color: #3498db;
+}
+
+.planDescription {
+  margin: 0;
+  text-align: left;
+  font-size: 0.9em;
+  color: #777;
+}
