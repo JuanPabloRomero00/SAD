@@ -78,16 +78,16 @@ const Step1 = ({ data, handleChange }) => {
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='direccion'>Dirección</label>
-        <input id='direccion' className='formInput' placeholder='Calle del domicilio' type='text'
+        <input id='direccion' className='formInput' placeholder='Calle y altura del domicilio' type='text'
           value={data.direccion}
           onChange={(e) => handleChange('direccion', e.target.value)}
         />
       </div>
       <div className='formGroup'>
-        <label className='formLabel' htmlFor='altura'>Altura</label>
-        <input id='altura' className='formInput' type='number' placeholder='Numeración del domicilio' onKeyDown={preventArrows}
-          value={data.altura}
-          onChange={(e) => handleChange('altura', e.target.value)}
+        <label className='formLabel' htmlFor='localidad'>Localidad</label>
+        <input id='localidad' className='formInput' type='text' placeholder='Ingrese localidad' onKeyDown={preventArrows}
+          value={data.localidad}
+          onChange={(e) => handleChange('localidad', e.target.value)}
         />
       </div>
     </>
@@ -139,16 +139,28 @@ const Step3 = ({ data, plans }) => {
   const planSeleccionado = plans.find(p => p.id === data.plan);
 
   return (
-    <div>
-      <h3 className='subTitle'>Revisá tus datos</h3>
-      <p>Por favor, confirmá que toda la información ingresada sea correcta.</p>
-      <ul>
-        <li><strong>DNI:</strong> {data.dni}</li>
-        <li><strong>Nombre:</strong> {data.nombre}</li>
-        <li><strong>Apellido:</strong> {data.apellido}</li>
-        <li><strong>Plan:</strong> {planSeleccionado ? planSeleccionado.name : 'No seleccionado'}</li>
-      </ul>
-    </div>
+    <>
+      <div className='newContainer'>
+        <h3 className='subTitleDetail'>Revisá tus datos</h3>
+        <p>Por favor, confirmá que toda la información ingresada sea correcta.</p>
+        <div className='newUserContainer'>
+          <ul className='newUserDetail'>
+            <li><strong>DNI:</strong><br /> {data.dni}</li>
+            <li><strong>Nombre:</strong><br /> {data.nombre} {data.apellido}</li>
+            <li><strong>Correo:</strong><br /> {data.email}</li>
+            <li><strong>Teléfono:</strong><br /> {data.telefono}</li>
+            <li><strong>Fecha de Nacimiento:</strong><br /> {data.fechaNacimiento}</li>
+            <li><strong>Dirección:</strong><br /> {data.direccion}, {data.localidad}</li>
+          </ul>
+          <div className='planDetail'>
+            <h4>Plan Seleccionado</h4>
+            <p><strong>Plan: </strong>&nbsp; {planSeleccionado ? planSeleccionado.name : 'No seleccionado'}</p>
+            <p><strong>Precio: </strong>&nbsp; {planSeleccionado ? `${'$' + planSeleccionado.price}` : 'No seleccionado'}</p>
+            <p><strong>Medio de Pago: </strong>&nbsp;Sede</p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -162,7 +174,7 @@ function Signup() {
     telefono: '',
     fechaNacimiento: '',
     direccion: '',
-    altura: '',
+    localidad: '',
     plan: null,
     password: ''
   });
@@ -211,7 +223,7 @@ function Signup() {
           {step === 3 && <Step3 data={formData} plans={plans} />}
 
           <div className='formButton'>
-            {step > 1 && <button className='backButton' onClick={prevStep}>Atras</button>}
+            {step > 1 && <button className='backButton' onClick={prevStep}>Atrás</button>}
             <button className='nextButton' onClick={nextStep}>
               {step === 3 ? 'Finalizar' : 'Continuar'}
             </button>

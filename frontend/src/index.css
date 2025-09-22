@@ -233,64 +233,6 @@ button:focus-visible {
   align-self: start;
 }
 
-/*Estilo de Login.jxs*/
-
-.loginData {
-  background-color: #1e1e1e;
-  height: 400px;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  width: 100%;
-  align-content: center;
-  
-}
-
-.loginGroup {
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-evenly;
-    
-}
-.loginLabel {
-  font-size: 18px;
-}
-.loginInput {
-  box-sizing: border-box;
-  height: 38px;
-  max-width: 350px;
-  min-height: 38px;
-  padding: 0 14px;
-  color: white;
-  background-color: #757575;
-  width: 400px;
-  border-radius: 25px;   
-  font-size: 12px;
-  outline: none;
-  border: none;
-}
-.loginText {
-  font-size: 12px;
-  margin: 0px;
-  padding: auto;
-}
-
-
-.logeoButton {
-  background-color: #00ff08;
-  width: 350px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3px;
-}
-
-
 .planCardsContainer {
   display: flex;
   width: 100%;
@@ -298,7 +240,6 @@ button:focus-visible {
   justify-content: space-between;
 }
 
-/* Estilo base de cada card */
 .planCard {
   padding: 15px 0;
   box-sizing: border-box;
@@ -314,25 +255,19 @@ button:focus-visible {
   flex-direction: column;
 }
 
-/* Efecto al pasar el mouse sobre una card no seleccionada */
 .planCard:not(.selected):hover {
   border-color: #aaa;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Estilo de la card CUANDO ESTÁ SELECCIONADA */
 .planCard.selected {
   background-color: #464646;
-  /* Un fondo azulado muy suave */
   border-color: #ffffff;
-  /* Borde azul más fuerte */
   box-shadow: 0 2px 15px rgba(42, 255, 53, 0.2);
   transform: scale(1.02);
-  /* La hace un poquito más grande */
 }
 
-/* Estilos para el texto dentro de las cards */
 .planName {
   margin: 0 0 5px 0;
 }
@@ -356,4 +291,129 @@ button:focus-visible {
   justify-content: space-between;
   height: 100px;
   align-items: center;
+}
+
+.newContainer{
+  display: flex;
+  flex-direction: column;
+  justify-self: flex-start;
+  align-self: flex-start;
+  height: 320px;
+  width: 100%;
+  padding: 0 40px;
+}
+
+.newUserContainer{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;;
+  align-items: center;
+  height: 100%;
+}
+
+.newUserDetail{
+  margin: 0;
+  list-style: none;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 360px;
+  height: 180px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 14px;
+  justify-content: space-between;
+  background-color: #757575;
+  text-align: start;
+  font-size: 12px;
+}
+
+.subTitleDetail{
+  margin: 0;
+  font-size: 21px;
+}
+
+.newUserDetail strong{
+  align-content: start;
+  color: #000000;
+}
+
+.newUserDetail li{
+  align-content: start;
+  padding: 10px 0;
+  width: 150px;
+  min-width: 150px;
+  color: #ffffff;
+}
+
+.planDetail{
+  list-style: none;
+  width: 240px;
+  height: 180px;
+  background-color: #757575;
+  border-radius: 15px;
+}
+
+.planDetail p{
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+/*Estilo de Login.jxs*/
+.loginData {
+  background-color: #1e1e1e;
+  height: 400px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  align-content: center;
+  
+}
+
+.loginGroup {
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+    
+}
+
+.loginLabel {
+  font-size: 18px;
+}
+
+.loginInput {
+  box-sizing: border-box;
+  height: 38px;
+  max-width: 350px;
+  min-height: 38px;
+  padding: 0 14px;
+  color: white;
+  background-color: #757575;
+  width: 400px;
+  border-radius: 25px;   
+  font-size: 12px;
+  outline: none;
+  border: none;
+}
+
+.loginText {
+  font-size: 12px;
+  margin: 0px;
+  padding: auto;
+}
+
+.logeoButton {
+  background-color: #00ff08;
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
 }
