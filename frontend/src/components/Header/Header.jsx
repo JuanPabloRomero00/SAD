@@ -20,7 +20,10 @@ function Header() {
         </ul>
         <div className='authButtons'>
           <button className='loginButton'>
+            <Link to="/login">
             Ingresar
+            </Link>
+            
           </button>
           <button className='signButton'>
             <Link to="/signup">
