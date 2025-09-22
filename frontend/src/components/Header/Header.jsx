@@ -14,7 +14,7 @@ function Header() {
         </h1>
         <ul className='navList'>
           <li><Link to={"/"}>Inicio </Link></li>
-          <li>Actividades</li>
+          <li><Link to={"/activities"}> Actividades</Link></li>
           <li>Historia</li>
           <li>Contácto</li>
         </ul>

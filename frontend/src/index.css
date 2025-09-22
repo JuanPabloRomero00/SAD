@@ -60,30 +60,44 @@ button:focus-visible {
   }
 } */
 
-/*Estilo SignUp.jsx*/
-
-.formContainer {
-
+.appContainer {
   display: flex;
   flex-direction: column;
-  width: 60%;
-  margin: 0 auto;
-  max-width: 600px;
-  
-  
+  height: 100%;
 }
+
+.mainContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+/*Estilo SignUp.jsx*/
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;  
+  max-width: 680px;  
+  border: 1px solid red;
+}
+
 .formTitle{
   font-size: 35px;
   margin: 20px;
 }
+
 .subTitle{
   font-size: 22px;
 }
+
 .formStep {
   display: flex;
   justify-content: space-between;
   height: 60px;
 }
+
  .formData {
   background-color: #1e1e1e;
   height: 400px;
@@ -94,30 +108,31 @@ button:focus-visible {
   justify-content: space-evenly;
   width: 100%;
   align-content: center;
-  
 }
+
 .formGroup {
   height: 70px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
-    
 }
+
 .formLabel {
   font-size: 13px;
 }
+
 .formButton {
   display: flex;
   justify-content: space-around;
   width: 100%;
   height: 68px;
   align-items: center;
-  
 }
+
 .stepButton {
   color: white;
-  font-size: 11px;
+  font-size: 12px;
   background-color: #1e1e1e;
   text-align: center;
   width: 180px;
@@ -141,6 +156,7 @@ button:focus-visible {
   outline: none;
   border: none;
 }
+
 .backButton {
   background-color: #000000;
   color: white;
@@ -149,6 +165,7 @@ button:focus-visible {
   align-items: center;
   border-radius: 3px;
 }
+
 .nextButton {
   background-color: #00ff09;
   display: flex;
@@ -156,9 +173,11 @@ button:focus-visible {
   align-items: center;
   border-radius: 3px;
 }
+
 .formReturn{
   font-weight: 500;
 }
+
 .toLogin {
   color: #00ff09;
 }
