@@ -526,6 +526,11 @@ button:focus-visible {
   font-weight: 200;
 }
 
+.btn-pass{
+  background-color: #00FF09;
+  color: black;
+}
+
 .reservas {
   width: 900px;
 }
@@ -559,4 +564,9 @@ button:focus-visible {
 .membresia {
   text-align: center;
   margin: 50px 0;
+}
+
+.membresia .btn-delete{
+  background: #420000;
+  margin-top: 10%;
 }

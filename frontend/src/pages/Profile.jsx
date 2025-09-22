@@ -119,7 +119,7 @@ const Profile = () => {
             )}
 
             {!changePasswordMode && (
-              <button className="btn-info btn-primary" onClick={() => setChangePasswordMode(true)}>Cambiar contraseña</button>
+              <button className="btn-info btn-primary btn-pass" onClick={() => setChangePasswordMode(true)}>Cambiar contraseña</button>
             )}
 
             {changePasswordMode && (
@@ -183,6 +183,10 @@ const Profile = () => {
               ))}
             </div>
           )}
+
+          <button className="btn-edit btn-delete">
+            Darse de baja
+          </button>
         </div>
       </div>
     </div>
