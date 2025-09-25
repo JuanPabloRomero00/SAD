@@ -6,6 +6,7 @@ const connectDB = require('./src/config/db');
 const User = require('./src/models/User'); 
 const port = 3000
 const Credential = require('./src/models/Credential'); 
+const Activity = require('./src/models/Activity'); // Agrega esta línea
 
 app.use(cors());
 app.use(express.json());
@@ -149,6 +150,64 @@ app.get('/credentials/inactive', async (req, res) => {
     res.json(credentials);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Crear una actividad/taller
+app.post('/activities', async (req, res) => {
+  try {
+    const activity = new Activity(req.body);
+    await activity.save();
+    res.status(201).json(activity);
+  } catch (err) {
+    res.status(400).json({ error: "No se pudo crear la actividad" });
+  }
+});
+
+// Obtener todas las actividades/talleres
+app.get('/activities', async (req, res) => {
+  try {
+    const activities = await Activity.find().sort({ date: 1 });
+    res.json(activities);
+  } catch (err) {
+    res.status(500).json({ error: "No se encontraron las actividades" });
+  }
+});
+
+// Anotar usuario a una actividad (POST /activities/:id/join)
+app.post('/activities/:id/join', async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const activity = await Activity.findById(req.params.id);
+    if (!activity) return res.status(404).json({ error: "Actividad no encontrada" });
+
+    // Verifica si el usuario ya está anotado
+    if (activity.participants.includes(userId)) {
+      return res.status(400).json({ error: "El usuario ya está anotado en esta actividad" });
+    }
+
+    activity.participants.push(userId);
+    await activity.save();
+    res.json({ message: "Usuario anotado correctamente", activity });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Desanotar usuario de una actividad (POST /activities/:id/leave)
+app.post('/activities/:id/leave', async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const activity = await Activity.findById(req.params.id);
+    if (!activity) return res.status(404).json({ error: "Actividad no encontrada" });
+
+    activity.participants = activity.participants.filter(
+      id => id.toString() !== userId
+    );
+    await activity.save();
+    res.json({ message: "Usuario desanotado correctamente", activity });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
