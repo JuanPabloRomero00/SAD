@@ -111,15 +111,17 @@ button:hover {
   font-weight: 400;
 }
 
-.home-buttons {
+.home-buttons, .btn-primary, .btn-outline {
   width: 40%;
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
+  font-weight: 500;
+  padding: 10px;
 }
 
-.home-buttons button {
-  width: 240px;
+.btn-primary, .btn-outline {
+  width: 150px;
   height: 57px;
   justify-content: center;
   align-items: center;
@@ -129,10 +131,20 @@ button:hover {
 .home-buttons .btn-primary{
   background-color: #00FF09;
   color: black;
+  border: 1px solid white;
 }
 
 .btn-outline{
   color: white;
+  border: 1px solid white;
+}
+
+.btn-primary:hover, .btn-outline:hover{
+  border-color: #005503;
+}
+
+.btn-primary:active, .btn-outline:active{
+   transform: scale(0.95);
 }
 
 /* ======================= */

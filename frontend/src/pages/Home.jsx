@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Header/Header";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -13,8 +14,8 @@ function Home() {
           <p>Asociate online y empezá hoy a entrenar con nosotros.</p>
 
           <div className="home-buttons">
-            <button className="btn-primary">Ver actividades</button>
-            <button className="btn-outline">Asociate ahora</button>
+            <Link to={'/activities'} className="btn-primary">Ver actividades</Link>
+            <Link to={'/signup'} className="btn-outline">Asociate ahora</Link>
           </div>
         </div>
       </div>

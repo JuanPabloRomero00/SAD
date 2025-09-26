@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 const plans = [
   {
@@ -120,7 +121,7 @@ const Step2 = ({ data, handleChange, selectedPlan, onPlanSelect, passConfirm, se
         <div className='passContainer'>
           <div className='formGroup'>
             <label className='formLabel' htmlFor='password'>Contraseña</label>
-            <input id='password' className='formInput' placeholder='Genere su contraseña' type='password'
+            <input id='password' className='formInput' autoComplete='off' placeholder='Genere su contraseña' type='password'
               value={data.password}
               onChange={(e) => handleChange('password', e.target.value)}
             />
@@ -128,7 +129,7 @@ const Step2 = ({ data, handleChange, selectedPlan, onPlanSelect, passConfirm, se
           </div>
           <div className='formGroup'>
             <label className='formLabel' htmlFor='passConfirm'>Confirmar contraseña</label>
-            <input id='passConfirm' className='formInput' placeholder='Reingrese la contraseña' type='password'
+            <input id='passConfirm' autoComplete='off' className='formInput' placeholder='Reingrese la contraseña' type='password'
               value={passConfirm}
               onChange={(e) => setPassConfirm(e.target.value)} />
           </div>
@@ -191,6 +192,7 @@ function Signup() {
 
   const [passConfirm, setPassConfirm] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
 
   const isStep1Valid = () => {
     return formData.dni && formData.nombre && formData.apellido && formData.email && formData.telefono;
@@ -220,8 +222,8 @@ function Signup() {
       }
       setStep(3);
     } else if (step === 3) {
-      console.log("Enviando al backend:", formData);
-      alert("¡Asociación completada con éxito!");
+      console.log("Datos para el backend:", formData);
+      setShowSuccessAlert(true);
     }
   };
 
@@ -277,6 +279,7 @@ function Signup() {
         </div>
       </div>
       <p className='formReturn'> ¿Ya tenés cuenta? <Link to="/login" className='toLogin'> Ingresa acá. </Link></p>
+      {showSuccessAlert && <CustomAlert />}
     </>
   );
 }
