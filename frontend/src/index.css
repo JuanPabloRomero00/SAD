@@ -28,6 +28,7 @@ input[type=number]::-webkit-outer-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 a {
@@ -57,12 +58,7 @@ button {
 }
 
 button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-color: #006103;
 }
 
 /* @media (prefers-color-scheme: light) {
@@ -78,8 +74,13 @@ button:focus-visible {
   }
 } */
 
-
 /* Home */
+.home-section{
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .home-section h2{
   font-size: 60px;
   font-weight: 700;
@@ -117,6 +118,10 @@ button:focus-visible {
   color: black;
 }
 
+.btn-outline{
+  color: white;
+}
+
 /* ======================= */
 
 .appContainer {
@@ -129,7 +134,7 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-grow: 1;
 }
 
@@ -154,7 +159,8 @@ button:focus-visible {
 .formStep {
   display: flex;
   justify-content: space-between;
-  height: 60px;
+  height: 50px;
+  margin: 14px 0;
 }
 
 .formData {
@@ -169,6 +175,7 @@ button:focus-visible {
   width: 100%;
   align-content: flex-start;
   min-width: 700px;
+  margin-bottom: 20px;
 }
 
 .formGroup {
@@ -212,7 +219,6 @@ button:focus-visible {
   background-color: #00FF09;
   color: #000000;
 }
-
 
 .stepButton:focus {
   outline: none;
@@ -354,7 +360,6 @@ button:focus-visible {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  ;
   align-items: center;
   height: 100%;
 }
@@ -412,13 +417,16 @@ button:focus-visible {
 /*Estilo de Login.jxs*/
 .loginData {
   background-color: #1e1e1e;
-  height: 400px;
+  margin: 20px 0;
+  height: 428px;
+  min-height: 428px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 40px;
   width: 100%;
   align-content: center;
 
@@ -435,6 +443,7 @@ button:focus-visible {
 
 .loginLabel {
   font-size: 18px;
+  margin: 6px 0;
 }
 
 .loginInput {
