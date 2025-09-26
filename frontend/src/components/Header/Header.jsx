@@ -19,17 +19,12 @@ function Header() {
           <li>Contácto</li>
         </ul>
         <div className='authButtons'>
-          <button className='loginButton'>
-            <Link to="/login">
+          <Link className='loginButton' to="/login">
             Ingresar
-            </Link>
-            
-          </button>
-          <button className='signButton'>
-            <Link to="/signup">
-              Asociate
-            </Link>
-          </button>
+          </Link>
+          <Link className='signButton' to="/signup">
+            Asociate
+          </Link>
         </div>
       </nav>
     </>

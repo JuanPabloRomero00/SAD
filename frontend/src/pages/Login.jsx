@@ -28,7 +28,7 @@ function Login() {
     </div>
     </div>
      </div>
-    <p className='formReturn'> ¿No tenés cuenta? <Link className='toLogin'> Asociate al club. </Link>para crear tu usuario</p>
+    <p className='formReturn'> ¿No tenés cuenta? <Link className='toLogin'> Asociate al Club </Link>y crea tu Usuario.</p>
 
     </>
   )

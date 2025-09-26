@@ -49,24 +49,51 @@
   gap: 25px;
 }
 
-.authButtons button {
+.authButtons {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 3px;
-  border: 1px solid white;
 }
 
-.signButton {  
+.signButton, .loginButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 46px;
+  width: 102px;
+  border: 1px solid white;
+  border-radius: 3px;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.signButton {
   background-color: #00ff08;
   color: #000000;
+
 }
 
-.signButton Link{
+.signButton:hover {
+  border-color: #005503;
+}
+
+.signButton:active {
+  transform: scale(0.95);
+}
+
+.signButton Link {
   color: #000000;
 }
 
-.loginButton{
+.loginButton {
   background-color: #000000;
   color: #ffffff;
+}
+
+.loginButton:hover {
+  border-color: #005503;
+}
+
+.loginButton:active {
+  transform: scale(0.95);
 }
