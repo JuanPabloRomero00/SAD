@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
+import authService from '../services/authService';
 
 const plans = [
   {
@@ -25,7 +26,7 @@ const plans = [
   }
 ];
 
-const Step1 = ({ data, handleChange }) => {
+const Step1 = ({ data, handleChange, handleAddress }) => {
   const preventArrows = (e) => {
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
       e.preventDefault();
@@ -45,15 +46,15 @@ const Step1 = ({ data, handleChange }) => {
       <div className='formGroup'>
         <label className='formLabel' htmlFor='nombre'>Nombre</label>
         <input id='nombre' className='formInput' placeholder='Ingrese su nombre' autoComplete='on' type='text'
-          value={data.nombre}
-          onChange={(e) => handleChange('nombre', e.target.value)}
+          value={data.name}
+          onChange={(e) => handleChange('name', e.target.value)}
         />
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='apellido'>Apellido</label>
         <input id='apellido' className='formInput' placeholder='Ingrese su apellido' type='text'
-          value={data.apellido}
-          onChange={(e) => handleChange('apellido', e.target.value)}
+          value={data.surname}
+          onChange={(e) => handleChange('surname', e.target.value)}
         />
       </div>
       <div className='formGroup'>
@@ -66,29 +67,29 @@ const Step1 = ({ data, handleChange }) => {
       <div className='formGroup'>
         <label className='formLabel' htmlFor='telefono'>Teléfono</label>
         <input id='telefono' className='formInput' placeholder='11 1234 5678' maxLength="15" type='tel'
-          value={data.telefono}
-          onChange={(e) => handleChange('telefono', e.target.value)}
+          value={data.phone}
+          onChange={(e) => handleChange('phone', e.target.value)}
         />
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='fechaNacimiento'>Fecha de Nacimiento</label>
         <input id='fechaNacimiento' autoComplete='off' className='formInput' type='date'
-          value={data.fechaNacimiento}
-          onChange={(e) => handleChange('fechaNacimiento', e.target.value)}
+          value={data.birthdate}
+          onChange={(e) => handleChange('birthdate', e.target.value)}
         />
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='direccion'>Dirección</label>
         <input id='direccion' autoComplete='off' className='formInput' placeholder='Calle y altura del domicilio' type='text'
-          value={data.direccion}
-          onChange={(e) => handleChange('direccion', e.target.value)}
+          value={data.address.street}
+          onChange={(e) => handleAddress('street', e.target.value)}
         />
       </div>
       <div className='formGroup'>
         <label className='formLabel' htmlFor='localidad'>Localidad</label>
         <input id='localidad' className='formInput' type='text' placeholder='Ingrese localidad' onKeyDown={preventArrows}
-          value={data.localidad}
-          onChange={(e) => handleChange('localidad', e.target.value)}
+          value={data.address.city}
+          onChange={(e) => handleAddress('city', e.target.value)}
         />
       </div>
     </>
@@ -150,11 +151,11 @@ const Step3 = ({ data, plans }) => {
         <div className='newUserContainer'>
           <ul className='newUserDetail'>
             <li><strong>DNI:</strong><br /> {data.dni}</li>
-            <li><strong>Nombre:</strong><br /> {data.nombre} {data.apellido}</li>
+            <li><strong>Nombre:</strong><br /> {data.name} {data.surname}</li>
             <li><strong>Correo:</strong><br /> {data.email}</li>
-            <li><strong>Teléfono:</strong><br /> {data.telefono}</li>
-            <li><strong>Fecha de Nacimiento:</strong><br /> {data.fechaNacimiento}</li>
-            <li><strong>Dirección:</strong><br /> {data.direccion}, {data.localidad}</li>
+            <li><strong>Teléfono:</strong><br /> {data.phone}</li>
+            <li><strong>Fecha de Nacimiento:</strong><br /> {data.birthdate}</li>
+            <li><strong>Dirección:</strong><br /> {data.address.street}, {data.address.city}</li>
           </ul>
           <div className='planDetail'>
             <h4>Plan Seleccionado</h4>
@@ -172,13 +173,15 @@ function Signup() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     dni: '',
-    nombre: '',
-    apellido: '',
+    name: '',
+    surname: '',
     email: '',
-    telefono: '',
-    fechaNacimiento: '',
-    direccion: '',
-    localidad: '',
+    phone: '',
+    birthdate: '',
+    address: {
+      street: '',
+      city: ''
+    },
     plan: null,
     password: ''
   });
@@ -190,12 +193,23 @@ function Signup() {
     }));
   };
 
+  const handleAddress = (field, value) => {
+    setFormData(prevData => ({
+      ...prevData,
+      address: {
+        ...prevData.address,
+        [field]: value
+      }
+    }));
+  };
+
   const [passConfirm, setPassConfirm] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const isStep1Valid = () => {
-    return formData.dni && formData.nombre && formData.apellido && formData.email && formData.telefono;
+    return formData.dni && formData.name && formData.surname && formData.email && formData.phone;
   };
 
   const isStep2Valid = () => {
@@ -203,7 +217,7 @@ function Signup() {
   };
 
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (step === 1) {
       if (!isStep1Valid()) {
         alert("Por favor, completá todos los campos obligatorios.");
@@ -222,8 +236,20 @@ function Signup() {
       }
       setStep(3);
     } else if (step === 3) {
-      console.log("Datos para el backend:", formData);
-      setShowSuccessAlert(true);
+      setIsLoading(true);
+      try {
+        const responseData = await authService.registerUser(formData);
+        setShowSuccessAlert(true);
+        console.log("Respuesta del backend:", responseData);
+      } catch (err) {
+        console.error("Error al enviar el formulario:", err);
+        alert(err.message);
+        console.log(`Error: ${err.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+
+
     }
   };
 
@@ -252,11 +278,11 @@ function Signup() {
         <div className='formStep'>
           <button className={`stepButton ${step === 1 ? 'active' : ''}`} onClick={() => goToStep(1)}>1. Datos Personales</button>
           <button className={`stepButton ${step === 2 ? 'active' : ''}`} disabled={!isStep1Valid()} onClick={() => goToStep(2)}>2. Plan</button>
-          <button className={`stepButton ${step === 3 ? 'active' : ''}`} disabled={!isStep2Valid() || !isStep1Valid()} onClick={() => goToStep(3)}>3. Revisión</button>
+          <button className={`stepButton ${step === 3 ? 'active' : ''}`} disabled={!isStep2Valid() || !isStep1Valid() || isLoading} onClick={() => goToStep(3)}>3. Revisión</button>
         </div>
 
         <div className='formData'>
-          {step === 1 && <Step1 data={formData} handleChange={handleChange} />}
+          {step === 1 && <Step1 data={formData} handleChange={handleChange} handleAddress={handleAddress} />}
           {step === 2 &&
             <Step2
               data={formData}

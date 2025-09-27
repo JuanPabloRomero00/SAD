@@ -14,7 +14,7 @@ app.use(express.json());
 //Esta fue la forma de crear un admin por defecto para probar la conexión con la base de datos
 //const createDefaultAdmin = require('./src/config/createDefaultAdmin');
 
-connectDB();
+//connectDB();
 //createDefaultAdmin();
 
 app.get('/', (req, res) => {
@@ -29,11 +29,11 @@ app.post('/users/create', async (req, res) => {
     await user.save();
 
     // Crear la credencial digital
-    const memberId = `${user._id}-${user.document}`;
+    const memberId = `${user._id}-${user.dni}`;
     const credential = new Credential({
       name: user.name,
       surname: user.surname,
-      document: user.document,
+      dni: user.dni,
       birthdate: user.birthdate,
       memberId: memberId,
       role: user.role
