@@ -7,6 +7,7 @@ const User = require('./src/models/User');
 const port = 3000
 const Credential = require('./src/models/Credential'); 
 const Activity = require('./src/models/Activity'); // Agrega esta línea
+const authRoutes = require('./src/routes/usersRoutes');
 
 app.use(cors());
 app.use(express.json());
@@ -14,7 +15,7 @@ app.use(express.json());
 //Esta fue la forma de crear un admin por defecto para probar la conexión con la base de datos
 //const createDefaultAdmin = require('./src/config/createDefaultAdmin');
 
-//connectDB();
+connectDB();
 //createDefaultAdmin();
 
 app.get('/', (req, res) => {
@@ -50,7 +51,7 @@ app.post('/users/create', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`SAD app listening on port ${port}`)
 })
 
 
@@ -211,4 +212,5 @@ app.post('/activities/:id/leave', async (req, res) => {
   }
 });
 
-
+// Login de usuario
+app.use('/auth', authRoutes);

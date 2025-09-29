@@ -67,7 +67,7 @@
   align-items: center;
 }
 
-.signButton, .loginButton {
+.signButton, .loginButton, .logoutButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,5 +107,20 @@
 }
 
 .loginButton:active {
+  transform: scale(0.95);
+}
+
+
+.logoutButton {
+  width: 115px;
+  border: 1px solid red;
+  color: red;
+}
+
+.logoutButton:hover {
+  border-color: rgb(110, 36, 36);
+}
+
+.logoutButton:active {
   transform: scale(0.95);
 }
