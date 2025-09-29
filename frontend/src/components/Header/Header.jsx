@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
 
 function Header() {
-  const [user, setUser] = useState(null);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Cargar usuario al montar el componente
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/"); // redirige a inicio o donde quieras
+    logout();
+    navigate("/");
   };
 
   return (

@@ -1,15 +1,13 @@
-import React from 'react'
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import { Form, Link } from 'react-router-dom';
-import { useState } from 'react';
-
-
+import React, { useState } from "react";
+import CustomAlert from "../components/CustomAlert/CustomAlert";
+import { useAuth } from "../context/useAuth";
 
 function Login() {
   const [dni, setDni] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,12 +29,10 @@ function Login() {
 
       const data = await response.json();
 
-      // Guardar usuario en localStorage
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // Guardar usuario en el contexto
+      login(data.user);
 
-      alert("Login exitoso ✅");
-      // redirigir a actividades
-      window.location.href = "/activities";
+      setShowSuccessAlert(true);
     } catch (err) {
       setError(err.message);
     }
@@ -89,8 +85,10 @@ function Login() {
         ¿No tenés cuenta? <a href="/register">Asociate al Club</a> y crea tu
         Usuario.
       </p>
+
+      {showSuccessAlert && (<CustomAlert message="¡Login exitoso!" redirectTo="/activities" />)}
     </>
   );
 }
 
-export default Login
+export default Login;

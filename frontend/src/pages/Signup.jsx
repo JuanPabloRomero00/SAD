@@ -305,7 +305,7 @@ function Signup() {
         </div>
       </div>
       <p className='formReturn'> ¿Ya tenés cuenta? <Link to="/login" className='toLogin'> Ingresa acá. </Link></p>
-      {showSuccessAlert && <CustomAlert />}
+      {showSuccessAlert && <CustomAlert message="¡Te registraste exitosamente!" redirectTo="/login"  />}
     </>
   );
 }

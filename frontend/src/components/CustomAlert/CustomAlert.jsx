@@ -2,16 +2,16 @@ import { useNavigate } from 'react-router-dom'
 import React, { useEffect } from 'react';
 import { Snackbar, Alert, Box, LinearProgress } from "@mui/material";
 
-function CustomAlert() {
+function CustomAlert({ message, redirectTo }) {
     const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate("/login");
+            navigate(redirectTo);
         }, 3500);
 
         return () => clearTimeout(timer);
-    }, [navigate]);
+    }, [navigate, redirectTo]);
 
     return (
         <>
@@ -28,8 +28,8 @@ function CustomAlert() {
                     flexDirection: "row", justifyContent: "center", alignItems: "center",
                     fontSize: "1.1rem", zIndex: 9999, padding: 2,
                     boxSizing: "border-box", textAlign: "center",
-                }}> ¡Te registraste exitosamente!
-
+                }}>
+                    {message}
                 <Box sx={{ fontSize: "12px", width: '100%', left: 0, bottom: 0, position: 'absolute', p: 1, mt: 3 }}>
                     Serás redirigido automáticamente en un instante...
                 </Box>
