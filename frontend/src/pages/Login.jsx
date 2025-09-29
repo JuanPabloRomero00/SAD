@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import './Login.css';
 import CustomAlert from "../components/CustomAlert/CustomAlert";
 import { useAuth } from "../context/useAuth";
 
@@ -7,11 +8,49 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [remaining, setRemaining] = useState(0);
   const { login } = useAuth();
+
+
+  useEffect(() => {
+    // Al cargar, revisa si hay bloqueo
+    const blockedUntil = localStorage.getItem("loginBlockedUntil");
+    if (blockedUntil) {
+      const now = Date.now();
+      if (now < Number(blockedUntil)) {
+        setIsBlocked(true);
+        setRemaining(Math.ceil((Number(blockedUntil) - now) / 1000));
+      } else {
+        localStorage.removeItem("loginBlockedUntil");
+        localStorage.removeItem("loginAttempts");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isBlocked) return;
+    if (remaining <= 0) {
+      setIsBlocked(false);
+      setRemaining(0);
+      localStorage.removeItem("loginBlockedUntil");
+      localStorage.removeItem("loginAttempts");
+      return;
+    }
+    const timer = setInterval(() => {
+      setRemaining((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [isBlocked, remaining]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (isBlocked) {
+      setError("Demasiados intentos fallidos. Intenta nuevamente en unos minutos.");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:3000/auth/login", {
@@ -23,15 +62,30 @@ function Login() {
       });
 
       if (!response.ok) {
+        // Manejo de intentos fallidos
+        let attempts = Number(localStorage.getItem("loginAttempts")) || 0;
+        attempts += 1;
+        localStorage.setItem("loginAttempts", attempts);
+        if (attempts >= 3) {
+          const blockTime = Date.now() + 10 * 60 * 1000; // 10 minutos
+          localStorage.setItem("loginBlockedUntil", blockTime);
+          setIsBlocked(true);
+          setRemaining(10 * 60);
+          setError("Demasiados intentos fallidos. Intenta nuevamente en 10 minutos.");
+          return;
+        }
         const errorData = await response.json();
         throw new Error(errorData.error || "Error en el login");
       }
+
+      // Si login exitoso, limpia los intentos
+      localStorage.removeItem("loginAttempts");
+      localStorage.removeItem("loginBlockedUntil");
 
       const data = await response.json();
 
       // Guardar usuario en el contexto
       login(data.user);
-
       setShowSuccessAlert(true);
     } catch (err) {
       setError(err.message);
@@ -72,8 +126,8 @@ function Login() {
           </div>
 
           <div>
-            <button className='logeoButton' type='submit'>
-              Ingresar
+            <button className='logeoButton' type='submit' disabled={isBlocked}>
+              {isBlocked ? `Bloqueado (${remaining}s)` : 'Ingresar'}
             </button>
           </div>
         </div>
