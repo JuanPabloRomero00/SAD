@@ -67,7 +67,7 @@ function Login() {
         attempts += 1;
         localStorage.setItem("loginAttempts", attempts);
         if (attempts >= 3) {
-          const blockTime = Date.now() + 10 * 60 * 1000; // 10 minutos
+          const blockTime = Date.now() + 1 * 60 * 1000; // 10 minutos
           localStorage.setItem("loginBlockedUntil", blockTime);
           setIsBlocked(true);
           setRemaining(10 * 60);

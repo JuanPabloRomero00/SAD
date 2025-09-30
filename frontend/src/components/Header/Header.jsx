@@ -30,9 +30,14 @@ function Header() {
 
         <div className="authButtons">
           {user ? (
-            <button className="logoutButton" onClick={handleLogout}>
-              Cerrar Sesión
-            </button>
+            <>
+              <Link className="profileButton" to="/profile">
+                Perfil
+              </Link>
+              <button className="logoutButton" onClick={handleLogout}>
+                Cerrar Sesión
+              </button>
+            </>
           ) : (
             <>
               <Link className="loginButton" to="/login">

@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
+import { useAuth } from "../context/useAuth";
 
 const Profile = () => {
+  const { user } = useAuth();
+
   const [usuario, setUsuario] = useState({
-    nombre: "Nombre Apellido",
-    dni: "12345678",
-    plan: "Standard",
-    vencimiento: "28 de Septiembre de 2026",
-    telefono: "1155551234",
-    email: "nombreapellido@gmail.com",
+    nombre: user.name,
+    dni: user.dni,
+    // plan: "Standard",
+    // vencimiento: "28 de Septiembre de 2026",
+    // telefono: "1155551234",
+    // email: "nombreapellido@gmail.com",
   });
 
   const [editMode, setEditMode] = useState(false);
