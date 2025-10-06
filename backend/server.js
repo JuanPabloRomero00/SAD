@@ -89,6 +89,24 @@ app.patch('/users/:id', async (req, res) => {
   }
 });
 
+// Modificar el rol de un usuario por ID (PATCH /users/:id/role)
+app.patch('/users/:id/role', async (req, res) => {
+  try {
+    const { role } = req.body;
+    if (!role) {
+      return res.status(400).json({ error: "El campo 'role' es requerido" });
+    }
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { role },
+      { new: true, runValidators: true }
+    );
+    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
+    res.json({ message: "Rol actualizado correctamente", user });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
 // Dar de baja lógica a un usuario por ID (PATCH /users/:id/deactivate)
 app.patch('/users/:id/deactivate', async (req, res) => {
