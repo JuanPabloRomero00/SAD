@@ -16,7 +16,13 @@ const userSchema = new mongoose.Schema({
     type: String, 
     enum: ['admin', 'employee', 'user'], 
     default: 'user', 
-    required: true },
+    required: true 
+  },
+  plan: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Plan',
+    required: function() { return this.role === 'user'; }
+  },
   active: { type: Boolean, default: true }
 });
 

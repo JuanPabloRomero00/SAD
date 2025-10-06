@@ -7,6 +7,7 @@ const User = require('./src/models/User');
 const port = 3000
 const Credential = require('./src/models/Credential'); 
 const Activity = require('./src/models/Activity'); // Agrega esta línea
+const Plan = require('./src/models/Plan'); // Agrega esta línea
 
 app.use(cors());
 app.use(express.json());
@@ -14,7 +15,7 @@ app.use(express.json());
 //Esta fue la forma de crear un admin por defecto para probar la conexión con la base de datos
 //const createDefaultAdmin = require('./src/config/createDefaultAdmin');
 
-//connectDB();
+connectDB();
 //createDefaultAdmin();
 
 app.get('/', (req, res) => {
@@ -191,7 +192,20 @@ app.get('/activities', async (req, res) => {
     res.status(500).json({ error: "No se encontraron las actividades" });
   }
 });
-
+// Actualizar actividad por ID (PATCH /activities/:id)
+app.patch('/activities/:id', async (req, res) => {
+  try {
+    const activity = await Activity.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!activity) return res.status(404).json({ error: "Actividad no encontrada" });
+    res.json({ message: "Actividad actualizada correctamente", activity });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 // Anotar usuario a una actividad (POST /activities/:id/join)
 app.post('/activities/:id/join', async (req, res) => {
   try {
@@ -224,6 +238,26 @@ app.post('/activities/:id/leave', async (req, res) => {
     );
     await activity.save();
     res.json({ message: "Usuario desanotado correctamente", activity });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Elegir o modificar el plan de un usuario (PATCH /users/:id/plan)
+app.patch('/users/:id/plan', async (req, res) => {
+  try {
+    const { planId } = req.body;
+    if (!planId) {
+      return res.status(400).json({ error: "El campo 'planId' es requerido" });
+    }
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
+    if (user.role !== 'user') {
+      return res.status(403).json({ error: "Solo los usuarios con rol 'user' pueden elegir un plan" });
+    }
+    user.plan = planId;
+    await user.save();
+    res.json({ message: "Plan asignado correctamente", user });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
