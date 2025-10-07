@@ -2,22 +2,31 @@ import { createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
 
-  // Al iniciar, cargamos el user desde localStorage
-  useEffect(() => {
+export function AuthProvider({ children }) {
+  // Inicializa el estado con el valor de localStorage si existe
+  const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  // Mantiene sincronizado el estado con localStorage si cambia el usuario
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
+
 
   const login = (userData) => {
-    localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
+    console.log(userData);
   };
 
+
   const logout = () => {
-    localStorage.removeItem("user");
     setUser(null);
   };
 

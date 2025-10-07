@@ -8,6 +8,9 @@ const Profile = () => {
   const [usuario, setUsuario] = useState({
     nombre: user.name,
     dni: user.dni,
+    plan: "Standar",
+    telefono: user.phone,
+    email: user.email
     // plan: "Standard",
     // vencimiento: "28 de Septiembre de 2026",
     // telefono: "1155551234",
@@ -61,138 +64,147 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-page">
-      <div className="profile-container">
-        <div className="profile-card">
-          <div className="avatar">NN</div>
-          <h2>{usuario.nombre}</h2>
-          <p className="socio">Socio N-1234567</p>
+    <>
+      <div className="profile-page">
+        <aside className="side-menu">
+          <ul className="profile-list-menu">
+            <li>Perfil</li>
+            <li>Actividades</li>
+            <li>Plan</li>
+          </ul>
+        </aside>
+        <div className="profile-container">
+          <div className="profile-card">
+            <div className="avatar">NN</div>
+            <h2>{usuario.nombre}</h2>
+            <p className="socio">Socio N-1234567</p>
 
-          <div className="profile-info">
-            <div>
-              <span>DNI</span>
-              {editMode ? (
-                <input type="text" name="dni" value={usuario.dni} onChange={handleChange} />
-              ) : (
-                <span>{usuario.dni}</span>
-              )}
+            <div className="profile-info">
+              <div>
+                <span>DNI</span>
+                {editMode ? (
+                  <input type="text" name="dni" value={usuario.dni} onChange={handleChange} />
+                ) : (
+                  <span>{usuario.dni}</span>
+                )}
+              </div>
+              <div>
+                <span>Plan</span>
+                {editMode ? (
+                  <input type="text" name="plan" value={usuario.plan} onChange={handleChange} />
+                ) : (
+                  <span>{usuario.plan}</span>
+                )}
+              </div>
+              <div>
+                <span>Vencimiento</span>
+                {editMode ? (
+                  <input type="text" name="vencimiento" value={usuario.vencimiento} onChange={handleChange} />
+                ) : (
+                  <span>{usuario.vencimiento}</span>
+                )}
+              </div>
+              <div>
+                <span>Telefono</span>
+                {editMode ? (
+                  <input type="text" name="telefono" value={usuario.telefono} onChange={handleChange} />
+                ) : (
+                  <span>{usuario.telefono}</span>
+                )}
+              </div>
+              <div>
+                <span>Email</span>
+                {editMode ? (
+                  <input type="email" name="email" value={usuario.email} onChange={handleChange} />
+                ) : (
+                  <span>{usuario.email}</span>
+                )}
+              </div>
             </div>
-            <div>
-              <span>Plan</span>
+
+            <Box sx={{ mt: 2, width: '100%', display: 'flex', flexDirection: 'column' }}>
               {editMode ? (
-                <input type="text" name="plan" value={usuario.plan} onChange={handleChange} />
+                <>
+                  <button className="btn-info btn-primary" onClick={handleSave}>Guardar</button>
+                  <button className="btn-info btn-link" onClick={() => setEditMode(false)}>Cancelar</button>
+                </>
               ) : (
-                <span>{usuario.plan}</span>
+                <button className="btn-info btn-edit" onClick={() => setEditMode(true)}>Editar perfil</button>
               )}
-            </div>
-            <div>
-              <span>Vencimiento</span>
-              {editMode ? (
-                <input type="text" name="vencimiento" value={usuario.vencimiento} onChange={handleChange} />
-              ) : (
-                <span>{usuario.vencimiento}</span>
+
+              {!changePasswordMode && (
+                <button className="btn-info btn-primary btn-pass" onClick={() => setChangePasswordMode(true)}>Cambiar contraseña</button>
               )}
-            </div>
-            <div>
-              <span>Telefono</span>
-              {editMode ? (
-                <input type="text" name="telefono" value={usuario.telefono} onChange={handleChange} />
-              ) : (
-                <span>{usuario.telefono}</span>
+
+              {changePasswordMode && (
+                <div className="change-password-form" style={{ marginTop: "10px" }}>
+                  <div>
+                    <span>Contraseña actual</span>
+                    <input type="password" name="current" value={passwords.current} onChange={handlePasswordChange} />
+                  </div>
+                  <div>
+                    <span>Nueva contraseña</span>
+                    <input type="password" name="newPassword" value={passwords.newPassword} onChange={handlePasswordChange} />
+                  </div>
+                  <div>
+                    <span>Confirmar nueva contraseña</span>
+                    <input type="password" name="confirm" value={passwords.confirm} onChange={handlePasswordChange} />
+                  </div>
+                  <Box sx={{ mt: 1 }}>
+                    <button className="btn-info btn-primary" onClick={handleSavePassword}>Guardar</button>
+                    <button className="btn-info btn-link" onClick={() => setChangePasswordMode(false)}>Cancelar</button>
+                  </Box>
+                </div>
               )}
-            </div>
-            <div>
-              <span>Email</span>
-              {editMode ? (
-                <input type="email" name="email" value={usuario.email} onChange={handleChange} />
-              ) : (
-                <span>{usuario.email}</span>
-              )}
-            </div>
+
+              <button className="btn-info btn-link">Descargar carnet digital</button>
+            </Box>
           </div>
 
-          <Box sx={{ mt: 2 }}>
-            {editMode ? (
-              <>
-                <button className="btn-info btn-primary" onClick={handleSave}>Guardar</button>
-                <button className="btn-info btn-link" onClick={() => setEditMode(false)}>Cancelar</button>
-              </>
-            ) : (
-              <button className="btn-info btn-edit" onClick={() => setEditMode(true)}>Editar perfil</button>
-            )}
+          <div className="reservas">
+            <h3>Tus próximas reservas</h3>
+            <p>Vas a ver las clases y turnos que reservaste</p>
+            {reservas.map((reserva, i) => (
+              <div key={i} className="reserva">
+                <div>
+                  <strong>{reserva.nombre}</strong>
+                  <p>{reserva.fecha}</p>
+                </div>
+                <span className={reserva.estado === "Confirmado" ? "estado-confirmado" : "estado-pendiente"}>
+                  {reserva.estado}
+                </span>
+              </div>
+            ))}
+          </div>
 
-            {!changePasswordMode && (
-              <button className="btn-info btn-primary btn-pass" onClick={() => setChangePasswordMode(true)}>Cambiar contraseña</button>
-            )}
+          <div className="membresia">
+            <h3>Estado de tu membresía</h3>
+            <p>Tu próxima renovación vence el 28 de septiembre de 2025</p>
+            <button className="btn-edit" onClick={() => setShowPayments(!showPayments)}>
+              Ver historial de pagos
+            </button>
 
-            {changePasswordMode && (
-              <div className="change-password-form" style={{ marginTop: "10px" }}>
-                <div>
-                  <span>Contraseña actual</span>
-                  <input type="password" name="current" value={passwords.current} onChange={handlePasswordChange} />
-                </div>
-                <div>
-                  <span>Nueva contraseña</span>
-                  <input type="password" name="newPassword" value={passwords.newPassword} onChange={handlePasswordChange} />
-                </div>
-                <div>
-                  <span>Confirmar nueva contraseña</span>
-                  <input type="password" name="confirm" value={passwords.confirm} onChange={handlePasswordChange} />
-                </div>
-                <Box sx={{ mt: 1 }}>
-                  <button className="btn-info btn-primary" onClick={handleSavePassword}>Guardar</button>
-                  <button className="btn-info btn-link" onClick={() => setChangePasswordMode(false)}>Cancelar</button>
-                </Box>
+            {showPayments && (
+              <div className="historial-pagos" style={{ marginTop: "10px" }}>
+                {pagos.map((pago, index) => (
+                  <div key={index} className="pago-item" style={{ borderBottom: "1px solid #eee", padding: "5px 0" }}>
+                    <strong>Pago {index + 1}</strong>
+                    <p>Fecha de pago: {pago.fechaPago}</p>
+                    <p>Vencimiento: {pago.vencimiento}</p>
+                    <p>Monto: {pago.monto}</p>
+                    <p>Plan: {pago.plan}</p>
+                  </div>
+                ))}
               </div>
             )}
 
-            <button className="btn-info btn-link">Descargar carnet digital</button>
-          </Box>
-        </div>
-
-        <div className="reservas">
-          <h3>Tus próximas reservas</h3>
-          <p>Vas a ver las clases y turnos que reservaste</p>
-          {reservas.map((reserva, i) => (
-            <div key={i} className="reserva">
-              <div>
-                <strong>{reserva.nombre}</strong>
-                <p>{reserva.fecha}</p>
-              </div>
-              <span className={reserva.estado === "Confirmado" ? "estado-confirmado" : "estado-pendiente"}>
-                {reserva.estado}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="membresia">
-          <h3>Estado de tu membresía</h3>
-          <p>Tu próxima renovación vence el 28 de septiembre de 2025</p>
-          <button className="btn-edit" onClick={() => setShowPayments(!showPayments)}>
-            Ver historial de pagos
-          </button>
-
-          {showPayments && (
-            <div className="historial-pagos" style={{ marginTop: "10px" }}>
-              {pagos.map((pago, index) => (
-                <div key={index} className="pago-item" style={{ borderBottom: "1px solid #eee", padding: "5px 0" }}>
-                  <strong>Pago {index + 1}</strong>
-                  <p>Fecha de pago: {pago.fechaPago}</p>
-                  <p>Vencimiento: {pago.vencimiento}</p>
-                  <p>Monto: {pago.monto}</p>
-                  <p>Plan: {pago.plan}</p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <button className="btn-edit btn-delete">
-            Darse de baja
-          </button>
+            <button className="btn-edit btn-delete">
+              Darse de baja
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

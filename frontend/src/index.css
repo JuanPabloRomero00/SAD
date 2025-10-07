@@ -12,7 +12,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -46,18 +46,21 @@ body {
 
 button {
   padding: 0;
-  height: 46px;
+  height: 45px;
   width: 102px;
   display: flex;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
+  border: none;
+  outline: none;
+  color: white;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
-button:disabled:hover{
+button:disabled:hover {
   color: #ffffff9d;
   background-color: rgb(124, 124, 124);
 }
@@ -66,7 +69,7 @@ button:hover {
   border-color: #006103;
 }
 
-.inputError{
+.inputError {
   position: absolute;
   padding-left: 8px;
   font-size: 12px;
@@ -88,20 +91,20 @@ button:hover {
 } */
 
 /* Home */
-.home-section{
+.home-section {
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-.home-section h2{
+.home-section h2 {
   font-size: 60px;
   font-weight: 700;
   color: white;
   text-align: left;
 }
 
-.home-section .home-title-green{
+.home-section .home-title-green {
   color: #00FF09;
 }
 
@@ -111,7 +114,9 @@ button:hover {
   font-weight: 400;
 }
 
-.home-buttons, .btn-primary, .btn-outline {
+.home-buttons,
+.btn-primary,
+.btn-outline {
   width: 40%;
   display: flex;
   justify-content: space-between;
@@ -120,7 +125,8 @@ button:hover {
   padding: 10px;
 }
 
-.btn-primary, .btn-outline {
+.btn-primary,
+.btn-outline {
   width: 150px;
   height: 57px;
   justify-content: center;
@@ -128,23 +134,25 @@ button:hover {
   margin-right: 10px;
 }
 
-.home-buttons .btn-primary{
+.home-buttons .btn-primary {
   background-color: #00FF09;
   color: black;
   border: 1px solid white;
 }
 
-.btn-outline{
+.btn-outline {
   color: white;
   border: 1px solid white;
 }
 
-.btn-primary:hover, .btn-outline:hover{
+.btn-primary:hover,
+.btn-outline:hover {
   border-color: #005503;
 }
 
-.btn-primary:active, .btn-outline:active{
-   transform: scale(0.95);
+.btn-primary:active,
+.btn-outline:active {
+  transform: scale(0.95);
 }
 
 /* ======================= */
@@ -507,15 +515,47 @@ button:hover {
 }
 
 /* Estilos de Profile */
+.profile-page {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  width: 900px;
+  border: 1px solid white;
+}
+
+.side-menu {
+  width: 120px;
+  min-width: 120px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-list-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 60px 0;
+}
+
+.profile-list-menu li{
+  cursor: pointer;
+}
+
 .profile-container {
-  max-width: 900px;
-  margin: 50px auto;
-  padding: 0 20px;
+  width: 100%;
+  border: 1px solid;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-card {
   text-align: center;
   margin-bottom: 50px;
+  padding: 20px;
 }
 
 #avatar {
@@ -533,7 +573,6 @@ button:hover {
 
 .profile-info {
   text-align: left;
-  margin: 20px 0;
 }
 
 .profile-info div {
@@ -544,8 +583,9 @@ button:hover {
 
 .btn-info,
 .btn-edit {
-  width: 900px;
-  height: 20xpx;
+  width: 80%;
+  margin: 0 auto;
+  height: 45px;
   border-radius: 24px;
   margin-bottom: 10px;
   align-items: center;
@@ -565,13 +605,9 @@ button:hover {
   font-weight: 200;
 }
 
-.btn-pass{
+.btn-pass {
   background-color: #00FF09;
   color: black;
-}
-
-.reservas {
-  width: 900px;
 }
 
 .reservas .reserva {
@@ -605,7 +641,7 @@ button:hover {
   margin: 50px 0;
 }
 
-.membresia .btn-delete{
+.membresia .btn-delete {
   background: #420000;
   margin-top: 10%;
 }
@@ -759,12 +795,12 @@ Estilos de Activities
   border: 1px solid #2a2a2a;
   background: #111;
   color: #fff;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-  cursor:pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
 }
 
 .calendar-day-btn.unavailable {
@@ -788,11 +824,11 @@ Estilos de Activities
   border-radius: 10px;
   color: #fff;
   font-weight: 600;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .time-btn.active {
-  background: linear-gradient(90deg,#2b6cb0,#5a8cff);
+  background: linear-gradient(90deg, #2b6cb0, #5a8cff);
   border-color: transparent;
 }
 
@@ -801,12 +837,18 @@ Estilos de Activities
   padding: 16px;
   background: #111;
   border-radius: 16px;
-  display:flex;
+  display: flex;
   gap: 18px;
-  align-items:flex-start;
+  align-items: flex-start;
   border: 1px solid #222;
 }
 
-.detail-left { flex: 0 0 320px; }
-.detail-right { flex: 1; }
+.detail-left {
+  flex: 0 0 320px;
+}
+
+.detail-right {
+  flex: 1;
+}
+
 /* ===================================== */
