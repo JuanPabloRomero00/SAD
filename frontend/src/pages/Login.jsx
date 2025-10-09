@@ -56,7 +56,7 @@ function Login() {
       }
 
       console.log('Login response:', data);
-      login(data.user); // Guarda el usuario en contexto y localStorage
+      login(data.user);
       showAlert('¡Bienvenido! Iniciando sesión...', 'success');
       setTimeout(() => {
         navigate('/');
