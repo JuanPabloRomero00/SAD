@@ -24,15 +24,42 @@ const Profile = () => {
   const [showPayments, setShowPayments] = useState(false);
 
   const reservas = [
-    { nombre: "Entrenamiento Funcional", fecha: "24 de septiembre de 2025 - 16:00hs - Sede Central", estado: "Confirmado" },
-    { nombre: "Yoga Principiante", fecha: "26 de septiembre de 2025 - 11:00hs - Sede Central", estado: "Pendiente" },
-    { nombre: "Basquet Formativo", fecha: "Martes / Jueves - 18:00-20:00", estado: "Confirmado" },
+    {
+      nombre: "Entrenamiento Funcional",
+      fecha: "24 de septiembre de 2025 - 16:00hs - Sede Central",
+      estado: "Confirmado",
+    },
+    {
+      nombre: "Yoga Principiante",
+      fecha: "26 de septiembre de 2025 - 11:00hs - Sede Central",
+      estado: "Pendiente",
+    },
+    {
+      nombre: "Basquet Formativo",
+      fecha: "Martes / Jueves - 18:00-20:00",
+      estado: "Confirmado",
+    },
   ];
 
   const pagos = [
-    { fechaPago: "01/08/2025", vencimiento: "31/08/2025", monto: "$5000", plan: "Standard" },
-    { fechaPago: "01/07/2025", vencimiento: "31/07/2025", monto: "$5000", plan: "Standard" },
-    { fechaPago: "01/06/2025", vencimiento: "30/06/2025", monto: "$5000", plan: "Standard" },
+    {
+      fechaPago: "01/08/2025",
+      vencimiento: "31/08/2025",
+      monto: "$5000",
+      plan: "Standard",
+    },
+    {
+      fechaPago: "01/07/2025",
+      vencimiento: "31/07/2025",
+      monto: "$5000",
+      plan: "Standard",
+    },
+    {
+      fechaPago: "01/06/2025",
+      vencimiento: "30/06/2025",
+      monto: "$5000",
+      plan: "Standard",
+    },
   ];
 
   const handleChange = (e) => {
@@ -72,7 +99,12 @@ const Profile = () => {
             <div>
               <span>DNI</span>
               {editMode ? (
-                <input type="text" name="dni" value={usuario.dni} onChange={handleChange} />
+                <input
+                  type="text"
+                  name="dni"
+                  value={usuario.dni}
+                  onChange={handleChange}
+                />
               ) : (
                 <span>{usuario.dni}</span>
               )}
@@ -80,7 +112,12 @@ const Profile = () => {
             <div>
               <span>Plan</span>
               {editMode ? (
-                <input type="text" name="plan" value={usuario.plan} onChange={handleChange} />
+                <input
+                  type="text"
+                  name="plan"
+                  value={usuario.plan}
+                  onChange={handleChange}
+                />
               ) : (
                 <span>{usuario.plan}</span>
               )}
@@ -88,7 +125,12 @@ const Profile = () => {
             <div>
               <span>Vencimiento</span>
               {editMode ? (
-                <input type="text" name="vencimiento" value={usuario.vencimiento} onChange={handleChange} />
+                <input
+                  type="text"
+                  name="vencimiento"
+                  value={usuario.vencimiento}
+                  onChange={handleChange}
+                />
               ) : (
                 <span>{usuario.vencimiento}</span>
               )}
@@ -96,7 +138,12 @@ const Profile = () => {
             <div>
               <span>Telefono</span>
               {editMode ? (
-                <input type="text" name="telefono" value={usuario.telefono} onChange={handleChange} />
+                <input
+                  type="text"
+                  name="telefono"
+                  value={usuario.telefono}
+                  onChange={handleChange}
+                />
               ) : (
                 <span>{usuario.telefono}</span>
               )}
@@ -104,7 +151,12 @@ const Profile = () => {
             <div>
               <span>Email</span>
               {editMode ? (
-                <input type="email" name="email" value={usuario.email} onChange={handleChange} />
+                <input
+                  type="email"
+                  name="email"
+                  value={usuario.email}
+                  onChange={handleChange}
+                />
               ) : (
                 <span>{usuario.email}</span>
               )}
@@ -114,39 +166,86 @@ const Profile = () => {
           <Box sx={{ mt: 2 }}>
             {editMode ? (
               <>
-                <button className="btn-info btn-primary" onClick={handleSave}>Guardar</button>
-                <button className="btn-info btn-link" onClick={() => setEditMode(false)}>Cancelar</button>
+                <button className="btn-info btn-primary" onClick={handleSave}>
+                  Guardar
+                </button>
+                <button
+                  className="btn-info btn-link"
+                  onClick={() => setEditMode(false)}
+                >
+                  Cancelar
+                </button>
               </>
             ) : (
-              <button className="btn-info btn-edit" onClick={() => setEditMode(true)}>Editar perfil</button>
+              <button
+                className="btn-info btn-edit"
+                onClick={() => setEditMode(true)}
+              >
+                Editar perfil
+              </button>
             )}
 
             {!changePasswordMode && (
-              <button className="btn-info btn-primary btn-pass" onClick={() => setChangePasswordMode(true)}>Cambiar contraseña</button>
+              <button
+                className="btn-info btn-primary btn-pass"
+                onClick={() => setChangePasswordMode(true)}
+              >
+                Cambiar contraseña
+              </button>
             )}
 
             {changePasswordMode && (
-              <div className="change-password-form" style={{ marginTop: "10px" }}>
+              <div
+                className="change-password-form"
+                style={{ marginTop: "10px" }}
+              >
                 <div>
                   <span>Contraseña actual</span>
-                  <input type="password" name="current" value={passwords.current} onChange={handlePasswordChange} />
+                  <input
+                    type="password"
+                    name="current"
+                    value={passwords.current}
+                    onChange={handlePasswordChange}
+                  />
                 </div>
                 <div>
                   <span>Nueva contraseña</span>
-                  <input type="password" name="newPassword" value={passwords.newPassword} onChange={handlePasswordChange} />
+                  <input
+                    type="password"
+                    name="newPassword"
+                    value={passwords.newPassword}
+                    onChange={handlePasswordChange}
+                  />
                 </div>
                 <div>
                   <span>Confirmar nueva contraseña</span>
-                  <input type="password" name="confirm" value={passwords.confirm} onChange={handlePasswordChange} />
+                  <input
+                    type="password"
+                    name="confirm"
+                    value={passwords.confirm}
+                    onChange={handlePasswordChange}
+                  />
                 </div>
                 <Box sx={{ mt: 1 }}>
-                  <button className="btn-info btn-primary" onClick={handleSavePassword}>Guardar</button>
-                  <button className="btn-info btn-link" onClick={() => setChangePasswordMode(false)}>Cancelar</button>
+                  <button
+                    className="btn-info btn-primary"
+                    onClick={handleSavePassword}
+                  >
+                    Guardar
+                  </button>
+                  <button
+                    className="btn-info btn-link"
+                    onClick={() => setChangePasswordMode(false)}
+                  >
+                    Cancelar
+                  </button>
                 </Box>
               </div>
             )}
 
-            <button className="btn-info btn-link">Descargar carnet digital</button>
+            <button className="btn-info btn-link">
+              Descargar carnet digital
+            </button>
           </Box>
         </div>
 
@@ -159,7 +258,13 @@ const Profile = () => {
                 <strong>{reserva.nombre}</strong>
                 <p>{reserva.fecha}</p>
               </div>
-              <span className={reserva.estado === "Confirmado" ? "estado-confirmado" : "estado-pendiente"}>
+              <span
+                className={
+                  reserva.estado === "Confirmado"
+                    ? "estado-confirmado"
+                    : "estado-pendiente"
+                }
+              >
                 {reserva.estado}
               </span>
             </div>
@@ -169,14 +274,21 @@ const Profile = () => {
         <div className="membresia">
           <h3>Estado de tu membresía</h3>
           <p>Tu próxima renovación vence el 28 de septiembre de 2025</p>
-          <button className="btn-edit" onClick={() => setShowPayments(!showPayments)}>
+          <button
+            className="btn-edit"
+            onClick={() => setShowPayments(!showPayments)}
+          >
             Ver historial de pagos
           </button>
 
           {showPayments && (
             <div className="historial-pagos" style={{ marginTop: "10px" }}>
               {pagos.map((pago, index) => (
-                <div key={index} className="pago-item" style={{ borderBottom: "1px solid #eee", padding: "5px 0" }}>
+                <div
+                  key={index}
+                  className="pago-item"
+                  style={{ borderBottom: "1px solid #eee", padding: "5px 0" }}
+                >
                   <strong>Pago {index + 1}</strong>
                   <p>Fecha de pago: {pago.fechaPago}</p>
                   <p>Vencimiento: {pago.vencimiento}</p>
@@ -187,9 +299,7 @@ const Profile = () => {
             </div>
           )}
 
-          <button className="btn-edit btn-delete">
-            Darse de baja
-          </button>
+          <button className="btn-edit btn-delete">Darse de baja</button>
         </div>
       </div>
     </div>

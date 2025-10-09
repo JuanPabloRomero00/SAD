@@ -21,7 +21,7 @@
   font-size: 16px;
 }
 
-.logoContainer:active{
+.logoContainer:active {
   transform: scale(0.98);
 }
 
@@ -45,11 +45,11 @@
   font-weight: 500;
 }
 
-.navList li:hover{
+.navList li:hover {
   color: #00af06de;
 }
 
-.navList li:active{
+.navList li:active {
   transform: scale(0.95);
 }
 
@@ -67,7 +67,9 @@
   align-items: center;
 }
 
-.signButton, .loginButton, .logoutButton {
+.signButton,
+.loginButton,
+.logoutButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,7 +84,6 @@
 .signButton {
   background-color: #00ff08;
   color: #000000;
-
 }
 
 .signButton:hover {
@@ -109,7 +110,6 @@
 .loginButton:active {
   transform: scale(0.95);
 }
-
 
 .logoutButton {
   width: 115px;
