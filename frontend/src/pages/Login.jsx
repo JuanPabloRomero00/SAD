@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import { useAuth } from '../context/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
@@ -10,6 +12,7 @@ function Login() {
   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const showAlert = (message, type) => {
     setAlert({ show: true, message, type });
@@ -33,18 +36,30 @@ function Login() {
 
     setLoading(true);
     try {
-      // Simulamos el login por ahora
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simular carga
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ dni: formData.dni, password: formData.password }),
+      });
 
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        showAlert('Usuario o contraseña incorrecta', 'error');
+        return;
+      }
+
+      console.log('Login response:', data);
+      login(data.user); // Guarda el usuario en contexto y localStorage
       showAlert('¡Bienvenido! Iniciando sesión...', 'success');
-
-      // Redirigir después de 1 segundo
       setTimeout(() => {
-        navigate('/'); // Redirigir a la página principal o dashboard
-      }, 1000);
+        navigate('/');
+        setLoading(false);
+      }, 2000);
     } catch (error) {
       showAlert(error.message || 'Error al iniciar sesión', 'error');
-    } finally {
       setLoading(false);
     }
   };
@@ -60,7 +75,7 @@ function Login() {
         Usa tu DNI y contraseña para entrar al panel de socio.
       </h3>
 
-      <div className='formContainer'>
+      <div className='formContainer' style={{ position: 'relative' }}>
         {alert.show && (
           <CustomAlert message={alert.message} type={alert.type} />
         )}

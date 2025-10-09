@@ -11,6 +11,12 @@ function CustomAlert({ message, type = "info" }) {
       marginBottom: "16px",
       fontWeight: "500",
       textAlign: "center",
+      position: "absolute",
+      bottom: "100px",
+      left: "0",
+      right: "0",
+      margin: "0 auto",
+      maxWidth: "300px",
     };
 
     switch (type) {
@@ -24,7 +30,7 @@ function CustomAlert({ message, type = "info" }) {
       case "error":
         return {
           ...baseStyles,
-          backgroundColor: "#f8d7da",
+          backgroundColor: "#f7a4aaff",
           color: "#721c24",
           border: "1px solid #f5c6cb",
         };
