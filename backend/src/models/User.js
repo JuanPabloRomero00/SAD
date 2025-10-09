@@ -12,11 +12,19 @@ const userSchema = new mongoose.Schema({
     city: { type: String, required: true }
   },
   password: { type: String, required: true },
+  securityQuestion: { type: String, required: true },
+  securityAnswer: { type: String, required: true },
   role: { 
     type: String, 
     enum: ['admin', 'employee', 'user'], 
     default: 'user', 
-    required: true },
+    required: true 
+  },
+  plan: { 
+    type: String, 
+    enum: ['basico', 'completo', 'premium'],
+    required: function() { return this.role === 'user'; }
+  },
   active: { type: Boolean, default: true }
 });
 

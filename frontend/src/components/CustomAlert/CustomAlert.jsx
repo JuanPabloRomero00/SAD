@@ -1,46 +1,54 @@
-import { useNavigate } from 'react-router-dom'
-import React, { useEffect } from 'react';
-import { Snackbar, Alert, Box, LinearProgress } from "@mui/material";
+import React from 'react';
 
-function CustomAlert({ message, redirectTo }) {
-    const navigate = useNavigate();
+function CustomAlert({ message, type = 'info' }) {
+    // Si no hay mensaje, no mostrar nada
+    if (!message) return null;
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            navigate(redirectTo);
-        }, 3500);
+    const getAlertStyles = () => {
+        const baseStyles = {
+            padding: '12px 16px',
+            borderRadius: '4px',
+            marginBottom: '16px',
+            fontWeight: '500',
+            textAlign: 'center'
+        };
 
-        return () => clearTimeout(timer);
-    }, [navigate, redirectTo]);
+        switch (type) {
+            case 'success':
+                return {
+                    ...baseStyles,
+                    backgroundColor: '#d4edda',
+                    color: '#155724',
+                    border: '1px solid #c3e6cb'
+                };
+            case 'error':
+                return {
+                    ...baseStyles,
+                    backgroundColor: '#f8d7da',
+                    color: '#721c24',
+                    border: '1px solid #f5c6cb'
+                };
+            case 'warning':
+                return {
+                    ...baseStyles,
+                    backgroundColor: '#fff3cd',
+                    color: '#856404',
+                    border: '1px solid #ffeeba'
+                };
+            default: // info
+                return {
+                    ...baseStyles,
+                    backgroundColor: '#d1ecf1',
+                    color: '#0c5460',
+                    border: '1px solid #bee5eb'
+                };
+        }
+    };
 
     return (
-        <>
-            <Box
-                sx={{
-                    position: "fixed", top: 0, left: 0, width: "100%",
-                    height: "100vh", backgroundColor: "rgba(0,0,0,0.6)", zIndex: 9998,
-                }}
-            />
-            <Alert severity="success" variant="filled"
-                sx={{
-                    position: "fixed", top: 0, right: 0, bottom: 0, left: 0,
-                    margin: "auto", width: "340px", height: "110px", display: "flex",
-                    flexDirection: "row", justifyContent: "center", alignItems: "center",
-                    fontSize: "1.1rem", zIndex: 9999, padding: 2,
-                    boxSizing: "border-box", textAlign: "center",
-                }}>
-                    {message}
-                <Box sx={{ fontSize: "12px", width: '100%', left: 0, bottom: 0, position: 'absolute', p: 1, mt: 3 }}>
-                    Serás redirigido automáticamente en un instante...
-                </Box>
-                <LinearProgress color="inherit"
-                    sx={{
-                        position: "absolute", bottom: 0, left: 0,
-                        width: "100%", height: 4, borderRadius: 0,
-                    }}
-                />
-            </Alert>
-        </>
+        <div style={getAlertStyles()}>
+            {message}
+        </div>
     );
 }
 

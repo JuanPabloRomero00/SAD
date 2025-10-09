@@ -7,6 +7,8 @@ import Footer from './components/Footer/Footer'
 import Login from './pages/Login';
 import Activities from './pages/Activities';
 import Profile from './pages/Profile';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path='/login' element={<Login />} ></Route>
             <Route path='/activities' element={<Activities />}></Route>
             <Route path='/profile' element={<Profile />}></Route>
+            <Route path='/forgot-password' element={<ForgotPassword />}></Route>
+            <Route path='/reset-password' element={<ResetPassword />}></Route>
           </Routes>
         </main>
         <footer>
