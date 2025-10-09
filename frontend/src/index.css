@@ -46,13 +46,16 @@ body {
 
 button {
   padding: 0;
-  height: 46px;
+  height: 45px;
   width: 102px;
   display: flex;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
+  border: none;
+  outline: none;
+  color: white;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -510,15 +513,47 @@ button:hover {
 }
 
 /* Estilos de Profile */
+.profile-page {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  width: 900px;
+  border: 1px solid white;
+}
+
+.side-menu {
+  width: 120px;
+  min-width: 120px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-list-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 60px 0;
+}
+
+.profile-list-menu li{
+  cursor: pointer;
+}
+
 .profile-container {
-  max-width: 900px;
-  margin: 50px auto;
-  padding: 0 20px;
+  width: 100%;
+  border: 1px solid;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile-card {
   text-align: center;
   margin-bottom: 50px;
+  padding: 20px;
 }
 
 #avatar {
@@ -536,7 +571,6 @@ button:hover {
 
 .profile-info {
   text-align: left;
-  margin: 20px 0;
 }
 
 .profile-info div {
@@ -547,8 +581,9 @@ button:hover {
 
 .btn-info,
 .btn-edit {
-  width: 900px;
-  height: 20xpx;
+  width: 80%;
+  margin: 0 auto;
+  height: 45px;
   border-radius: 24px;
   margin-bottom: 10px;
   align-items: center;
@@ -570,10 +605,6 @@ button:hover {
 .btn-pass {
   background-color: #00ff09;
   color: black;
-}
-
-.reservas {
-  width: 900px;
 }
 
 .reservas .reserva {
@@ -814,7 +845,7 @@ Estilos de Activities
 .detail-left {
   flex: 0 0 320px;
 }
+
 .detail-right {
   flex: 1;
 }
-/* ===================================== */
