@@ -47,12 +47,16 @@ function Login() {
       const data = await response.json();
 
       if (!response.ok || data.error) {
-        showAlert('Usuario o contraseña incorrecta', 'error');
+        setTimeout(() => {
+          showAlert('Usuario o contraseña incorrecta', 'error');
+          setLoading(false);
+        }, 1000);
+
         return;
       }
 
       console.log('Login response:', data);
-      login(data.user); // Guarda el usuario en contexto y localStorage
+      login(data.user);
       showAlert('¡Bienvenido! Iniciando sesión...', 'success');
       setTimeout(() => {
         navigate('/');
