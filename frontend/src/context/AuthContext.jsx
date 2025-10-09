@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-
 export function AuthProvider({ children }) {
   // Inicializa el estado con el valor de localStorage si existe
   const [user, setUser] = useState(() => {
