@@ -47,7 +47,11 @@ function Login() {
       const data = await response.json();
 
       if (!response.ok || data.error) {
-        showAlert('Usuario o contraseña incorrecta', 'error');
+        setTimeout(() => {
+          showAlert('Usuario o contraseña incorrecta', 'error');
+          setLoading(false);
+        }, 1000);
+
         return;
       }
 
