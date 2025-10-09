@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import CustomAlert from "../components/CustomAlert/CustomAlert";
+import CustomAlert from "../CustomAlert/CustomAlert";
+import "./Login.css";
 
 function Login() {
   const [formData, setFormData] = useState({

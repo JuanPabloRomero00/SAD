@@ -24,7 +24,7 @@ Frontend: React + Vite/CRA
 
 Backend: Node.js + Express.
 
-Base de Datos: MongoDB 
+Base de Datos: MongoDB
 
 👥 Roles de usuario
 

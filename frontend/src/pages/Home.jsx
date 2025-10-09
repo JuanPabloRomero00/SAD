@@ -14,8 +14,12 @@ function Home() {
           <p>Asociate online y empezá hoy a entrenar con nosotros.</p>
 
           <div className="home-buttons">
-            <Link to={'/activities'} className="btn-primary">Ver actividades</Link>
-            <Link to={'/signup'} className="btn-outline">Asociate ahora</Link>
+            <Link to={"/activities"} className="btn-primary">
+              Ver actividades
+            </Link>
+            <Link to={"/signup"} className="btn-outline">
+              Asociate ahora
+            </Link>
           </div>
         </div>
       </div>

@@ -19,14 +19,14 @@
 }
 
 /* Chrome, Safari, Edge, Opera */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
@@ -105,7 +105,7 @@ button:hover {
 }
 
 .home-section .home-title-green {
-  color: #00FF09;
+  color: #00ff09;
 }
 
 .home-section .home-content p {
@@ -135,7 +135,7 @@ button:hover {
 }
 
 .home-buttons .btn-primary {
-  background-color: #00FF09;
+  background-color: #00ff09;
   color: black;
   border: 1px solid white;
 }
@@ -251,7 +251,7 @@ button:hover {
 }
 
 .stepButton.active {
-  background-color: #00FF09;
+  background-color: #00ff09;
   color: #000000;
 }
 
@@ -339,7 +339,7 @@ button:hover {
   border-radius: 14px;
   transition: all 0.2s ease-in-out;
   background-color: #757575;
-  color: #FFFFFF;
+  color: #ffffff;
   flex-direction: column;
 }
 
@@ -467,7 +467,6 @@ button:hover {
   gap: 40px;
   width: 100%;
   align-content: center;
-
 }
 
 .loginGroup {
@@ -476,7 +475,6 @@ button:hover {
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
-
 }
 
 .loginLabel {
@@ -592,7 +590,6 @@ button:hover {
   justify-content: center;
 }
 
-
 .btn-primary {
   background: 00FF09;
 }
@@ -606,7 +603,7 @@ button:hover {
 }
 
 .btn-pass {
-  background-color: #00FF09;
+  background-color: #00ff09;
   color: black;
 }
 
@@ -653,7 +650,7 @@ Estilos de Activities
   color: #fff;
   padding: 40px;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .activities-container button {
@@ -686,7 +683,9 @@ Estilos de Activities
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   flex: 1 1 calc(50% - 30px);
   max-width: calc(50% - 30px);
   cursor: pointer;
@@ -850,5 +849,3 @@ Estilos de Activities
 .detail-right {
   flex: 1;
 }
-
-/* ===================================== */
