@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 import authService from '../services/authService';
 
@@ -24,6 +24,14 @@ const plans = [
       '15% de descuento.'
     ]
   }
+];
+
+const securityQuestions = [
+  "¿Cuál es el nombre de tu primera mascota?",
+  "¿En qué ciudad naciste?",
+  "¿Cuál es el nombre de tu mejor amigo de la infancia?",
+  "¿Cuál es tu color favorito?",
+  "¿Cómo se llamaba tu primer maestro/a?"
 ];
 
 const Step1 = ({ data, handleChange, handleAddress }) => {
@@ -96,8 +104,47 @@ const Step1 = ({ data, handleChange, handleAddress }) => {
   );
 };
 
-const Step2 = ({ data, handleChange, selectedPlan, onPlanSelect, passConfirm, setPassConfirm, passwordError }) => {
+const Step2 = ({ data, handleChange, passConfirm, setPassConfirm, passwordError }) => {
+  return (
+    <>
+      <div className='formGroup'>
+        <label className='formLabel' htmlFor='password'>Contraseña</label>
+        <input id='password' className='formInput' autoComplete='off' placeholder='Genere su contraseña' type='password'
+          value={data.password}
+          onChange={(e) => handleChange('password', e.target.value)}
+        />
+        {passwordError && <p className="inputError">{passwordError}</p>}
+      </div>
+      <div className='formGroup'>
+        <label className='formLabel' htmlFor='passConfirm'>Confirmar contraseña</label>
+        <input id='passConfirm' autoComplete='off' className='formInput' placeholder='Reingrese la contraseña' type='password'
+          value={passConfirm}
+          onChange={(e) => setPassConfirm(e.target.value)} />
+      </div>
+      <div className='formGroup'>
+        <label className='formLabel' htmlFor='securityQuestion'>Pregunta de seguridad</label>
+        <select id='securityQuestion' className='formInput' 
+          value={data.securityQuestion}
+          onChange={(e) => handleChange('securityQuestion', e.target.value)}
+        >
+          <option value="">Selecciona una pregunta de seguridad</option>
+          {securityQuestions.map((question, index) => (
+            <option key={index} value={question}>{question}</option>
+          ))}
+        </select>
+      </div>
+      <div className='formGroup'>
+        <label className='formLabel' htmlFor='securityAnswer'>Respuesta de seguridad</label>
+        <input id='securityAnswer' className='formInput' placeholder='Respuesta a la pregunta de seguridad' type='text'
+          value={data.securityAnswer}
+          onChange={(e) => handleChange('securityAnswer', e.target.value)}
+        />
+      </div>
+    </>
+  );
+};
 
+const Step3 = ({ data, selectedPlan, onPlanSelect }) => {
   return (
     <>
       <div className='planContainer'>
@@ -119,28 +166,12 @@ const Step2 = ({ data, handleChange, selectedPlan, onPlanSelect, passConfirm, se
             </div>
           ))}
         </div>
-        <div className='passContainer'>
-          <div className='formGroup'>
-            <label className='formLabel' htmlFor='password'>Contraseña</label>
-            <input id='password' className='formInput' autoComplete='off' placeholder='Genere su contraseña' type='password'
-              value={data.password}
-              onChange={(e) => handleChange('password', e.target.value)}
-            />
-            {passwordError && <p className="inputError">{passwordError}</p>}
-          </div>
-          <div className='formGroup'>
-            <label className='formLabel' htmlFor='passConfirm'>Confirmar contraseña</label>
-            <input id='passConfirm' autoComplete='off' className='formInput' placeholder='Reingrese la contraseña' type='password'
-              value={passConfirm}
-              onChange={(e) => setPassConfirm(e.target.value)} />
-          </div>
-        </div>
       </div>
     </>
   );
 };
 
-const Step3 = ({ data, plans }) => {
+const Step4 = ({ data, plans }) => {
   const planSeleccionado = plans.find(p => p.id === data.plan);
 
   return (
@@ -171,6 +202,7 @@ const Step3 = ({ data, plans }) => {
 
 function Signup() {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     dni: '',
     name: '',
@@ -183,7 +215,9 @@ function Signup() {
       city: ''
     },
     plan: null,
-    password: ''
+    password: '',
+    securityQuestion: '',
+    securityAnswer: ''
   });
 
   const handleChange = (field, value) => {
@@ -205,15 +239,25 @@ function Signup() {
 
   const [passConfirm, setPassConfirm] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false)
+  const [alert, setAlert] = useState({ show: false, message: '', type: '' });
   const [isLoading, setIsLoading] = useState(false);
+
+  const showAlert = (message, type) => {
+    setAlert({ show: true, message, type });
+    setTimeout(() => setAlert({ show: false, message: '', type: '' }), 3000);
+  };
 
   const isStep1Valid = () => {
     return formData.dni && formData.name && formData.surname && formData.email && formData.phone;
   };
 
   const isStep2Valid = () => {
-    return formData.plan && formData.password && (formData.password === passConfirm);
+    return formData.password && (formData.password === passConfirm) && 
+           formData.securityQuestion && formData.securityAnswer;
+  };
+
+  const isStep3Valid = () => {
+    return formData.plan;
   };
 
 
@@ -230,26 +274,36 @@ function Signup() {
         setPasswordError("Las contraseñas no coinciden.");
         return;
       }
-      if (!formData.plan || !formData.password || !passConfirm) {
-        alert("Por favor, seleccioná un plan y completá la contraseña.");
+      if (!formData.password || !passConfirm || !formData.securityQuestion || !formData.securityAnswer) {
+        alert("Por favor, completá todos los campos requeridos.");
         return;
       }
       setStep(3);
     } else if (step === 3) {
+      if (!formData.plan) {
+        alert("Por favor, seleccioná un plan.");
+        return;
+      }
+      setStep(4);
+    } else if (step === 4) {
       setIsLoading(true);
       try {
         const responseData = await authService.registerUser(formData);
-        setShowSuccessAlert(true);
+        showAlert('¡Te registraste exitosamente!', 'success');
         console.log("Respuesta del backend:", responseData);
+        
+        // Redirigir al login después de 2 segundos
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+        
       } catch (err) {
         console.error("Error al enviar el formulario:", err);
-        alert(err.message);
+        showAlert(err.message || 'Error al registrar usuario', 'error');
         console.log(`Error: ${err.message}`);
       } finally {
         setIsLoading(false);
       }
-
-
     }
   };
 
@@ -266,6 +320,8 @@ function Signup() {
       setStep(2);
     } else if (stepNumber === 3 && isStep1Valid() && isStep2Valid()) {
       setStep(3);
+    } else if (stepNumber === 4 && isStep1Valid() && isStep2Valid() && isStep3Valid()) {
+      setStep(4);
     }
   };
 
@@ -275,10 +331,18 @@ function Signup() {
       <h3 className='subTitle'>Completá el formulario con tus datos.</h3>
 
       <div className='formContainer'>
+        {alert.show && (
+          <CustomAlert 
+            message={alert.message} 
+            type={alert.type} 
+          />
+        )}
+        
         <div className='formStep'>
           <button className={`stepButton ${step === 1 ? 'active' : ''}`} onClick={() => goToStep(1)}>1. Datos Personales</button>
-          <button className={`stepButton ${step === 2 ? 'active' : ''}`} disabled={!isStep1Valid()} onClick={() => goToStep(2)}>2. Plan</button>
-          <button className={`stepButton ${step === 3 ? 'active' : ''}`} disabled={!isStep2Valid() || !isStep1Valid() || isLoading} onClick={() => goToStep(3)}>3. Revisión</button>
+          <button className={`stepButton ${step === 2 ? 'active' : ''}`} disabled={!isStep1Valid()} onClick={() => goToStep(2)}>2. Seguridad</button>
+          <button className={`stepButton ${step === 3 ? 'active' : ''}`} disabled={!isStep2Valid() || !isStep1Valid()} onClick={() => goToStep(3)}>3. Plan</button>
+          <button className={`stepButton ${step === 4 ? 'active' : ''}`} disabled={!isStep3Valid() || !isStep2Valid() || !isStep1Valid() || isLoading} onClick={() => goToStep(4)}>4. Revisión</button>
         </div>
 
         <div className='formData'>
@@ -286,26 +350,30 @@ function Signup() {
           {step === 2 &&
             <Step2
               data={formData}
-              selectedPlan={formData.plan}
               handleChange={handleChange}
-              onPlanSelect={(planId) => handleChange('plan', planId)}
               passConfirm={passConfirm}
               setPassConfirm={setPassConfirm}
               passwordError={passwordError}
             />
           }
-          {step === 3 && <Step3 data={formData} plans={plans} />}
+          {step === 3 && 
+            <Step3 
+              data={formData} 
+              selectedPlan={formData.plan} 
+              onPlanSelect={(planId) => handleChange('plan', planId)} 
+            />
+          }
+          {step === 4 && <Step4 data={formData} plans={plans} />}
 
           <div className='formButton'>
             {step > 1 && <button className='backButton' onClick={prevStep}>Atrás</button>}
             <button className='nextButton' onClick={nextStep}>
-              {step === 3 ? 'Finalizar' : 'Continuar'}
+              {step === 4 ? 'Finalizar' : 'Continuar'}
             </button>
           </div>
         </div>
       </div>
       <p className='formReturn'> ¿Ya tenés cuenta? <Link to="/login" className='toLogin'> Ingresa acá. </Link></p>
-      {showSuccessAlert && <CustomAlert />}
     </>
   );
 }

@@ -26,6 +26,15 @@ app.get('/', (req, res) => {
 // Ruta para crear usuario y su credencial digital
 app.post('/users/create', async (req, res) => {
   try {
+    // Verificar si el email ya existe
+    const existingUser = await User.findOne({ email: req.body.email });
+    if (existingUser) {
+      return res.status(400).json({
+        error: "Email ya registrado",
+        message: "Ya existe un usuario con este email"
+      });
+    }
+
     const user = new User(req.body);
     await user.save();
 
@@ -45,6 +54,91 @@ app.post('/users/create', async (req, res) => {
   } catch (err) {
     res.status(400).json({
       error: "El usuario no se pudo crear correctamente",
+      message: err.message
+    });
+  }
+});
+
+// Ruta para obtener pregunta de seguridad por email
+app.post('/users/get-security-question', async (req, res) => {
+  try {
+    const { email } = req.body;
+    
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        message: "No existe un usuario con este email"
+      });
+    }
+
+    res.status(200).json({
+      securityQuestion: user.securityQuestion,
+      userId: user._id
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: "Error al buscar usuario",
+      message: err.message
+    });
+  }
+});
+
+// Ruta para verificar email y pregunta de seguridad
+app.post('/users/verify-security', async (req, res) => {
+  try {
+    const { email, securityAnswer } = req.body;
+    
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        message: "No existe un usuario con este email"
+      });
+    }
+
+    if (user.securityAnswer.toLowerCase().trim() !== securityAnswer.toLowerCase().trim()) {
+      return res.status(400).json({
+        error: "Respuesta incorrecta",
+        message: "La respuesta de seguridad no es correcta"
+      });
+    }
+
+    res.status(200).json({
+      message: "Verificación exitosa",
+      securityQuestion: user.securityQuestion,
+      userId: user._id
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: "Error en la verificación",
+      message: err.message
+    });
+  }
+});
+
+// Ruta para cambiar contraseña
+app.post('/users/reset-password', async (req, res) => {
+  try {
+    const { userId, newPassword } = req.body;
+    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        error: "Usuario no encontrado",
+        message: "No se pudo encontrar el usuario"
+      });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({
+      message: "Contraseña actualizada exitosamente"
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: "Error al cambiar contraseña",
       message: err.message
     });
   }
