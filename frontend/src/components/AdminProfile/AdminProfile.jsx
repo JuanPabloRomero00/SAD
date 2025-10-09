@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ProfileAdmin() {
+function AdminProfile() {
 //esto es solo como modo de prueba
   const users = [
     {
@@ -115,4 +115,4 @@ function ProfileAdmin() {
   );
 }
 
-export default ProfileAdmin;
+export default AdminProfile;
