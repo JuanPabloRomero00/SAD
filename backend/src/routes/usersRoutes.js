@@ -24,7 +24,10 @@ router.post('/login', async (req, res) => {
         id: user._id,
         dni: user.dni,
         name: user.name,
-        role: user.role
+        role: user.role,
+        phone: user.phone,
+        email: user.email,
+        address: user.address
       }
     });
   } catch (err) {
