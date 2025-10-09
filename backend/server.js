@@ -1,14 +1,14 @@
-require('dotenv').config();
-const express = require('express')
-const cors = require('cors')
-const app = express()
-const connectDB = require('./src/config/db');
-const User = require('./src/models/User'); 
-const port = 3000
-const Credential = require('./src/models/Credential'); 
-const Activity = require('./src/models/Activity'); // Agrega esta línea
-const Plan = require('./src/models/Plan'); // Agrega esta línea
-const authRoutes = require('./src/routes/usersRoutes');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const app = express();
+const connectDB = require("./src/config/db");
+const User = require("./src/models/User");
+const port = 3000;
+const Credential = require("./src/models/Credential");
+const Activity = require("./src/models/Activity"); // Agrega esta línea
+const Plan = require("./src/models/Plan"); // Agrega esta línea
+const authRoutes = require("./src/routes/usersRoutes");
 
 app.use(cors());
 app.use(express.json());
@@ -19,20 +19,19 @@ app.use(express.json());
 connectDB();
 //createDefaultAdmin();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 // Ruta para crear usuario y su credencial digital
-app.post('/users/create', async (req, res) => {
+app.post("/users/create", async (req, res) => {
   try {
     // Verificar si el email ya existe
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {
       return res.status(400).json({
         error: "Email ya registrado",
-        message: "Ya existe un usuario con este email"
+        message: "Ya existe un usuario con este email",
       });
     }
 
@@ -47,7 +46,7 @@ app.post('/users/create', async (req, res) => {
       dni: user.dni,
       birthdate: user.birthdate,
       memberId: memberId,
-      role: user.role
+      role: user.role,
     });
     await credential.save();
 
@@ -55,79 +54,82 @@ app.post('/users/create', async (req, res) => {
   } catch (err) {
     res.status(400).json({
       error: "El usuario no se pudo crear correctamente",
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // Ruta para obtener pregunta de seguridad por email
-app.post('/users/get-security-question', async (req, res) => {
+app.post("/users/get-security-question", async (req, res) => {
   try {
     const { email } = req.body;
-    
+
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({
         error: "Usuario no encontrado",
-        message: "No existe un usuario con este email"
+        message: "No existe un usuario con este email",
       });
     }
 
     res.status(200).json({
       securityQuestion: user.securityQuestion,
-      userId: user._id
+      userId: user._id,
     });
   } catch (err) {
     res.status(500).json({
       error: "Error al buscar usuario",
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // Ruta para verificar email y pregunta de seguridad
-app.post('/users/verify-security', async (req, res) => {
+app.post("/users/verify-security", async (req, res) => {
   try {
     const { email, securityAnswer } = req.body;
-    
+
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({
         error: "Usuario no encontrado",
-        message: "No existe un usuario con este email"
+        message: "No existe un usuario con este email",
       });
     }
 
-    if (user.securityAnswer.toLowerCase().trim() !== securityAnswer.toLowerCase().trim()) {
+    if (
+      user.securityAnswer.toLowerCase().trim() !==
+      securityAnswer.toLowerCase().trim()
+    ) {
       return res.status(400).json({
         error: "Respuesta incorrecta",
-        message: "La respuesta de seguridad no es correcta"
+        message: "La respuesta de seguridad no es correcta",
       });
     }
 
     res.status(200).json({
       message: "Verificación exitosa",
       securityQuestion: user.securityQuestion,
-      userId: user._id
+      userId: user._id,
     });
   } catch (err) {
     res.status(500).json({
       error: "Error en la verificación",
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 // Ruta para cambiar contraseña
-app.post('/users/reset-password', async (req, res) => {
+app.post("/users/reset-password", async (req, res) => {
   try {
     const { userId, newPassword } = req.body;
-    
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({
         error: "Usuario no encontrado",
-        message: "No se pudo encontrar el usuario"
+        message: "No se pudo encontrar el usuario",
       });
     }
 
@@ -135,23 +137,22 @@ app.post('/users/reset-password', async (req, res) => {
     await user.save();
 
     res.status(200).json({
-      message: "Contraseña actualizada exitosamente"
+      message: "Contraseña actualizada exitosamente",
     });
   } catch (err) {
     res.status(500).json({
       error: "Error al cambiar contraseña",
-      message: err.message
+      message: err.message,
     });
   }
 });
 
 app.listen(port, () => {
-  console.log(`SAD app listening on port ${port}`)
-})
-
+  console.log(`SAD app listening on port ${port}`);
+});
 
 // Obtener todos los usuarios (GET /users)
-app.get('/users', async (req, res) => {
+app.get("/users", async (req, res) => {
   try {
     const users = await User.find({ active: true });
     res.json(users);
@@ -160,9 +161,8 @@ app.get('/users', async (req, res) => {
   }
 });
 
-
 // Obtener usuario por ID (GET /users/:id)
-app.get('/users/:id', async (req, res) => {
+app.get("/users/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
@@ -172,12 +172,13 @@ app.get('/users/:id', async (req, res) => {
   }
 });
 
-
-
 // Actualizar usuario por ID (PATCH /users/:id)
-app.patch('/users/:id', async (req, res) => {
+app.patch("/users/:id", async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
     res.json(user);
   } catch (err) {
@@ -186,7 +187,7 @@ app.patch('/users/:id', async (req, res) => {
 });
 
 // Modificar el rol de un usuario por ID (PATCH /users/:id/role)
-app.patch('/users/:id/role', async (req, res) => {
+app.patch("/users/:id/role", async (req, res) => {
   try {
     const { role } = req.body;
     if (!role) {
@@ -195,7 +196,7 @@ app.patch('/users/:id/role', async (req, res) => {
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { role },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
     res.json({ message: "Rol actualizado correctamente", user });
@@ -205,12 +206,12 @@ app.patch('/users/:id/role', async (req, res) => {
 });
 
 // Dar de baja lógica a un usuario por ID (PATCH /users/:id/deactivate)
-app.patch('/users/:id/deactivate', async (req, res) => {
+app.patch("/users/:id/deactivate", async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { active: false },
-      { new: true }
+      { new: true },
     );
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
     res.json({ message: "Usuario dado de baja.", user });
@@ -220,7 +221,7 @@ app.patch('/users/:id/deactivate', async (req, res) => {
 });
 
 // Obtener solo los usuarios dados de baja (inactivos) (GET /users/inactive)
-app.get('/users/inactive', async (req, res) => {
+app.get("/users/inactive", async (req, res) => {
   try {
     const users = await User.find({ active: false });
     res.json(users);
@@ -229,10 +230,9 @@ app.get('/users/inactive', async (req, res) => {
   }
 });
 
-
 // Obtener todas las credenciales (GET /credentials)
-app.get('/credentials', async (req, res) => {
-  try { 
+app.get("/credentials", async (req, res) => {
+  try {
     const credentials = await Credential.find();
     res.json(credentials);
   } catch (err) {
@@ -240,25 +240,24 @@ app.get('/credentials', async (req, res) => {
   }
 });
 
-
 //Baja logica de credencial
-app.patch('/credentials/:id/deactivate', async (req, res) => {
+app.patch("/credentials/:id/deactivate", async (req, res) => {
   try {
     const credential = await Credential.findByIdAndUpdate(
       req.params.id,
       { active: false },
-      { new: true }
+      { new: true },
     );
-    if (!credential) return res.status(404).json({ error: "Credencial no encontrada" });
+    if (!credential)
+      return res.status(404).json({ error: "Credencial no encontrada" });
     res.json({ message: "Credencial dada de baja.", credential });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-
 // Obtener solo las credenciales dadas de baja
-app.get('/credentials/inactive', async (req, res) => {
+app.get("/credentials/inactive", async (req, res) => {
   try {
     const credentials = await Credential.find({ active: false });
     res.json(credentials);
@@ -268,7 +267,7 @@ app.get('/credentials/inactive', async (req, res) => {
 });
 
 // Crear una actividad/taller
-app.post('/activities', async (req, res) => {
+app.post("/activities", async (req, res) => {
   try {
     const activity = new Activity(req.body);
     await activity.save();
@@ -279,7 +278,7 @@ app.post('/activities', async (req, res) => {
 });
 
 // Obtener todas las actividades/talleres
-app.get('/activities', async (req, res) => {
+app.get("/activities", async (req, res) => {
   try {
     const activities = await Activity.find().sort({ date: 1 });
     res.json(activities);
@@ -288,29 +287,32 @@ app.get('/activities', async (req, res) => {
   }
 });
 // Actualizar actividad por ID (PATCH /activities/:id)
-app.patch('/activities/:id', async (req, res) => {
+app.patch("/activities/:id", async (req, res) => {
   try {
-    const activity = await Activity.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!activity) return res.status(404).json({ error: "Actividad no encontrada" });
+    const activity = await Activity.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!activity)
+      return res.status(404).json({ error: "Actividad no encontrada" });
     res.json({ message: "Actividad actualizada correctamente", activity });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 // Anotar usuario a una actividad (POST /activities/:id/join)
-app.post('/activities/:id/join', async (req, res) => {
+app.post("/activities/:id/join", async (req, res) => {
   try {
     const { userId } = req.body;
     const activity = await Activity.findById(req.params.id);
-    if (!activity) return res.status(404).json({ error: "Actividad no encontrada" });
+    if (!activity)
+      return res.status(404).json({ error: "Actividad no encontrada" });
 
     // Verifica si el usuario ya está anotado
     if (activity.participants.includes(userId)) {
-      return res.status(400).json({ error: "El usuario ya está anotado en esta actividad" });
+      return res
+        .status(400)
+        .json({ error: "El usuario ya está anotado en esta actividad" });
     }
 
     activity.participants.push(userId);
@@ -322,14 +324,15 @@ app.post('/activities/:id/join', async (req, res) => {
 });
 
 // Desanotar usuario de una actividad (POST /activities/:id/leave)
-app.post('/activities/:id/leave', async (req, res) => {
+app.post("/activities/:id/leave", async (req, res) => {
   try {
     const { userId } = req.body;
     const activity = await Activity.findById(req.params.id);
-    if (!activity) return res.status(404).json({ error: "Actividad no encontrada" });
+    if (!activity)
+      return res.status(404).json({ error: "Actividad no encontrada" });
 
     activity.participants = activity.participants.filter(
-      id => id.toString() !== userId
+      (id) => id.toString() !== userId,
     );
     await activity.save();
     res.json({ message: "Usuario desanotado correctamente", activity });
@@ -339,7 +342,7 @@ app.post('/activities/:id/leave', async (req, res) => {
 });
 
 // Elegir o modificar el plan de un usuario (PATCH /users/:id/plan)
-app.patch('/users/:id/plan', async (req, res) => {
+app.patch("/users/:id/plan", async (req, res) => {
   try {
     const { planId } = req.body;
     if (!planId) {
@@ -347,8 +350,12 @@ app.patch('/users/:id/plan', async (req, res) => {
     }
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
-    if (user.role !== 'user') {
-      return res.status(403).json({ error: "Solo los usuarios con rol 'user' pueden elegir un plan" });
+    if (user.role !== "user") {
+      return res
+        .status(403)
+        .json({
+          error: "Solo los usuarios con rol 'user' pueden elegir un plan",
+        });
     }
     user.plan = planId;
     await user.save();
@@ -359,4 +366,4 @@ app.patch('/users/:id/plan', async (req, res) => {
 });
 
 // Login de usuario
-app.use('/auth', authRoutes);
+app.use("/auth", authRoutes);

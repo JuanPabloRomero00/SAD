@@ -1,31 +1,31 @@
-import { Route, Routes } from 'react-router-dom';
-import './App.css'
-import Header from './components/Header/Header';
-import Home from './pages/Home'
-import Signup from './pages/Signup';
-import Footer from './components/Footer/Footer'
-import Login from './components/Login/Login';
-import Activities from './pages/Activities';
-import Profile from './pages/Profile';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Header from "./components/Header/Header";
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import Footer from "./components/Footer/Footer";
+import Login from "./components/Login/Login";
+import Activities from "./pages/Activities";
+import Profile from "./pages/Profile";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
     <>
-      <div className='appContainer'>
+      <div className="appContainer">
         <header>
           <Header></Header>
         </header>
-        <main className='mainContainer'>
+        <main className="mainContainer">
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/signup' element={<Signup />} ></Route>
-            <Route path='/login' element={<Login />} ></Route>
-            <Route path='/activities' element={<Activities />}></Route>
-            <Route path='/profile' element={<Profile />}></Route>
-            <Route path='/forgot-password' element={<ForgotPassword />}></Route>
-            <Route path='/reset-password' element={<ResetPassword />}></Route>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/activities" element={<Activities />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+            <Route path="/reset-password" element={<ResetPassword />}></Route>
           </Routes>
         </main>
         <footer>

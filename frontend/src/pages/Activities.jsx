@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from "react";
 
-import futbol from '../assets/activities/futbol.jpg';
-import pingpong from '../assets/activities/pingpong.jpg';
-import volley from '../assets/activities/volley.jpg';
-import yoga from '../assets/activities/yoga.jpg';
-import placeholderImg from '../assets/activities/gray-gradient.jpg';
+import futbol from "../assets/activities/futbol.jpg";
+import pingpong from "../assets/activities/pingpong.jpg";
+import volley from "../assets/activities/volley.jpg";
+import yoga from "../assets/activities/yoga.jpg";
+import placeholderImg from "../assets/activities/gray-gradient.jpg";
 
 const DAY_NAME_TO_JS = {
   Dom: 0,
@@ -14,13 +14,13 @@ const DAY_NAME_TO_JS = {
   Mier: 3,
   Jue: 4,
   Vie: 5,
-  Sab: 6
+  Sab: 6,
 };
 
 function generateNextDays(n = 14) {
   const today = new Date();
   const arr = [];
-  for (let i = 0; i < n; i++){
+  for (let i = 0; i < n; i++) {
     const d = new Date(today);
     d.setDate(today.getDate() + i);
     arr.push(d);
@@ -35,11 +35,12 @@ function Activities() {
       category: "Deporte en equipo",
       level: "Intermedio",
       title: "Futbol mayores",
-      description: "Entrenamientos tácticos y físicos, torneo interno los sábados.",
+      description:
+        "Entrenamientos tácticos y físicos, torneo interno los sábados.",
       // CORREGIDO: availableDays (antes 'avalibleDays')
       availableDays: ["Lun", "Mie", "Vie"],
       times: ["20:00-22:00"],
-      image: futbol
+      image: futbol,
     },
     {
       id: 2,
@@ -49,17 +50,18 @@ function Activities() {
       description: "Entrenamientos técnicos y partidos amistosos.",
       availableDays: ["Mar", "Vie"],
       times: ["16:30-17:30"],
-      image: pingpong
+      image: pingpong,
     },
     {
       id: 3,
       category: "Deporte en equipo",
       level: "Principiante",
       title: "Volleyball",
-      description: "Entrenamientos tácticos y físicos, torneo interno los sábados.",
+      description:
+        "Entrenamientos tácticos y físicos, torneo interno los sábados.",
       availableDays: ["Lun", "Vie"],
       times: ["18:00-19:30"],
-      image: volley
+      image: volley,
     },
     {
       id: 4,
@@ -69,8 +71,8 @@ function Activities() {
       description: "Posturas físicas, técnicas de respiración y meditación.",
       availableDays: ["Jue"],
       times: ["19:30-20:30"],
-      image: yoga
-    }
+      image: yoga,
+    },
   ];
 
   // UI state
@@ -90,7 +92,9 @@ function Activities() {
   // Convierte availableDays (["Lun","Mie"]) a Set de números JS {1,3}
   const activityWeekdaySet = (activity) => {
     const arr = getActivityDaysArray(activity);
-    return new Set(arr.map((d) => DAY_NAME_TO_JS[d] ?? null).filter((n) => n !== null));
+    return new Set(
+      arr.map((d) => DAY_NAME_TO_JS[d] ?? null).filter((n) => n !== null),
+    );
   };
 
   const onSelectActivity = (activity) => {
@@ -111,13 +115,19 @@ function Activities() {
   // Formatea fecha bonita
   const formatDateReadable = (date) => {
     if (!date) return "";
-    return date.toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "short" });
+    return date.toLocaleDateString("es-AR", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    });
   };
 
   return (
     <div className="activities-container">
       <h2 className="activities-title">Actividades y talleres</h2>
-      <p className="activities-subtitle">Descubrí todas nuestras actividades.</p>
+      <p className="activities-subtitle">
+        Descubrí todas nuestras actividades.
+      </p>
 
       {/* LISTADO DE ACTIVIDADES */}
       <div className="activities-flex" style={{ marginBottom: 28 }}>
@@ -127,7 +137,13 @@ function Activities() {
             <div
               key={activity.id}
               className="activity-card"
-              style={{ cursor: "pointer", border: selectedActivity?.id === activity.id ? "2px solid #555" : "none" }}
+              style={{
+                cursor: "pointer",
+                border:
+                  selectedActivity?.id === activity.id
+                    ? "2px solid #555"
+                    : "none",
+              }}
               onClick={() => onSelectActivity(activity)}
               role="button"
               aria-pressed={selectedActivity?.id === activity.id}
@@ -178,11 +194,16 @@ function Activities() {
             Seleccioná un día disponible para ver horarios.
           </p>
 
-          <div className="calendar-grid" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <div
+            className="calendar-grid"
+            style={{ display: "flex", gap: 10, flexWrap: "wrap" }}
+          >
             {calendarDays.map((d) => {
               const weekday = d.getDay(); // 0-6
               const allowed = activityWeekdaySet(selectedActivity).has(weekday);
-              const isSelected = selectedDate && d.toDateString() === selectedDate.toDateString();
+              const isSelected =
+                selectedDate &&
+                d.toDateString() === selectedDate.toDateString();
               return (
                 <button
                   key={d.toISOString()}
@@ -191,7 +212,9 @@ function Activities() {
                   disabled={!allowed}
                   aria-pressed={isSelected}
                 >
-                  <div style={{ fontSize: 12, color: allowed ? "#fff" : "#777" }}>
+                  <div
+                    style={{ fontSize: 12, color: allowed ? "#fff" : "#777" }}
+                  >
                     {d.toLocaleDateString("es-AR", { weekday: "short" })}
                   </div>
                   <div style={{ fontSize: 14, fontWeight: 700 }}>
@@ -210,7 +233,9 @@ function Activities() {
       {/* SI HAY FECHA SELECCIONADA -> MOSTRAR HORARIOS */}
       {selectedDate && (
         <div style={{ marginBottom: 28 }}>
-          <h4 style={{ marginTop: 0 }}>Horarios para {formatDateReadable(selectedDate)}</h4>
+          <h4 style={{ marginTop: 0 }}>
+            Horarios para {formatDateReadable(selectedDate)}
+          </h4>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             {(selectedActivity.times || []).map((t) => {
               const active = selectedTime === t;
@@ -230,7 +255,11 @@ function Activities() {
 
       {/* SI HAY HORARIO SELECCIONADO -> MOSTRAR TARJETA DETALLE (puede ser modal) */}
       {selectedTime && (
-        <aside className="detail-panel" role="dialog" aria-label="Detalle de actividad">
+        <aside
+          className="detail-panel"
+          role="dialog"
+          aria-label="Detalle de actividad"
+        >
           <div className="detail-left">
             <div className="image-wrapper" style={{ height: 220 }}>
               <img
