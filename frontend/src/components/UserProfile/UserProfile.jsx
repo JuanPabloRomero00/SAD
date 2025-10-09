@@ -1,8 +1,8 @@
 
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { useAuth } from "../context/useAuth";
-const Profile = () => {
+import { useAuth } from "../../context/useAuth";
+const UserProfile = () => {
   const { user } = useAuth();
   const [usuario, setUsuario] = useState({
     nombre: user.name,
@@ -155,4 +155,4 @@ const Profile = () => {
     </>
   );
 };
-export default Profile;
+export default UserProfile;

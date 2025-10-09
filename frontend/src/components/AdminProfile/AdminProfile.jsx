@@ -1,41 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../context/useAuth';
+import userService from '../../services/userService';
 
 function AdminProfile() {
-//esto es solo como modo de prueba
-  const users = [
-    {
-      id: "1234",
-      nombre: "Juan Pérez",
-      dni: "12345678",
-      nacimiento: "1990-01-01",
-      email: "juan@example.com",
-      telefono: "+5491112345678",
-      plan: "Premium",
-      activo: true
-    },
-    {
-      id: "5678",
-      nombre: "María López",
-      dni: "87654321",
-      nacimiento: "1985-05-10",
-      email: "maria@example.com",
-      telefono: "+5491198765432",
-      plan: "Básico",
-      activo: false
-    },
-    {
-      id: "9012",
-      nombre: "Carlos Gómez",
-      dni: "45678912",
-      nacimiento: "1992-03-14",
-      email: "carlos@example.com",
-      telefono: "+5491145678912",
-      plan: "Estándar",
-      activo: true
-    },
-  ];
+  const {user} = useAuth;
 
   const [selectedUser, setSelectedUser] = useState(null);
+
+  const [users, setUsers] = useState([]);
+  useEffect(()=> {
+    const listaUsuarios = async () => {
+      try {
+        const response = await userService.getAllUsers();
+        setUsers(response);
+        console.log(users)
+        console.log(response)
+      }catch(error){
+        // alert(error);
+        console.log(error)
+      }
+    }
+    listaUsuarios();
+  }, [])
+
+useEffect(() => {
+  console.log("Usuarios actualizados:", users);
+}, [users]);
 
   return (
     <div className="profile-page">
@@ -44,12 +34,12 @@ function AdminProfile() {
         <ul className="profile-user-list">
           {users.map((user) => (
             <li
-              key={user.id}
+              key={user._id}
               onClick={() => setSelectedUser(user)}
               style={{ cursor: 'pointer' }}
-              className={selectedUser?.id === user.id ? 'selected' : ''}
+              className={selectedUser?._id === user._id ? 'selected' : ''}
             >
-              {user.nombre} - {user.dni} - {user.id}
+              {user.name} - {user.dni} - {user.plan}
             </li>
           ))}
         </ul>
@@ -69,14 +59,14 @@ function AdminProfile() {
         {selectedUser ? (
           <div className="profile-card profile-admin-card">
             <div className="avatar" id="avatar">
-              {selectedUser.nombre
+              {selectedUser.name
                 .split(' ')
                 .map((n) => n[0])
                 .join('')
                 .toUpperCase()}
             </div>
-            <h2>{selectedUser.nombre}</h2>
-            <p className="id-admin">ID: {selectedUser.id}</p>
+            <h2>{selectedUser.name}</h2>
+            <p className="id-admin">ID: {selectedUser._id}</p>
 
             <h2>Información de Perfil</h2>
             <div className="profile-admin-info">
@@ -95,14 +85,14 @@ function AdminProfile() {
 
               <div className="info-text">
                 <ul>
-                  <li>{selectedUser.nombre}</li>
+                  <li>{selectedUser.name}</li>
                   <li>{selectedUser.dni}</li>
-                  <li>{selectedUser.nacimiento}</li>
+                  <li>{selectedUser.birthdate}</li>
                   <li>{selectedUser.email}</li>
-                  <li>{selectedUser.telefono}</li>
+                  <li>{selectedUser.phone}</li>
                   <li>{selectedUser.plan}</li>
-                  <li>{selectedUser.activo ? 'Sí' : 'No'}</li>
-                  <li>{selectedUser.id}</li>
+                  <li>{selectedUser.active ? 'Sí' : 'No'}</li>
+                  <li>{selectedUser._id}</li>
                 </ul>
               </div>
             </div>
