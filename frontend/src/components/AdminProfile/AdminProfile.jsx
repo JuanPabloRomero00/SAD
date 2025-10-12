@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../context/useAuth';
+//import { useAuth } from '../../context/useAuth';
 import userService from '../../services/userService';
 
 function AdminProfile() {
-  const {user} = useAuth;
+  //const { user } = useAuth;
 
   const [selectedUser, setSelectedUser] = useState(null);
 
   const [users, setUsers] = useState([]);
-  useEffect(()=> {
+
+  useEffect(() => {
     const listaUsuarios = async () => {
       try {
         const response = await userService.getAllUsers();
         setUsers(response);
-        console.log(users)
-        console.log(response)
-      }catch(error){
-        // alert(error);
-        console.log(error)
+        console.log("Datos recibidos:", response);
+      } catch (error) {
+        console.log(error);
       }
     }
     listaUsuarios();
-  }, [])
-
-useEffect(() => {
-  console.log("Usuarios actualizados:", users);
-}, [users]);
+  }, []);
 
   return (
     <div className="profile-page">
