@@ -59,6 +59,7 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
+  color: black;
 }
 
 button:disabled:hover {
