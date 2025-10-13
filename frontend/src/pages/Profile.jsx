@@ -1,6 +1,5 @@
 
 import React, { useState } from "react";
-import { Box } from "@mui/material";
 import { useAuth } from "../context/useAuth";
 import UserProfile from "../components/UserProfile/UserProfile";
 import AdminProfile from "../components/AdminProfile/AdminProfile";

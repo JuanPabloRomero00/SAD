@@ -5,16 +5,16 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   // Inicializa el estado con el valor de localStorage si existe
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = sessionStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
   // Mantiene sincronizado el estado con localStorage si cambia el usuario
   useEffect(() => {
     if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
+      sessionStorage.setItem("user", JSON.stringify(user));
     } else {
-      localStorage.removeItem("user");
+      sessionStorage.removeItem("user");
     }
   }, [user]);
 

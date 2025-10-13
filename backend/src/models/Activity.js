@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const ActivitySchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  date: { type: Date, required: true },
-  duration: { type: Number },
+  days: [{ type: Number, required: true,  min: 1, max: 7 }], // 1 (Lunes) a 7 (Domingo)
+  time: { type: String, required: true },
   location: { type: String },
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // <-- nuevo campo
+  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: false }],
+  img: { type: String }, // <-- nuevo campo
 });
 
 module.exports = mongoose.model("Activity", ActivitySchema);

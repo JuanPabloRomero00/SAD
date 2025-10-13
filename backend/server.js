@@ -286,6 +286,7 @@ app.get("/activities", async (req, res) => {
     res.status(500).json({ error: "No se encontraron las actividades" });
   }
 });
+
 // Actualizar actividad por ID (PATCH /activities/:id)
 app.patch("/activities/:id", async (req, res) => {
   try {
@@ -300,6 +301,7 @@ app.patch("/activities/:id", async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
 // Anotar usuario a una actividad (POST /activities/:id/join)
 app.post("/activities/:id/join", async (req, res) => {
   try {
