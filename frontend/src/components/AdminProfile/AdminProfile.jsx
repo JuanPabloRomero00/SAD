@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 //import { useAuth } from '../../context/useAuth';
 import userService from '../../services/userService';
+import UserReport from '../UserReport/UserReport.jsx';
 
 function AdminProfile() {
   //const { user } = useAuth;
@@ -47,6 +48,7 @@ function AdminProfile() {
           <li>Historial de Pagos</li>
           <li>Editar Perfil</li>
           <li>Eliminar Usuario</li>
+          <UserReport users={users} />
         </ul>
       </aside>
 
@@ -80,12 +82,12 @@ function AdminProfile() {
 
               <div className="info-text">
                 <ul>
-                  <li>{selectedUser.name}</li>
+                  <li>{selectedUser.name + " " + selectedUser.surname}</li>
                   <li>{selectedUser.dni}</li>
-                  <li>{selectedUser.birthdate}</li>
-                  <li>{selectedUser.email}</li>
-                  <li>{selectedUser.phone}</li>
-                  <li>{selectedUser.plan}</li>
+                  <li>{selectedUser.birthdate || "-"}</li>
+                  <li>{selectedUser.email || "-"}</li>
+                  <li>{selectedUser.phone || "-"}</li>
+                  <li>{selectedUser.plan || "-"}</li>
                   <li>{selectedUser.active ? 'Sí' : 'No'}</li>
                   <li>{selectedUser._id}</li>
                 </ul>
