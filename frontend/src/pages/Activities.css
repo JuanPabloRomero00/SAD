@@ -69,3 +69,25 @@
 .modal-return:active {
   transform: scale(0.95);
 }
+
+.modal-login {
+  background-color: #00ff08;
+  width: 102px;
+  display: flex;
+  box-sizing: border-box;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  color: black;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+}
+
+.modal-login:hover {
+  border: 1px solid #005203;
+}
+
+.modal-login:active {
+  transform: scale(0.95);
+}

@@ -723,14 +723,28 @@ Estilos de Activities
 ============================*/
 .activities-container {
   color: #fff;
-  padding: 40px;
+  padding: 40px 0px;
+  width: 100%;
+  min-width: 1300px;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
+  display: flex;
 }
 
 .activities-container button {
   justify-content: center;
   align-items: center;
+}
+
+.activities-main{
+  width: 76%;
+  display: flex;
+  flex-direction: column;
+}
+
+.activities-aside {
+  min-height: 100vh;
+  min-width: 240px;
 }
 
 .activities-title {
@@ -747,9 +761,12 @@ Estilos de Activities
 
 .activities-flex {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  width: 1000px;
   gap: 30px;
-  justify-content: space-between;
+  align-self: center;
+  justify-content: space-evenly;
 }
 
 .activity-card {

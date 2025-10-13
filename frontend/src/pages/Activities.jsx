@@ -4,6 +4,7 @@ import { DAYS_WEEK } from "../constants/eDays";
 import "./Activities.css";
 import { useAuth } from '../context/useAuth';
 import CustomAlert from "../components/CustomAlert/CustomAlert";
+import { Link } from "react-router-dom";
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -56,53 +57,78 @@ function Activities() {
 
   return (
     <div className="activities-container">
-      <h2 className="activities-title">Actividades y talleres</h2>
-      <p className="activities-subtitle">
-        Descubrí todas nuestras actividades.
-      </p>
-
-      <div className="activities-flex" style={{ marginBottom: 28 }}>
-        {activities.map((activity) => {
-          return (
-            <div key={activity._id} className="activity-card" style={{ cursor: "pointer" }}
-              onClick={() => handleActivityClick(activity)}>
-              <div className="image-wrapper">
-                <img src={`/img/activities/${activity.img}`} alt={activity.title} loading="lazy" />
-              </div>
-              <div className="card-header">
-                <h3 className="card-title">{activity.title}</h3>
-              </div>
-              <p className="card-description">{activity.description}</p>
-              <div className="card-info">
-                <div className="card-box info-box">
-                  <p>Días</p>
-                  <span>{activity.days.map(dayNumber => DAYS_WEEK[dayNumber]).join(", ")}</span>
+      <aside className="activities-aside">
+        <h4>Filtros</h4>
+        <div className="filter-group">
+          <label htmlFor="category">Categoría:</label>
+          <select id="category">
+            <option value="all">Todas</option>
+            <option value="events">Natación</option>
+            <option value="events">Vóley</option>
+            <option value="events">Yóga</option>
+          </select>
+        </div>
+      </aside>
+      <div className="activities-main">
+        <h2 className="activities-title">Actividades y talleres</h2>
+        <p className="activities-subtitle">
+          Descubrí todas nuestras actividades.
+        </p>
+        <div className="activities-flex" style={{ marginBottom: 28 }}>
+          {activities.map((activity) => {
+            return (
+              <div key={activity._id} className="activity-card" style={{ cursor: "pointer" }}
+                onClick={() => handleActivityClick(activity)}>
+                <div className="image-wrapper">
+                  <img src={`/img/activities/${activity.img}`} alt={activity.title} loading="lazy" />
                 </div>
-                <div className="info-box">
-                  <p>Horarios</p>
-                  <span>{(activity.time)}</span>
+                <div className="card-header">
+                  <h3 className="card-title">{activity.title}</h3>
+                </div>
+                <p className="card-description">{activity.description}</p>
+                <div className="card-info">
+                  <div className="card-box info-box">
+                    <p>Días</p>
+                    <span>{activity.days.map(dayNumber => DAYS_WEEK[dayNumber]).join(", ")}</span>
+                  </div>
+                  <div className="info-box">
+                    <p>Horarios</p>
+                    <span>{(activity.time)}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      {isModalOpen && selectedActivity && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <span className="modal-req">Usted se está inscribiendo a:</span>
-            <p>
-              {selectedActivity.description} <br /><br /> Horario: {selectedActivity.time}hs
-            </p>
-            <CustomAlert message={alert.message} type={alert.type} />
-            <div className="modal-buttons">
-              <button className="modal-confirm" onClick={handleConfirm}>Confirmar</button>
-              <button className="modal-return" onClick={handleCloseModal}>Volver</button>
+        {isModalOpen && selectedActivity && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              {!user ? (
+                <>
+                  <span>Por favor, inicie sesión para inscribirse en una actividad.</span>
+                  <div className="modal-buttons">
+                    <Link className="modal-login" to={"/login"}>Confirmar</Link>
+                    <button className="modal-return" onClick={handleCloseModal}>Volver</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="modal-req">Usted se está inscribiendo a:</span>
+                  <p>
+                    {selectedActivity.description} <br /><br /> Horario: {selectedActivity.time}hs
+                  </p>
+                  <CustomAlert message={alert.message} type={alert.type} />
+                  <div className="modal-buttons">
+                    <button className="modal-confirm" onClick={handleConfirm}>Confirmar</button>
+                    <button className="modal-return" onClick={handleCloseModal}>Volver</button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
