@@ -49,6 +49,8 @@ function Activities() {
 
     try {
       await activitiesService.joinActivity(selectedActivity, user);
+      showAlert("Inscripción confirmada", "success");
+      handleCloseModal();
     } catch (error) {
       showAlert(error.message, "error");
     }
