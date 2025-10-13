@@ -49,6 +49,10 @@ function Activities() {
 
     try {
       await activitiesService.joinActivity(selectedActivity, user);
+      showAlert("Inscripción confirmada", "success");
+      setTimeout(() => {
+        handleCloseModal();
+      }, 1500);
     } catch (error) {
       showAlert(error.message, "error");
     }
@@ -92,7 +96,7 @@ function Activities() {
                     <span>{activity.days.map(dayNumber => DAYS_WEEK[dayNumber]).join(", ")}</span>
                   </div>
                   <div className="info-box">
-                    <p>Horarios</p>
+                    <p>Horario</p>
                     <span>{(activity.time)}</span>
                   </div>
                 </div>
