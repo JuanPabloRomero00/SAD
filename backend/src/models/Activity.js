@@ -7,6 +7,12 @@ const ActivitySchema = new mongoose.Schema({
   time: { type: String, required: true },
   location: { type: String },
   participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: false }],
+  pastParticipants: [
+  {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    removedAt: { type: Date, default: Date.now },
+  },
+],
   img: { type: String }, // <-- nuevo campo
 });
 

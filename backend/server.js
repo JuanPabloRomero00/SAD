@@ -325,21 +325,43 @@ app.post("/activities/:id/join", async (req, res) => {
   }
 });
 
-// Desanotar usuario de una actividad (POST /activities/:id/leave)
+// Ruta para desanotar usuario de una actividad
 app.post("/activities/:id/leave", async (req, res) => {
   try {
     const { userId } = req.body;
-    const activity = await Activity.findById(req.params.id);
-    if (!activity)
-      return res.status(404).json({ error: "Actividad no encontrada" });
 
-    activity.participants = activity.participants.filter(
-      (id) => id.toString() !== userId,
+    // Validar que el ID de usuario y actividad sean válidos
+    if (!userId) {
+      return res.status(400).json({ error: "El ID del usuario es requerido" });
+    }
+
+    const activity = await Activity.findById(req.params.id);
+    if (!activity) {
+      return res.status(404).json({ error: "Actividad no encontrada" });
+    }
+
+    // Verificar si el usuario está inscrito en la actividad
+    const isParticipant = activity.participants.some(
+      (id) => id.toString() === userId
     );
+    if (!isParticipant) {
+      return res.status(400).json({ error: "El usuario no está inscrito en esta actividad" });
+    }
+
+    // Remover al usuario de la lista de participantes
+    activity.participants = activity.participants.filter(
+      (id) => id.toString() !== userId
+    );
+
+    // Agregar al historial de bajas
+    activity.pastParticipants.push({ userId, removedAt: new Date() });
+
+    // Guardar los cambios en la base de datos
     await activity.save();
-    res.json({ message: "Usuario desanotado correctamente", activity });
+
+    res.status(200).json({ message: "Usuario desanotado correctamente", activity });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: "Error al desanotar usuario", message: err.message });
   }
 });
 
@@ -364,6 +386,126 @@ app.patch("/users/:id/plan", async (req, res) => {
     res.json({ message: "Plan asignado correctamente", user });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+});
+
+// Ruta para listar actividades a las que un usuario está inscrito
+app.get("/users/:id/activities", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const activities = await Activity.find({ participants: user._id });
+    res.json(activities);
+  } catch (err) {
+    res.status(500).json({ error: "Error al obtener actividades", message: err.message });
+  }
+});
+
+// Ruta para listar actividades según el filtro de actividad
+app.get("/activities/filter", async (req, res) => {
+  try {
+    const { title, day, time } = req.query;
+
+    const filter = {};
+    if (title) filter.title = { $regex: title, $options: "i" }; // Búsqueda por título (case-insensitive)
+    if (day) filter.days = Number(day); 
+    if (time) filter.time = time; 
+    const activities = await Activity.find(filter);
+    res.json(activities);
+  } catch (err) {
+    res.status(500).json({ error: "Error al filtrar actividades", message: err.message });
+  }
+});
+
+// Ruta para obtener el historial de actividades de un usuario (incluyendo bajas)
+app.get("/users/:id/activities/history", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const activities = await Activity.find({
+      $or: [
+        { participants: user._id }, // Actividades actuales
+        { "pastParticipants.userId": user._id }, // Historial de bajas
+      ],
+    });
+
+    const history = activities.map((activity) => {
+      const wasRemoved = activity.pastParticipants?.some(
+        (p) => p.userId.toString() === user._id.toString()
+      );
+
+      return {
+        activityId: activity._id,
+        title: activity.title,
+        description: activity.description,
+        days: activity.days,
+        time: activity.time,
+        wasRemoved,
+      };
+    });
+
+    res.json(history);
+  } catch (err) {
+    res.status(500).json({ error: "Error al obtener historial de actividades", message: err.message });
+  }
+});
+
+// Ruta para obtener detalles de una actividad específica
+app.get("/activities/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const activity = await Activity.findById(id).populate("participants", "name email");
+    if (!activity) {
+      return res.status(404).json({ error: "Actividad no encontrada" });
+    }
+
+    res.json(activity);
+  } catch (err) {
+    res.status(500).json({ error: "Error al obtener detalles de la actividad", message: err.message });
+  }
+});
+
+// Ruta para actualizar una actividad
+app.put("/activities/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    const activity = await Activity.findByIdAndUpdate(id, updates, { new: true, runValidators: true });
+    if (!activity) {
+      return res.status(404).json({ error: "Actividad no encontrada" });
+    }
+
+    res.status(200).json({ message: "Actividad actualizada correctamente", activity });
+  } catch (err) {
+    res.status(500).json({ error: "Error al actualizar la actividad", message: err.message });
+  }
+});
+
+// Ruta para eliminar una actividad
+app.delete("/activities/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const activity = await Activity.findByIdAndDelete(id);
+    if (!activity) {
+      return res.status(404).json({ error: "Actividad no encontrada" });
+    }
+
+    res.status(200).json({ message: "Actividad eliminada correctamente" });
+  } catch (err) {
+    res.status(500).json({ error: "Error al eliminar la actividad", message: err.message });
   }
 });
 
