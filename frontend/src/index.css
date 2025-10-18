@@ -943,3 +943,30 @@ Estilos de Activities
 .detail-right {
   flex: 1;
 }
+
+/* user activites */
+.user-activities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-activities h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin: 22px;
+}
+
+.user-activities .activity-card{
+  border: 1px solid #e0e0e0;
+  margin: 18px;
+  text-align: left;
+  padding: 12px;
+  border-radius: 8;
+  display: flex;
+  gap: 12;
+}
+
+.activity-card h4 {
+  font-size: 1.2rem;
+}

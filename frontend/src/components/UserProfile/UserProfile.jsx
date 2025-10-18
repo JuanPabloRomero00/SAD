@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useAuth } from "../../context/useAuth";
+import UserActivities from "../UserActivities/UserActivities";
 const UserProfile = () => {
   const { user } = useAuth();
   const [usuario, setUsuario] = useState({
@@ -119,17 +120,7 @@ const UserProfile = () => {
             </Box>
           </div>
           <div className="reservas">
-            <h3>Tus próximas reservas</h3>
-            <p>Vas a ver las clases y turnos que reservaste</p>
-            {reservas.map((reserva, i) => (
-              <div key={i} className="reserva">
-                <div>
-                  <strong>{reserva.nombre}</strong>
-                  <p>{reserva.fecha}</p>
-                </div>
-                <span className={reserva.estado === "Confirmado" ? "estado-confirmado" : "estado-pendiente"}>{reserva.estado}</span>
-              </div>
-            ))}
+            <UserActivities />
           </div>
           <div className="membresia">
             <h3>Estado de tu membresía</h3>
