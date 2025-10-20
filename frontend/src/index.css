@@ -7,8 +7,7 @@ body {
 
   color-scheme: light dark;
   color: #ffffffde;
-  background-color: #000000;
-
+  background-color: #151616;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -145,6 +144,7 @@ button:hover {
 .btn-outline {
   color: white;
   border: 1px solid white;
+  background-color: #000;
 }
 
 .btn-primary:hover,
@@ -526,17 +526,21 @@ button:hover {
   display: flex;
   flex-direction: row;
   padding: 0;
-  margin: 0;
+  margin: 40px 0;
   width: 1080px;
-  border: 1px solid white;
+  gap: 20px;
 }
 
 .side-menu {
-  width: 120px;
+  width: 240px;
   min-width: 120px;
   list-style: none;
-  padding: 0;
+  padding: 0 20px;
+  min-height: 300px;
   margin: 0;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  height: fit-content;
 }
 
 .profile-list-menu {
@@ -549,12 +553,17 @@ button:hover {
 
 .profile-list-menu li {
   cursor: pointer;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.profile-list-menu li.active {
+  background-color: #333;
 }
 
 .profile-container {
   width: 100%;
-  border: 1px solid;
-  padding: 0 40px;
+  
   display: flex;
   flex-direction: column;
 }
@@ -562,20 +571,24 @@ button:hover {
 .profile-card {
   text-align: center;
   margin-bottom: 50px;
-  padding: 20px;
+  padding: 40px;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 #avatar {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
   border-radius: 50%;
-  background-color: #333;
+  background-color: #007bff;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 36px;
 }
 
 .profile-info {
@@ -585,7 +598,27 @@ button:hover {
 .profile-info div {
   display: flex;
   justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #333;
+}
+
+.password-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 10px;
+  padding: 0 80px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
 }
 
 /* Estilos de Profile Admin */
@@ -632,16 +665,16 @@ button:hover {
 
 .profile-user-list li {
   padding: 8px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #333;
   transition: background 0.2s;
 }
 
 .profile-user-list li:hover {
-  background-color: grey;
+  background-color: #333;
 }
 
 .profile-user-list li.selected {
-  background-color: grey;
+  background-color: #444;
   font-weight: bold;
 }
 
@@ -674,8 +707,16 @@ button:hover {
   border: none;
   background: none;
   text-decoration: underline;
-  color: 757575;
+  color: #e4e4e4;
   font-weight: 200;
+}
+
+.btn-cancel {
+  background-color: #883636;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
 }
 
 .btn-pass {
@@ -711,7 +752,11 @@ button:hover {
 
 .membresia {
   text-align: center;
-  margin: 50px 0;
+  max-height: 300px;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: #1e1e1e;
+  border-radius: 12px;
 }
 
 .membresia .btn-delete {
@@ -958,15 +1003,36 @@ Estilos de Activities
 }
 
 .user-activities .activity-card{
-  border: 1px solid #e0e0e0;
-  margin: 18px;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  margin: 0;
   text-align: left;
   padding: 12px;
-  border-radius: 8;
+  border-radius: 8px;
   display: flex;
-  gap: 12;
+  gap: 12px;
 }
 
 .activity-card h4 {
   font-size: 1.2rem;
+}
+
+.buttonCancel{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancelActivity{
+  height: 25px;
+  font-size: 14px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cont-act-card{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }

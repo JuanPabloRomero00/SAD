@@ -85,7 +85,6 @@ function UserActivities() {
 
   return (
     <div className="user-activities">
-      <h3>Mis actividades</h3>
       {activities.length === 0 ? (
         <p>No tenés actividades asignadas.</p>
       ) : (
@@ -108,6 +107,9 @@ function UserActivities() {
                   </div>
                   {act.location && <div>Sede: {act.location}</div>}
                 </div>
+              </div>
+              <div className="buttonCancel">
+                <button className="cancelActivity">Darse de baja</button>
               </div>
             </div>
           ))}
