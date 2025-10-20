@@ -610,17 +610,6 @@ button:hover {
   padding: 0 80px;
 }
 
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
-}
-
 /* Estilos de Profile Admin */
 .profile-admin-card h2 {
   text-align: center;
@@ -697,10 +686,6 @@ button:hover {
   margin-bottom: 10px;
   align-items: center;
   justify-content: center;
-}
-
-.btn-primary {
-  background: 00FF09;
 }
 
 .btn-link {
