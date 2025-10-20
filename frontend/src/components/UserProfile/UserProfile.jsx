@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useAuth } from "../../context/useAuth";
 import UserActivities from "../UserActivities/UserActivities";
+import { plans as availablePlans } from "../../constants/plans";
 const UserProfile = () => {
   const { user } = useAuth();
   const [usuario, setUsuario] = useState({
@@ -16,6 +17,10 @@ const UserProfile = () => {
   const [changePasswordMode, setChangePasswordMode] = useState(false);
   const [passwords, setPasswords] = useState({ current: "", newPassword: "", confirm: "" });
   const [showPayments, setShowPayments] = useState(false);
+  const [showChangePlanForm, setShowChangePlanForm] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(usuario.plan || "Standard");
+
+  const plans = availablePlans.map(p => ({ id: p.id, title: p.name, price: `$${p.price}`, benefits: p.description }));
 
   const pagos = [
     { fechaPago: "01/08/2025", vencimiento: "31/08/2025", monto: "$5000", plan: "Standard" },
@@ -131,7 +136,53 @@ const UserProfile = () => {
             <div className="membresia">
               <h3>Estado de tu membresía</h3>
               <p>Tu próxima renovación vence el 28 de septiembre de 2025</p>
-              <button className="btn-edit" onClick={() => setShowPayments(!showPayments)}>Ver historial de pagos</button>
+              <button className="btn-edit" onClick={() => {setShowPayments(!showPayments); setShowChangePlanForm(false)}}>Ver historial de pagos</button>
+              <button className="btn-info btn-primary" onClick={() => {setShowChangePlanForm(true); setShowPayments(false)}}>Cambiar tu tipo de plan</button>
+              {showChangePlanForm && (
+                <div className="change-plan-form">
+                  <div style={{ display: "flex", gap: 12, justifyContent: "center"}}>
+                    {plans.map((p) => {
+                      const isCurrent = usuario.plan === p.id;
+                      const isSelected = selectedPlan === p.id;
+                      return (
+                        <div
+                          key={p.id}
+                          onClick={() => setSelectedPlan(p.id)}
+                          style={{
+                            cursor: "pointer",
+                            border: isSelected ? "2px solid #4caf50" : isCurrent ? "2px solid #2959e8ff" : "1px solid #ddd",
+                            padding: 12,
+                            borderRadius: 8,
+                            width: 180,
+                            boxShadow: isSelected ? "0 2px 8px rgba(25,118,210,0.15)" : "none",
+                          }}
+                        >
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <strong>{p.title}</strong>
+                            {isCurrent && <span style={{ fontSize: 12, color: "#4caf50" }}>Actual</span>}
+                          </div>
+                          <div style={{ marginTop: 8 }}>
+                            <div style={{ fontSize: 18, fontWeight: 600 }}>{p.price}</div>
+                            <ul style={{ paddingLeft: 16, marginTop: 8 }}>
+                              {p.benefits.map((b, i) => (
+                                <li key={i} style={{ fontSize: 12 }}>{b}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div style={{ marginTop: 12 }}>
+                    <button className="btn-info btn-primary" onClick={() => {
+                      setUsuario({ ...usuario, plan: selectedPlan });
+                      setShowChangePlanForm(false);
+                      console.log("Plan cambiado a:", selectedPlan);
+                    }}>Guardar</button>
+                    <button className="btn-info btn-cancel" onClick={() => setShowChangePlanForm(false)}>Cancelar</button>
+                  </div>
+                </div>
+              )}
               {showPayments && (
                 <div className="historial-pagos" style={{ marginTop: "10px" }}>
                   {pagos.map((pago, index) => (
