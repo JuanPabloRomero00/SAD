@@ -12,18 +12,24 @@
 }
 
 .modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #1a1a1a;
   padding: 30px;
   border-radius: 8px;
   max-width: 500px;
+  min-height: 140px;
   width: 100%;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .modal-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .modal-req {
@@ -35,12 +41,14 @@
 .modal-buttons button {
   margin: 0 10px;
   padding: 10px 20px;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
 }
 
 .modal-confirm {
+  display: flex;
+  justify-content: center;
   background-color: #00ff08;
   color: black;
   font-weight: 600;
@@ -51,15 +59,11 @@
   border: 1px solid #005203;
 }
 
-.modal-confirm:active {
-  transform: scale(0.95);
-}
-
 .modal-return {
   background-color: #000000;
   font-weight: 600;
   color: white;
-
+  border: 1px solid transparent;
 }
 
 .modal-return:hover {

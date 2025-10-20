@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/useAuth";
+import activitiesService from "../../services/activitiesService";
+import CustomAlert from "../CustomAlert/CustomAlert";
+import Modal from "../Modal/Modal";
 
 const dayNames = {
   1: "Lunes",
@@ -14,11 +17,21 @@ const dayNames = {
 const API_BASE = "http://localhost:3000";
 
 function UserActivities() {
-  const { user, token } = useAuth(); // token opcional si usás auth
+  const { user, token } = useAuth();
   const userId = user?._id || user?.id || user?.dni;
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Estado para el modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activityToLeave, setActivityToLeave] = useState(null);
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+
+  const showAlert = (message, type) => {
+    setAlert({ show: true, message, type });
+    setTimeout(() => setAlert({ show: false, message: "", type: "" }), 3000);
+  };
 
   useEffect(() => {
     if (!userId) return;
@@ -41,35 +54,13 @@ function UserActivities() {
           },
           signal,
         });
-
-        const ct = res.headers.get("content-type") || "";
-
-        if (!res.ok) {
-          // leer texto para ver posible HTML de error
-          const text = await res.text();
-          console.error("[UserActivities] response not OK:", res.status, ct, text.slice(0, 1000));
-          throw new Error(`Server responded ${res.status}`);
-        }
-
-        if (!ct.includes("application/json")) {
-          const text = await res.text();
-          console.error("[UserActivities] Expected JSON but got:", ct, text.slice(0, 1000));
-          throw new Error("Respuesta del servidor no es JSON (posible ruta equivocada)");
-        }
-
         const data = await res.json();
-        if (!Array.isArray(data)) {
-          console.warn("[UserActivities] El backend devolvió algo diferente a un array:", data);
-        }
-
         setActivities(Array.isArray(data) ? data : []);
       } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("[UserActivities] fetch aborted");
-          return;
+        if (err.name !== "AbortError") {
+          console.error("[UserActivities] fetch error:", err);
+          setError(err.message || "Error al cargar actividades");
         }
-        console.error("[UserActivities] fetch error:", err);
-        setError(err.message || "Error al cargar actividades");
       } finally {
         setLoading(false);
       }
@@ -79,9 +70,41 @@ function UserActivities() {
     return () => controller.abort();
   }, [userId, token]);
 
+  const handleLeaveActivity = async () => {
+    if (!activityToLeave) return;
+
+    try {
+      await activitiesService.leaveActivity(activityToLeave, userId);
+      showAlert("Te has dado de baja correctamente", "success");
+
+      setActivities(prevActivities =>
+        prevActivities.filter(activity => activity._id !== activityToLeave._id)
+      );
+
+      setTimeout(() => {
+        closeModal();
+      }, 1500);
+
+    } catch (err) {
+      console.error("Error al dar de baja la ctividad:", err);
+      showAlert(err.message || "No se pudo dar de baja la actividad.", "error");
+    }
+  };
+
+  const openConfirmationModal = (activity) => {
+    setActivityToLeave(activity);
+    setIsModalOpen(true);
+    setAlert({ show: false, message: "", type: "" });
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setActivityToLeave(null);
+  };
+
   if (!userId) return <div>No se encontró información del usuario.</div>;
   if (loading) return <div>Cargando actividades...</div>;
-  if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
+  if (error && !isModalOpen) return <div style={{ color: "red" }}>Error: {error}</div>;
 
   return (
     <div className="user-activities">
@@ -90,10 +113,7 @@ function UserActivities() {
       ) : (
         <div className="cont-act-card">
           {activities.map((act) => (
-            <div
-              key={act._id}
-              className="activity-card"
-            >
+            <div key={act._id} className="activity-card">
               <div>
                 <h4>{act.title}</h4>
                 {act.description && <p style={{ margin: "0 0 6px 0" }}>{act.description}</p>}
@@ -109,12 +129,21 @@ function UserActivities() {
                 </div>
               </div>
               <div className="buttonCancel">
-                <button className="cancelActivity">Darse de baja</button>
+                <button className="cancelActivity" onClick={() => openConfirmationModal(act)}>Darse de baja</button>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <p>¿Está seguro que desea darse de baja de <strong>{activityToLeave?.title}</strong>?</p>
+        <CustomAlert show={alert.show} message={alert.message} type={alert.type} />
+        <div className="modal-buttons">
+          <button className="modal-confirm" onClick={handleLeaveActivity}>Confirmar</button>
+          <button className="modal-return" onClick={closeModal}>Cancelar</button>
+        </div>
+      </Modal>
     </div>
   );
 }
