@@ -827,7 +827,6 @@ Estilos de Activities
     box-shadow 0.2s;
   flex: 1 1 calc(50% - 30px);
   max-width: calc(50% - 30px);
-  cursor: pointer;
 }
 
 .activity-card:hover {

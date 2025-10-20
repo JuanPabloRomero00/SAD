@@ -1,7 +1,7 @@
 const SERVER_URL = "http://localhost:3000";
 
 const activitiesService = {
-    getActivities: async () => {
+  getActivities: async () => {
     const response = await fetch(`${SERVER_URL}/activities`, {
       method: "GET",
     });
@@ -20,12 +20,32 @@ const activitiesService = {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: user.id }),      
+      body: JSON.stringify({ userId: user.id }),
     });
-    
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.error || "Error al recuperar Actividades.");
+    }
+
+    return response.json();
+  },
+
+  leaveActivity: async (activity, userId) => {
+    console.log(userId);
+
+
+    const response = await fetch(`${SERVER_URL}/activities/${activity._id}/leave`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: userId }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Error al darse de baja de la Actividad.");
     }
 
     return response.json();

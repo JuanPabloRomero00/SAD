@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import activitiesService from "../services/activitiesService";
 import { DAYS_WEEK } from "../constants/eDays";
-import "./Activities.css";
 import { useAuth } from '../context/useAuth';
 import CustomAlert from "../components/CustomAlert/CustomAlert";
 import { Link } from "react-router-dom";
+import Modal from "../components/Modal/Modal";
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -12,7 +12,6 @@ function Activities() {
   const [selectedActivity, setSelectedActivity] = useState(null);
   const { user } = useAuth();
   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
-
 
   const showAlert = (message, type) => {
     setAlert({ show: true, message, type });
@@ -105,9 +104,9 @@ function Activities() {
           })}
         </div>
 
-        {isModalOpen && selectedActivity && (
-          <div className="modal-overlay">
-            <div className="modal-content">
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+          {selectedActivity && (
+            <>
               {!user ? (
                 <>
                   <span>Por favor, inicie sesión para inscribirse en una actividad.</span>
@@ -129,9 +128,9 @@ function Activities() {
                   </div>
                 </>
               )}
-            </div>
-          </div>
-        )}
+            </>
+          )}
+        </Modal>
       </div>
     </div>
   );

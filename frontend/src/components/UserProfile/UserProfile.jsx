@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useAuth } from "../../context/useAuth";
 import UserActivities from "../UserActivities/UserActivities";
