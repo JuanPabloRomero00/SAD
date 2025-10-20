@@ -115,6 +115,7 @@
   width: 115px;
   border: 1px solid red;
   color: red;
+  background-color: #151616;
 }
 
 .logoutButton:hover {
