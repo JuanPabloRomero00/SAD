@@ -94,8 +94,8 @@ button:hover {
 
 /* Home */
 .home-section {
-  height: 100%;
   display: flex;
+  height: 100%;
   align-items: center;
 }
 
@@ -165,14 +165,15 @@ button:hover {
   flex-direction: column;
   text-align: center;
   flex-grow: 1;
-  overflow-y: auto;
+  overflow-y: scroll;
   box-sizing: border-box;
 }
 
 .footerContainer {
   display: flex;
   justify-content: center;
-  min-height: 100px;
+  min-height: 80px;
+  width: 100%;
   background-color: #181818;
   border-radius: 0px 0px 14px 14px;
   box-sizing: border-box;
@@ -528,19 +529,15 @@ button:hover {
 /* Estilos de Profile */
 .profile-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0;
-  margin: 40px 0;
+  padding: 40px;
   width: 1080px;
   gap: 20px;
 }
 
 .side-menu {
-  width: 240px;
-  min-width: 120px;
   list-style: none;
-  padding: 0 20px;
-  min-height: 300px;
   margin: 0;
   background-color: #1e1e1e;
   border-radius: 12px;
@@ -550,15 +547,16 @@ button:hover {
 .profile-list-menu {
   list-style: none;
   display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding: 60px 0;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 20px 0;
 }
 
 .profile-list-menu li {
   cursor: pointer;
-  padding: 5px;
+  padding: 6px;
   border-radius: 8px;
+  width: 280px;
 }
 
 .profile-list-menu li.active {
@@ -567,7 +565,6 @@ button:hover {
 
 .profile-container {
   width: 100%;
-
   display: flex;
   flex-direction: column;
 }
@@ -771,7 +768,7 @@ Estilos de Activities
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 20px;
+  padding: 40px 20px;
   box-sizing: border-box;
 }
 
@@ -782,8 +779,12 @@ Estilos de Activities
   background-color: #181818;
 }
 
+.activities-top {
+  border-bottom: 1px solid #eee;
+}
+
 .activities-title {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 700;
   margin-bottom: 8px;
 }
@@ -794,28 +795,50 @@ Estilos de Activities
   margin-bottom: 30px;
 }
 
+.activities-content {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  position: relative;
+  margin: 20px;
+}
+
+.activities-filter {
+  display: flex;
+  position: absolute;
+  font-weight: 600;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 180px;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.activities-filter span{
+  border-bottom: 1px solid white;
+  height: 30px;
+}
+
 .activities-flex {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 1000px;
-  gap: 30px;
-  align-self: center;
-  justify-content: space-evenly;
+  width: 1400px;  
+  justify-content: center;
+  gap: 40px;
 }
 
 .activity-card {
   background: #1a1a1a;
   border-radius: 16px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   min-width: 400px;
+  max-width: 400px;
   transition:
     transform 0.2s,
     box-shadow 0.2s;
-  flex: 1 1 calc(50% - 30px);
-  max-width: calc(50% - 30px);
 }
 
 .activity-card:hover {
@@ -824,8 +847,10 @@ Estilos de Activities
 }
 
 .image-wrapper {
-  width: 100%;
   height: 200px;
+  max-width: 400px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
   overflow: hidden;
   border-bottom: 1px solid #222;
 }
@@ -1023,4 +1048,37 @@ Estilos de Activities
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.icon-filter {
+  width: 30px;
+}
+
+.filter-container{
+  position: relative;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  margin: 0 5px;
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  min-width: 110px;
+}
+
+.filter-option {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #ffffffde;
+  transition: background-color 0.2s;
+}
+
+.filter-option:hover {
+  background-color: #333;
 }

@@ -136,11 +136,11 @@ const UserProfile = () => {
             <div className="membresia">
               <h3>Estado de tu membresía</h3>
               <p>Tu próxima renovación vence el 28 de septiembre de 2025</p>
-              <button className="btn-edit" onClick={() => {setShowPayments(!showPayments); setShowChangePlanForm(false)}}>Ver historial de pagos</button>
-              <button className="btn-info btn-primary" onClick={() => {setShowChangePlanForm(true); setShowPayments(false)}}>Cambiar tu tipo de plan</button>
+              <button className="btn-edit" onClick={() => { setShowPayments(!showPayments); setShowChangePlanForm(false) }}>Ver historial de pagos</button>
+              <button className="btn-info btn-primary" onClick={() => { setShowChangePlanForm(true); setShowPayments(false) }}>Cambiar tu tipo de plan</button>
               {showChangePlanForm && (
                 <div className="change-plan-form">
-                  <div style={{ display: "flex", gap: 12, justifyContent: "center"}}>
+                  <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
                     {plans.map((p) => {
                       const isCurrent = usuario.plan === p.id;
                       const isSelected = selectedPlan === p.id;

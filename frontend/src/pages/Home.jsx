@@ -1,8 +1,11 @@
 import React from "react";
-import Header from "../components/Header/Header";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
+import Footer from "../components/Footer/Footer";
 
 function Home() {
+  const { user } = useAuth();
+
   return (
     <>
       <div className="home-section">
@@ -17,12 +20,17 @@ function Home() {
             <Link to={"/activities"} className="btn-primary">
               Ver actividades
             </Link>
-            <Link to={"/signup"} className="btn-outline">
+            {!user ? (<Link to={"/signup"} className="btn-outline">
               Asociate ahora
-            </Link>
+            </Link>) : (<Link to={"/profile"} className="btn-outline">
+              Ver perfil
+            </Link>)}
           </div>
         </div>
       </div>
+      <footer className="footerContainer">
+        <Footer></Footer>
+      </footer>
     </>
   );
 }
