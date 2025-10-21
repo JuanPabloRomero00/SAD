@@ -13,24 +13,26 @@ import ResetPassword from "./pages/ResetPassword";
 function App() {
   return (
     <>
-      <div className="appContainer">
-        <header>
-          <Header></Header>
-        </header>
-        <main className="mainContainer">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<Signup />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/activities" element={<Activities />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-            <Route path="/reset-password" element={<ResetPassword />}></Route>
-          </Routes>
-        </main>
-        <footer>
-          <Footer></Footer>
-        </footer>
+      <div className="generalContainer">
+        <div className="appContainer">
+          <header>
+            <Header></Header>
+          </header>
+          <main className="mainContainer">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/signup" element={<Signup />}></Route>
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="/activities" element={<Activities />}></Route>
+              <Route path="/profile" element={<Profile />}></Route>
+              <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+              <Route path="/reset-password" element={<ResetPassword />}></Route>
+            </Routes>
+          </main>
+          <footer className="footerContainer">
+            <Footer></Footer>
+          </footer>
+        </div>
       </div>
     </>
   );

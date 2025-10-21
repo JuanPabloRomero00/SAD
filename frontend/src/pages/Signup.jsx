@@ -274,19 +274,21 @@ function Signup() {
             4. Revisión
           </button>
         </div>
-        <div className="formData">
-          {step === 1 && (
-            <Step1 data={formData} handleChange={handleChange} handleAddress={handleAddress} />
-          )}
-          {step === 2 && (
-            <Step2 data={formData} handleChange={handleChange} passConfirm={passConfirm} setPassConfirm={setPassConfirm} passwordError={passwordError} />
-          )}
-          {step === 3 && (
-            <Step3 data={formData} selectedPlan={formData.plan} onPlanSelect={(planId) => handleChange("plan", planId)} />
-          )}
-          {step === 4 && (
-            <Step4 data={formData} plans={plans} />
-          )}
+        <div className="formContent">
+          <div className="formData">
+            {step === 1 && (
+              <Step1 data={formData} handleChange={handleChange} handleAddress={handleAddress} />
+            )}
+            {step === 2 && (
+              <Step2 data={formData} handleChange={handleChange} passConfirm={passConfirm} setPassConfirm={setPassConfirm} passwordError={passwordError} />
+            )}
+            {step === 3 && (
+              <Step3 data={formData} selectedPlan={formData.plan} onPlanSelect={(planId) => handleChange("plan", planId)} />
+            )}
+            {step === 4 && (
+              <Step4 data={formData} plans={plans} />
+            )}
+          </div>
           <div className="formButton">
             {step > 1 && (
               <button className="backButton" onClick={prevStep}>
