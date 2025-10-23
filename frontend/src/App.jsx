@@ -19,7 +19,7 @@ function App() {
           <header>
             <Header></Header>
           </header>
-          <main className="">
+          <main className="mainContainer">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/signup" element={<Signup />}></Route>
@@ -31,6 +31,9 @@ function App() {
               <Route path="/reset-password" element={<ResetPassword />}></Route>
             </Routes>
           </main>
+          <footer>
+            <Footer />
+          </footer>
         </div>
       </div>
     </>

@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../components/Footer/Footer';
 
 function History() {
   return (
@@ -77,7 +76,6 @@ El elenco dirigido por Salvador Pasini tenía un solo objetivo para la temporada
 Finalmente, Chacarita mantuvo la base, y se dedicó, la temporada siguiente, de lleno al ascenso. Tuvo bajas importantes, pero la llegada de Rodrigo Salinas (30 goles en 42 partidos) fue determinante, sumado a un iluminado Nicolas Oroz que llevaba la 10. Este Chacarita, tras un largo campeonato de 44 fechas, pudo festejar con el ascenso a Primera División, luego de 7 años. El funebrero culminó el torneo colocándose en segundo lugar, detrás de Argentinos Juniors, con quien paradójicamente, igualó su último partido, que le decretó el ascenso (al Funebrero). No obstante, al igual que en la temporada 2009-2010 solo pudo mantenerse un año en Primera División tras una muy mala campaña en donde solo se destacaron los triunfos ante Gimnasia y Esgrima de La Plata, Lanús, Vélez y Estudiantes de La Plata, este último el único en condición de visitante en toda la temporada.</p>
       </div>
     </div>
-    <Footer />
     </>
   )
 }
