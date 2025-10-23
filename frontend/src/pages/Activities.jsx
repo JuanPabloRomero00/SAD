@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Modal from "../components/Modal/Modal";
 import * as icon from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
+import Footer from "../components/Footer/Footer";
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -71,7 +72,8 @@ function Activities() {
   const activityNames = [...new Set(activities.map(activity => activity.title))];
 
   return (
-    <div className="activities-container">
+    <>
+      <div className="activities-container">
       <div className="activities-main">
         <div className="activities-top">
           <h2 className="activities-title">Actividades y talleres</h2>
@@ -150,6 +152,9 @@ function Activities() {
         </Modal>
       </div>
     </div>
+
+    <Footer />
+    </>
   );
 }
 

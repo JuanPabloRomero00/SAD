@@ -9,6 +9,7 @@ import Activities from "./pages/Activities";
 import Profile from "./pages/Profile";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import History from "./pages/History";
 
 function App() {
   return (
@@ -18,12 +19,13 @@ function App() {
           <header>
             <Header></Header>
           </header>
-          <main className="mainContainer">
+          <main className="">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/signup" element={<Signup />}></Route>
               <Route path="/login" element={<Login />}></Route>
               <Route path="/activities" element={<Activities />}></Route>
+              <Route path="/history" element={<History />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
               <Route path="/forgot-password" element={<ForgotPassword />}></Route>
               <Route path="/reset-password" element={<ResetPassword />}></Route>

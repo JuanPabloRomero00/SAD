@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <>
-      <div className="home-section">
+      <div className="home-section mainContainer">
         <div className="home-content">
           <h2>Deporte, comunidad y bienestar</h2>
           <h2 className="home-title-green">en un mismo club.</h2>
@@ -28,9 +28,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <footer className="footerContainer">
-        <Footer></Footer>
-      </footer>
+      <Footer />
     </>
   );
 }
