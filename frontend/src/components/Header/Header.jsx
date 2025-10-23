@@ -28,7 +28,9 @@ function Header() {
           <li>
             <Link to={"/activities"}> Actividades</Link>
           </li>
-          <li>Historia</li>
+          <li>
+            <Link to={"/history"}>Historia</Link>
+          </li>
           <li>Contácto</li>
         </ul>
 

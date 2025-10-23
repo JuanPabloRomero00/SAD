@@ -7,6 +7,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --bg:#000;
+  --text:#fff;
+  --muted:rgba(255,255,255,0.75);
+  --accent:#00ff33;
 }
 
 * {
@@ -92,12 +97,26 @@ button:hover {
   }
 } */
 
+/* ======================= */
+/* se reemplazo el class .home-section por el siguiente: */
+.mainContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  flex-grow: 1;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  height: 70vh;
+}
+
 /* Home */
-.home-section {
+/* .home-section {
   display: flex;
   height: 100%;
   align-items: center;
-}
+} */
 
 .home-section h2 {
   font-size: 60px;
@@ -176,27 +195,6 @@ button:hover {
 .btn-primary:active,
 .btn-outline:active {
   transform: scale(0.95);
-}
-
-/* ======================= */
-.mainContainer {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  flex-grow: 1;
-  overflow-y: scroll;
-  box-sizing: border-box;
-}
-
-.footerContainer {
-  display: flex;
-  justify-content: center;
-  min-height: 80px;
-  width: 100%;
-  background-color: #181818;
-  border-radius: 0px 0px 14px 14px;
-  box-sizing: border-box;
 }
 
 /*Estilo SignUp.jsx*/
@@ -1167,4 +1165,102 @@ Estilos de Activities
 
 .filter-option:hover {
   background-color: #333;
+}
+
+/* conenedor historia */
+.contenedor-historia {
+  margin: 0 auto;
+  padding: 10px;
+  width: 80%;
+}
+
+.contenedor-historia h2 {
+  font-size: 3.5rem;
+  text-align: left;
+}
+
+.contenedor-historia hr {
+  margin: 1rem 0;
+  opacity: 0.25;
+}
+
+.contenedor-historia div {
+  margin-top: 20px;
+}
+
+.contenedor-historia .p-titulo {
+  text-align: left;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.contenedor-historia .p-texto {
+  text-align: justify;
+  letter-spacing: 2px;
+}
+
+/* footer */
+.footer {
+  background: var(--bg);
+  color: var(--text);
+  padding: 48px 64px;
+  font-family: Inter, system-ui,'Open Sans', Arial;
+  margin-top: 50px;
+}
+
+.contenedor-footer {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-text {
+  margin-top: 20px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 500px;
+  text-align: justify;
+}
+
+.footer-heading {
+  margin: 0 0 18px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.footer-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.footer-list li {
+  cursor: default;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.contact-info {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.footer-bottom {
+  margin-top: 48px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding-top: 28px;
+  color: var(--muted);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
 }
