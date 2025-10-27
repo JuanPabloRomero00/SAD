@@ -31,7 +31,9 @@ function Header() {
           <li>
             <Link to={"/history"}>Historia</Link>
           </li>
-          <li>Contácto</li>
+          <li>
+            <Link to={"/contact"}>Contacto</Link>
+          </li>
         </ul>
 
         <div className="authButtons">

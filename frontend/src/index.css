@@ -1195,3 +1195,65 @@ Estilos de Activities
   text-align: justify;
   letter-spacing: 2px;
 }
+
+/* contact */
+.contact-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-description { 
+  font-size: 1rem; 
+  line-height: 1.6; 
+  max-width: 600px; 
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 720px;
+  width: 100%;
+}
+
+.contact-title {
+  margin: 0;
+  letter-spacing: 0.5px;
+  font-size: 3.5rem;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.contact-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.contact-item a, .contact-item .direccion {
+  text-align: right;
+  font-size: 1.4rem;
+  font-weight: 100;
+}
+
+.label {
+  min-width: 110px;
+  font-weight: 400;
+  font-size: 1.6rem;
+  text-align: left;
+}
+
+.value {
+  flex: 1;
+}
+
+.link {
+  text-decoration: underline;
+}
