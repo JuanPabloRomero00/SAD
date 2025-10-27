@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CustomAlert from "../components/CustomAlert/CustomAlert";
-import authService from "../services/authService";
+import userService from "../services/userService";
 import { plans } from "../constants/plans";
 const securityQuestions = [
   "¿Cuál es el nombre de tu primera mascota?",
@@ -214,7 +214,7 @@ function Signup() {
     } else if (step === 4) {
       setIsLoading(true);
       try {
-        const responseData = await authService.registerUser(formData);
+        const responseData = await userService.registerUser(formData);
         showAlert("¡Te registraste exitosamente!", "success");
         console.log("Respuesta del backend:", responseData);
         setTimeout(() => {
