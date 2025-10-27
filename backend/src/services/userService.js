@@ -1,0 +1,86 @@
+const User = require("../models/User");
+const Credential = require("../models/Credential");
+
+async function createUser(userData) {
+    // Validaciones básicas
+    if (!userData.email) {
+        const err = new Error("Email requerido");
+        err.status = 400;
+        throw err;
+    }
+    if (!userData.dni) {
+        const err = new Error("DNI requerido");
+        err.status = 400;
+        throw err;
+    }
+
+    // Verificar si el email ya existe
+    const existingUser = await User.findOne({ email: userData.email });
+    if (existingUser) {
+      const err = new Error("Email ya registrado");
+      err.status = 400;
+      throw err;
+    }
+
+    // Crear y guardar usuario
+    const user = new User(userData);
+    await user.save();
+
+    // Crear la credencial digital
+    const memberId = `${user._id}-${user.dni}`;
+    const credential = new Credential({
+      name: user.name,
+      surname: user.surname,
+      dni: user.dni,
+      birthdate: user.birthdate,
+      memberId: memberId,
+      role: user.role || "user",
+    });
+    await credential.save();
+
+    // Retornar el usuario (sin campos sensibles si los hay)
+    const userObj = user.toObject();
+    delete userObj.password; // si existe
+    return { user: userObj, credentialId: credential._id };
+}
+
+function getAllUsers() {
+    return User.find({});
+}
+
+function getUserById(id) {
+    return User.findById(id);
+}
+
+async function updateUserById(id, updateData, options = {}) {
+    const user = await User.findByIdAndUpdate(id, updateData, options);
+    return user;
+}
+
+async function updateRoleByUserId(id, role) {
+    //Validaciones básicas
+    if (!role) {
+      const err = new Error("El campo 'role' es requerido");
+      err.status = 400;
+      throw err;
+    }
+    const user = await User.findByIdAndUpdate(
+      id,
+      { role },
+      { new: true, runValidators: true }
+    );
+    return user;
+}
+
+async function deleteUserById(id) {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { active: false },
+      { new: true },
+    );
+    return user;
+}
+
+module.exports = {
+    createUser, getAllUsers, getUserById, updateUserById, updateRoleByUserId, deleteUserById
+};

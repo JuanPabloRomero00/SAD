@@ -8,7 +8,8 @@ const port = 3000;
 const Credential = require("./src/models/Credential");
 const Activity = require("./src/models/Activity"); // Agrega esta línea
 const Plan = require("./src/models/Plan"); // Agrega esta línea
-const authRoutes = require("./src/routes/usersRoutes");
+const authRoutes = require("./src/routes/userRoutes");
+const userRoutes = require("./src/routes/userRoutes");
 
 app.use(cors());
 app.use(express.json());
@@ -23,69 +24,11 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// Ruta para crear usuario y su credencial digital
-app.post("/users/create", async (req, res) => {
-  try {
-    // Verificar si el email ya existe
-    const existingUser = await User.findOne({ email: req.body.email });
-    if (existingUser) {
-      return res.status(400).json({
-        error: "Email ya registrado",
-        message: "Ya existe un usuario con este email",
-      });
-    }
-
-    const user = new User(req.body);
-    await user.save();
-
-    // Crear la credencial digital
-    const memberId = `${user._id}-${user.dni}`;
-    const credential = new Credential({
-      name: user.name,
-      surname: user.surname,
-      dni: user.dni,
-      birthdate: user.birthdate,
-      memberId: memberId,
-      role: user.role,
-    });
-    await credential.save();
-
-    res.status(201).json({ user, credential });
-  } catch (err) {
-    res.status(400).json({
-      error: "El usuario no se pudo crear correctamente",
-      message: err.message,
-    });
-  }
-});
-
-// Ruta para obtener pregunta de seguridad por email
-app.post("/users/get-security-question", async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({
-        error: "Usuario no encontrado",
-        message: "No existe un usuario con este email",
-      });
-    }
-
-    res.status(200).json({
-      securityQuestion: user.securityQuestion,
-      userId: user._id,
-    });
-  } catch (err) {
-    res.status(500).json({
-      error: "Error al buscar usuario",
-      message: err.message,
-    });
-  }
-});
+app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 
 // Ruta para verificar email y pregunta de seguridad
-app.post("/users/verify-security", async (req, res) => {
+app.post("/auth/verify-security", async (req, res) => {
   try {
     const { email, securityAnswer } = req.body;
 
@@ -121,7 +64,7 @@ app.post("/users/verify-security", async (req, res) => {
 });
 
 // Ruta para cambiar contraseña
-app.post("/users/reset-password", async (req, res) => {
+app.post("/auth/reset-password", async (req, res) => {
   try {
     const { userId, newPassword } = req.body;
 
@@ -149,75 +92,6 @@ app.post("/users/reset-password", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`SAD app listening on port ${port}`);
-});
-
-// Obtener todos los usuarios (GET /users)
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find({ active: true });
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Obtener usuario por ID (GET /users/:id)
-app.get("/users/:id", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
-    res.json(user);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Actualizar usuario por ID (PATCH /users/:id)
-app.patch("/users/:id", async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
-    res.json(user);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Modificar el rol de un usuario por ID (PATCH /users/:id/role)
-app.patch("/users/:id/role", async (req, res) => {
-  try {
-    const { role } = req.body;
-    if (!role) {
-      return res.status(400).json({ error: "El campo 'role' es requerido" });
-    }
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { role },
-      { new: true, runValidators: true },
-    );
-    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
-    res.json({ message: "Rol actualizado correctamente", user });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Dar de baja lógica a un usuario por ID (PATCH /users/:id/deactivate)
-app.patch("/users/:id/deactivate", async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { active: false },
-      { new: true },
-    );
-    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
-    res.json({ message: "Usuario dado de baja.", user });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
 });
 
 // Obtener solo los usuarios dados de baja (inactivos) (GET /users/inactive)
