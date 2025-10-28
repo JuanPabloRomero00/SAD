@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import authService from '../services/authService';
 import { useAuth } from '../context/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
@@ -36,26 +37,17 @@ function Login() {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ dni: formData.dni, password: formData.password }),
+      const data = await authService.loginUser({
+        dni: formData.dni,
+        password: formData.password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok || data.error) {
-        setTimeout(() => {
-          showAlert('Usuario o contraseña incorrecta', 'error');
-          setLoading(false);
-        }, 1000);
-
+      if (!data || data.error) {
+        showAlert('Usuario o contraseña incorrecta', 'error');
+        setLoading(false);
         return;
       }
 
-      console.log('Login response:', data);
       login(data.user);
       showAlert('¡Bienvenido! Iniciando sesión...', 'success');
       setTimeout(() => {

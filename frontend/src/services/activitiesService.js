@@ -6,12 +6,21 @@ const activitiesService = {
       method: "GET",
     });
 
+    const contentType = response.headers.get("content-type");
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Error al recuperar Actividades.");
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al recuperar Actividades.");
+      } else {
+        throw new Error("Error de conexión con el servidor de actividades.");
+      }
     }
 
-    return response.json();
+    if (contentType && contentType.includes("application/json")) {
+      return response.json();
+    } else {
+      throw new Error("Respuesta inesperada del servidor.");
+    }
   },
 
   joinActivity: async (activity, user) => {
@@ -50,6 +59,28 @@ const activitiesService = {
 
     return response.json();
   },
-}
+
+  getUserActivities: async (userId) => {
+    const response = await fetch(`${SERVER_URL}/activities?userId=${userId}`, {
+      method: "GET",
+    });
+
+    const contentType = response.headers.get("content-type");
+    if (!response.ok) {
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al recuperar Actividades del usuario.");
+      } else {
+        throw new Error("Error de conexión con el servidor de actividades.");
+      }
+    }
+
+    if (contentType && contentType.includes("application/json")) {
+      return response.json();
+    } else {
+      throw new Error("Respuesta inesperada del servidor.");
+    }
+  },
+};
 
 export default activitiesService;

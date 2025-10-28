@@ -81,6 +81,44 @@ async function deleteUserById(id) {
     return user;
 }
 
-module.exports = {
-    createUser, getAllUsers, getUserById, updateUserById, updateRoleByUserId, deleteUserById
+
+const getInactiveUsers = () => {
+  return User.find({ active: false });
+};
+
+
+const assignPlanToUser = async (userId, planId) => {
+  if (!planId) {
+    const error = new Error('El campo planId es requerido');
+    error.status = 400;
+    throw error;
+  }
+
+  const user = await User.findById(userId);
+  if (!user) {
+    const error = new Error('Usuario no encontrado');
+    error.status = 404;
+    throw error;
+  }
+
+  if (user.role !== "user") {
+    const error = new Error('Solo los usuarios con rol user pueden elegir un plan');
+    error.status = 403;
+    throw error;
+  }
+
+  user.plan = planId;
+  await user.save();
+  return user;
+};
+
+module.exports = { 
+  createUser, 
+  getAllUsers, 
+  getUserById, 
+  updateUserById, 
+  updateRoleByUserId, 
+  deleteUserById,
+  getInactiveUsers,
+  assignPlanToUser
 };

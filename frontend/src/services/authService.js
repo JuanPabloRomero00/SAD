@@ -1,6 +1,25 @@
 const SERVER_URL = "http://localhost:3000";
 
 const authService = {
+  loginUser: async (credentials) => {
+    try {
+      const response = await fetch(`${SERVER_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
+      if (!response.ok) {
+        let errorData = {};
+        try {
+          errorData = await response.json();
+        } catch (e) {}
+        throw new Error(errorData.message || "Error en el login");
+      }
+      return await response.json();
+    } catch (err) {
+      throw err;
+    }
+  },
   getSecurityQuestion: async (email) => {
     const response = await fetch(`${SERVER_URL}/auth/get-security-question`, {
       method: "GET",

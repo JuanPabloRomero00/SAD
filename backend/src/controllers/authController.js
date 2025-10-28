@@ -1,5 +1,8 @@
 const {
-    getSecurityQuestion: getSecurityQuestionService
+    getSecurityQuestion: getSecurityQuestionService,
+    verifySecurity: verifySecurityService,
+    resetPassword: resetPasswordService,
+    loginUser: loginUserService
 } = require("../services/authService");
 
 const getSecurityQuestion = async (req, res) => {
@@ -13,8 +16,7 @@ const getSecurityQuestion = async (req, res) => {
             });
         } 
         res.status(200).json({
-            securityQuestion: user.securityQuestion,
-            userId: user._id,
+            securityQuestion: result,
         });
     } catch (err) {
         res.status(500).json({
@@ -22,8 +24,57 @@ const getSecurityQuestion = async (req, res) => {
             message: err.message,
         });
     }
-}
+};
 
+const verifySecurity = async (req, res) => {
+    try {
+        const { email, securityAnswer } = req.body;
+        const result = await verifySecurityService(email, securityAnswer);
+        res.status(200).json({
+            message: "Verificación exitosa",
+            securityQuestion: result.securityQuestion,
+            userId: result.userId,
+        });
+    } catch (err) {
+        res.status(err.status || 500).json({
+            error: err.status === 404 ? "Usuario no encontrado" : "Respuesta incorrecta",
+            message: err.message,
+        });
+    }
+};
+
+const resetPassword = async (req, res) => {
+    try {
+        const { userId, newPassword } = req.body;
+        await resetPasswordService(userId, newPassword);
+        res.status(200).json({
+            message: "Contraseña actualizada exitosamente",
+        });
+    } catch (err) {
+        res.status(err.status || 500).json({
+            error: "Error al cambiar contraseña",
+            message: err.message,
+        });
+    }
+};
+
+const loginUser = async (req, res) => {
+    try {
+        const { dni, password } = req.body;
+        const user = await loginUserService(dni, password);
+        res.json({
+            message: "Login exitoso",
+            user
+        });
+    } catch (err) {
+        res.status(err.status || 500).json({ error: err.message });
+    }
+};
+
+// Exporta todos los handlers en un solo objeto
 module.exports = {
-    getSecurityQuestion
+    getSecurityQuestion,
+    verifySecurity,
+    resetPassword,
+    loginUser
 };
