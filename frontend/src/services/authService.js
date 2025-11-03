@@ -22,7 +22,7 @@ const authService = {
   },
   getSecurityQuestion: async (email) => {
     const response = await fetch(`${SERVER_URL}/auth/get-security-question`, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },

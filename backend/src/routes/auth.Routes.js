@@ -8,7 +8,7 @@ const {
 } = require("../controllers/authController");
 
 router.post("/login", loginUser);
-router.post("/security-question", getSecurityQuestion);
+router.post("/get-security-question", getSecurityQuestion);
 router.post("/verify-security", verifySecurity);
 router.post("/reset-password", resetPassword);
 

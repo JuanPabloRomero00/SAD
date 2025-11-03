@@ -16,7 +16,8 @@ const getSecurityQuestion = async (req, res) => {
             });
         } 
         res.status(200).json({
-            securityQuestion: result,
+            securityQuestion: result.securityQuestion,
+            userId: result.userId,
         });
     } catch (err) {
         res.status(500).json({

@@ -3,7 +3,13 @@ const login = require("./userService").login;
 
 async function getSecurityQuestion(email) {
     const user = await User.findOne({ email });
-    return user ? user.securityQuestion : null;
+    if (!user) {
+        return null;
+    }
+    return {
+        securityQuestion: user.securityQuestion,
+        userId: user._id
+    };
 }
 
 async function verifySecurity(email, securityAnswer) {
