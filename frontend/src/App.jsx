@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import History from "./pages/History";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/login" element={<Login />}></Route>
               <Route path="/activities" element={<Activities />}></Route>
               <Route path="/history" element={<History />}></Route>
+              <Route path="/contact" element={<Contact />}></Route>
               <Route path="/profile" element={<Profile />}></Route>
               <Route path="/forgot-password" element={<ForgotPassword />}></Route>
               <Route path="/reset-password" element={<ResetPassword />}></Route>
