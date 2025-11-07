@@ -81,7 +81,7 @@ const deleteUserById = async (req, res) => {
 
 const getInactiveUsers = async (req, res) => {
   try {
-    const users = await getInactiveUsersService();
+    const users = await getInactive();
     res.json(users);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });
@@ -92,7 +92,7 @@ const getInactiveUsers = async (req, res) => {
 const assignPlanToUser = async (req, res) => {
   try {
     const { planId } = req.body;
-    const user = await assignPlanToUserService(req.params.id, planId);
+    const user = await assignPlan(req.params.id, planId);
     res.json({ message: "Plan asignado correctamente", user });
   } catch (err) {
     res.status(err.status || 400).json({ error: err.message });
