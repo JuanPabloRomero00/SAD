@@ -43,7 +43,7 @@ function UserActivities() {
       setLoading(true);
       setError(null);
 
-      const url = `${API_BASE}/users/${userId}/activities`;
+      const url = `${API_BASE}/activities?userId=${userId}`;
 
       try {
         const res = await fetch(url, {

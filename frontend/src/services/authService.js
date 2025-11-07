@@ -1,28 +1,27 @@
 const SERVER_URL = "http://localhost:3000";
 
 const authService = {
-  registerUser: async (userData) => {
-    console.log(userData);
-
-    const response = await fetch(`${SERVER_URL}/users/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      console.log(response);
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Error al registrar el usuario.");
+  loginUser: async (credentials) => {
+    try {
+      const response = await fetch(`${SERVER_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
+      if (!response.ok) {
+        let errorData = {};
+        try {
+          errorData = await response.json();
+        } catch (e) {}
+        throw new Error(errorData.message || "Error en el login");
+      }
+      return await response.json();
+    } catch (err) {
+      throw err;
     }
-
-    return response.json();
   },
-
   getSecurityQuestion: async (email) => {
-    const response = await fetch(`${SERVER_URL}/users/get-security-question`, {
+    const response = await fetch(`${SERVER_URL}/auth/get-security-question`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +38,7 @@ const authService = {
   },
 
   verifySecurityQuestion: async (email, securityAnswer) => {
-    const response = await fetch(`${SERVER_URL}/users/verify-security`, {
+    const response = await fetch(`${SERVER_URL}/auth/verify-security`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +55,7 @@ const authService = {
   },
 
   resetPassword: async (userId, newPassword) => {
-    const response = await fetch(`${SERVER_URL}/users/reset-password`, {
+    const response = await fetch(`${SERVER_URL}/auth/reset-password`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

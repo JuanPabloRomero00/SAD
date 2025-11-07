@@ -6,13 +6,21 @@ import UserActivities from "../UserActivities/UserActivities";
 import { plans as availablePlans } from "../../constants/plans";
 const UserProfile = () => {
   const { user } = useAuth();
+  // Inicializa el estado con los datos reales del usuario
   const [usuario, setUsuario] = useState({
-    nombre: user.name,
+    nombre: `${user.name || ''} ${user.surname || ''}`.trim(),
     dni: user.dni,
-    plan: "Standar",
+    plan: user.plan,
+    vencimiento: user.vencimiento || '',
     telefono: user.phone,
     email: user.email
   });
+
+  // Función para obtener iniciales del usuario
+  const getInitials = (name, surname) => {
+    if (!name && !surname) return 'NN';
+    return `${(name?.[0] || '')}${(surname?.[0] || '')}`.toUpperCase();
+  };
   const [editMode, setEditMode] = useState(false);
   const [changePasswordMode, setChangePasswordMode] = useState(false);
   const [passwords, setPasswords] = useState({ current: "", newPassword: "", confirm: "" });
@@ -68,7 +76,7 @@ const UserProfile = () => {
         <div className="profile-container">
           {profileSection == "profile" ? (
             <div className="profile-card">
-              <div className="avatar">NN</div>
+              <div className="avatar">{getInitials(user.name, user.surname)}</div>
               <h2>{usuario.nombre}</h2>
               <p className="socio">Socio N-1234567</p>
               <div className="profile-info">
@@ -78,7 +86,11 @@ const UserProfile = () => {
                 </div>
                 <div>
                   <span>Plan</span>
-                  {editMode ? (<input type="text" name="plan" value={usuario.plan} onChange={handleChange} className="formInput" />) : (<span>{usuario.plan}</span>)}
+                  {editMode ? (
+                    <input type="text" name="plan" value={usuario.plan} onChange={handleChange} className="formInput" />
+                  ) : (
+                    <span>{usuario.plan === 'basico' ? 'Básico' : usuario.plan === 'completo' ? 'Completo' : usuario.plan === 'premium' ? 'Premium' : usuario.plan}</span>
+                  )}
                 </div>
                 <div>
                   <span>Vencimiento</span>
