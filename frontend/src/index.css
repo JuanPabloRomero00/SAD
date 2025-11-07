@@ -50,6 +50,7 @@ body,
 
 body {
   min-width: 320px;
+  overflow-y: scroll;
 }
 
 button {
@@ -194,6 +195,7 @@ button:hover {
   box-sizing: border-box;
   margin-top: 80px;
   text-align: center;
+  align-items: center;
 }
 
 .footerContainer {

@@ -84,6 +84,7 @@ function AdminProfile() {
                         <li>Teléfono</li>
                         <li>Plan</li>
                         <li>Activo</li>
+                        <li>Clase</li>
                       </ul>
                     </div>
 
@@ -96,6 +97,7 @@ function AdminProfile() {
                         <li>{selectedUser.phone || "-"}</li>
                         <li>{selectedUser.plan || "-"}</li>
                         <li>{selectedUser.active ? 'Sí' : 'No'}</li>
+                        <li>{selectedUser.role}</li>
                       </ul>
                     </div>
                   </div>
