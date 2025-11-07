@@ -35,6 +35,23 @@ const userService = {
 
     return response.json();
   },
+
+  updateUser: async (userId, userData) => {
+    const response = await fetch(`${SERVER_URL}/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al actualizar el usuario.");
+    }
+
+    return response.json();
+  },
 }
 
 export default userService;

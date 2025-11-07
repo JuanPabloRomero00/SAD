@@ -4,7 +4,10 @@ const {
     getUserById: getUserByIdService,
     updateUserById: updateUserByIdService,
     updateRoleByUserId: updateRoleByUserIdService,
-    deleteUserById: deleteUserByIdService
+    deleteUserById: deleteUserByIdService,
+    getInactiveUsers: getInactiveUsersService,
+    assignPlanToUser: assignPlanToUserService,
+    getUserActivities: getUserActivitiesService
 } = require("../services/userService");
 
 const createUser = async (req, res) => {
@@ -78,7 +81,7 @@ const deleteUserById = async (req, res) => {
 
 const getInactiveUsers = async (req, res) => {
   try {
-    const users = await getInactive();
+    const users = await getInactiveUsersService();
     res.json(users);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });
@@ -89,11 +92,21 @@ const getInactiveUsers = async (req, res) => {
 const assignPlanToUser = async (req, res) => {
   try {
     const { planId } = req.body;
-    const user = await assignPlan(req.params.id, planId);
+    const user = await assignPlanToUserService(req.params.id, planId);
     res.json({ message: "Plan asignado correctamente", user });
   } catch (err) {
     res.status(err.status || 400).json({ error: err.message });
   }
+};
+
+const getUserActivities = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const activities = await getUserActivitiesService(id);
+        res.json(activities);
+    } catch (err) {
+        res.status(err.status || 500).json({ error: err.message });
+    }
 };
 
 module.exports = { 
@@ -104,5 +117,6 @@ module.exports = {
   updateRoleByUserId, 
   deleteUserById,
   getInactiveUsers,
-  assignPlanToUser
+  assignPlanToUser,
+  getUserActivities
 };

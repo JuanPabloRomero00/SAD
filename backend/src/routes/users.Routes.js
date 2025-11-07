@@ -8,12 +8,12 @@ const {
   updateRoleByUserId,
   deleteUserById,
   getInactiveUsers,
-  assignPlanToUser
+  assignPlanToUser,
+  getUserActivities
 } = require("../controllers/userController");
 
 // POST /users/create
 router.post("/create", createUser);
-
 // Obtener todos los usuarios (GET /users)
 router.get("/", getAllUsers);
 
@@ -22,6 +22,9 @@ router.get("/inactive", getInactiveUsers);
 
 // Obtener usuario por ID (GET /users/:id)
 router.get("/:id", getUserById);
+
+// Obtener las actividades de un usuario (GET /users/:id/activities)
+router.get("/:id/activities", getUserActivities);
 
 // Actualizar usuario por ID (PATCH /users/:id)
 router.patch("/:id", updateUserById);

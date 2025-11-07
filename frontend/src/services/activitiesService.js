@@ -81,6 +81,28 @@ const activitiesService = {
       throw new Error("Respuesta inesperada del servidor.");
     }
   },
+
+  getActivitiesByUserId: async (userId) => {
+    const response = await fetch(`${SERVER_URL}/users/${userId}/activities`, {
+      method: "GET",
+    });
+
+    const contentType = response.headers.get("content-type");
+    if (!response.ok) {
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al recuperar las actividades del usuario.");
+      } else {
+        throw new Error("Error de conexión con el servidor.");
+      }
+    }
+
+    if (contentType && contentType.includes("application/json")) {
+      return response.json();
+    } else {
+      throw new Error("Respuesta inesperada del servidor.");
+    }
+  },
 };
 
 export default activitiesService;

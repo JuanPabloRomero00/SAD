@@ -66,65 +66,66 @@ function Login() {
 
   return (
     <>
-      <h2 className='formTitle'>Ingresa al Club</h2>
-      <h3 className='subTitle'>
-        Usa tu DNI y contraseña para entrar al panel de socio.
-      </h3>
+      <div className='loginContainer'>
+        <h2 className='formTitle'>Ingresa al Club</h2>
+        <h3 className='subTitle'>
+          Usa tu DNI y contraseña para entrar al panel de socio.
+        </h3>
 
-      <div className='formContainer' style={{ position: 'relative' }}>
-        {alert.show && (
-          <CustomAlert message={alert.message} type={alert.type} />
-        )}
+        <div className='formContainer' style={{ position: 'relative' }}>
+          {alert.show && (
+            <CustomAlert message={alert.message} type={alert.type} />
+          )}
 
-        <form onSubmit={handleSubmit} className='loginData'>
-          <div className='loginGroup'>
-            <label className='loginLabel'>
-              <strong>DNI</strong>
-            </label>
-            <input className='loginInput' type='number' value={formData.dni}
-              onChange={(e) => handleChange('dni', e.target.value)} disabled={loading} />
-            <p className='loginText'>
-              Ingresa solo números, sin puntos ni guiones
-            </p>
-          </div>
+          <form onSubmit={handleSubmit} className='loginData'>
+            <div className='loginGroup'>
+              <label className='loginLabel'>
+                <strong>DNI</strong>
+              </label>
+              <input className='loginInput' type='number' value={formData.dni}
+                onChange={(e) => handleChange('dni', e.target.value)} disabled={loading} />
+              <p className='loginText'>
+                Ingresa solo números, sin puntos ni guiones
+              </p>
+            </div>
 
-          <div className='loginGroup'>
-            <label className='loginLabel'>
-              <strong>Contraseña</strong>
-            </label>
-            <input className='loginInput' type='password' value={formData.password}
-              onChange={(e) => handleChange('password', e.target.value)} disabled={loading} />
-          </div>
+            <div className='loginGroup'>
+              <label className='loginLabel'>
+                <strong>Contraseña</strong>
+              </label>
+              <input className='loginInput' type='password' value={formData.password}
+                onChange={(e) => handleChange('password', e.target.value)} disabled={loading} />
+            </div>
 
-          <div>
-            <button type='submit' className='logeoButton' disabled={loading}>
-              {loading ? 'Ingresando...' : 'Ingresar'}
-            </button>
-          </div>
+            <div>
+              <button type='submit' className='logeoButton' disabled={loading}>
+                {loading ? 'Ingresando...' : 'Ingresar'}
+              </button>
+            </div>
 
-          <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-            <button type='button' onClick={handleForgotPassword}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#007bff',
-                cursor: 'pointer',
-                textDecoration: 'underline',
-              }}
-            >
-              ¿Olvidaste tu contraseña?
-            </button>
-          </div>
-        </form>
+              <button className='forgotButton' type='button' onClick={handleForgotPassword}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#007bff',
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                }}
+              >
+                ¿Olvidaste tu contraseña?
+              </button>
+            
+          </form>
+        </div>
+
+        <p className='formReturn'>
+          ¿No tenés cuenta?{" "}
+          <Link to='/signup' className='toLogin'>
+            Asociate al Club
+          </Link>{" "}
+          y crea tu Usuario.
+        </p>
       </div>
-
-      <p className='formReturn'>
-        ¿No tenés cuenta?{" "}
-        <Link to='/signup' className='toLogin'>
-          Asociate al Club
-        </Link>{" "}
-        y crea tu Usuario.
-      </p>
     </>
   );
 }

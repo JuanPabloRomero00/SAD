@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Credential = require("../models/Credential");
+const Activity = require("../models/Activity");
 
 async function createUser(userData) {
     // Validaciones básicas
@@ -112,6 +113,17 @@ const assignPlanToUser = async (userId, planId) => {
   return user;
 };
 
+async function getUserActivities(userId) {
+    const user = await User.findById(userId);
+    if (!user) {
+        const error = new Error("Usuario no encontrado");
+        error.status = 404;
+        throw error;
+    }
+    
+    return Activity.find({ participants: user._id });
+}
+
 module.exports = { 
   createUser, 
   getAllUsers, 
@@ -120,5 +132,6 @@ module.exports = {
   updateRoleByUserId, 
   deleteUserById,
   getInactiveUsers,
-  assignPlanToUser
+  assignPlanToUser,
+  getUserActivities
 };

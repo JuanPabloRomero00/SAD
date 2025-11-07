@@ -102,7 +102,6 @@ button:hover {
 .home-section {
   display: flex;
   height: 100%;
-  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -192,8 +191,8 @@ button:hover {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  box-sizing: border-box;
   margin-top: 80px;
+  box-sizing: border-box;
   text-align: center;
   align-items: center;
 }
@@ -209,6 +208,14 @@ button:hover {
 }
 
 /*Estilo SignUp.jsx*/
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 .formContainer {
   display: flex;
   flex-direction: column;
@@ -500,17 +507,15 @@ button:hover {
   align-items: center;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 40px;
+  gap: 20px;
   width: 100%;
   align-content: center;
 }
 
 .loginGroup {
-  height: 70px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-evenly;
 }
 
 .loginLabel {
@@ -520,17 +525,21 @@ button:hover {
 
 .loginInput {
   box-sizing: border-box;
-  height: 38px;
+  height: 40px;
   max-width: 350px;
   min-height: 38px;
   padding: 0 14px;
   color: white;
   background-color: #757575;
   width: 400px;
-  border-radius: 25px;
+  border-radius: 8px;
   font-size: 12px;
   outline: none;
   border: none;
+}
+
+.loginInput::placeholder {
+  color: #bbbbbb;
 }
 
 .loginText {
@@ -555,6 +564,13 @@ button:hover {
   cursor: wait;
 }
 
+.forgotButton{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Estilos de Profile */
 .profile-page {
   display: flex;
@@ -570,8 +586,8 @@ button:hover {
   padding: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  gap: 30px;
 }
 
 .side-menu-title {
@@ -581,7 +597,7 @@ button:hover {
   align-items: center;
   background-color: #1e1e1e;
   border-bottom: 1px solid white;
-
+   
 }
 
 .profile-page-admin {
@@ -589,24 +605,28 @@ button:hover {
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
+  gap: 20px;
 }
 
 .admin-title {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  border-bottom: 1px solid white;
-  padding-bottom: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.admin-title h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
 }
 
 .side-menu {
   list-style: none;
   margin: 0;
   background-color: #1e1e1e;
-  border-radius: 12px;
+  border-radius: 6px;
   height: fit-content;
 }
 
@@ -617,7 +637,10 @@ button:hover {
   justify-content: space-evenly;
   align-items: center;
   height: 40px;
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
 .profile-list-menu li {
@@ -627,6 +650,8 @@ button:hover {
   border-radius: 8px;
   width: 180px;
   font-weight: 600;
+  text-align: center;
+  transition: background-color 0.2s;
 }
 
 .profile-list-menu li.active {
@@ -641,7 +666,6 @@ button:hover {
 
 .profile-card {
   text-align: center;
-  margin-bottom: 50px;
   padding: 40px;
   background-color: #1e1e1e;
   border-radius: 12px;
@@ -683,51 +707,81 @@ button:hover {
 
 /* Estilos de Profile Admin */
 .profile-admin-card h2 {
-  text-align: center;
+  text-align: left;
   font-size: 1.4rem;
-  margin: 14px;
+  margin: 0;
+}
+
+.profile-admin-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #333;
+  box-sizing: border-box;
+}
+
+.profile-admin-header .icon-edit {
+  margin-left: auto;
+  cursor: pointer;
+  width: 22px;
+  transition: color 0.2s;
+}
+
+.profile-admin-header .icon-edit:hover {
+  color: var(--accent);
 }
 
 .profile-admin-card {
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
   padding: 40px;
-  height: 640px;
-  max-height: 640px;
   box-sizing: border-box;
   position: relative;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
-.icon-edit{
-  position: absolute;
-  top: 40px;
-  right: 40px;
-  width: 24px;
+.profile-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
 }
 
 .side-menu-admin {
-  width: 280px;
-  background-color: #222;
+  width: 300px;
+  background-color: #1a1a1a;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .menu-admin {
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 760px;
+}
+
+.admin-content-view {
+  width: 100%;
+  height: 100%;
 }
 
 .profile-admin-info {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  gap: 60px;
 }
 
 .profile-admin-info ul {
   list-style-type: none;
   text-align: left;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .profile-admin-info ul li {
-  margin: 15px;
+  margin-bottom: 18px;
 }
 
 .profile-admin-info .info-title ul li {
@@ -741,34 +795,74 @@ button:hover {
 .profile-user-list {
   list-style: none;
   padding: 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  max-height: 620px;
+  box-sizing: border-box;
   overflow-y: auto;
-  height: 640px;
-  max-height: 640px;
 }
 
 .profile-user-list li {
-  padding: 10px 20px;
+  height: 38px;
   width: 100%;
   display: flex;
+  align-items: center;
+  padding: 0 25px;
   border-bottom: 1px solid #333;
   transition: background 0.2s;
 }
 
 .profile-user-list li:hover {
-  background-color: #333;
+  background-color: #252525;
 }
 
 .profile-user-list li.selected {
-  background-color: #444;
+  background-color: #003502;
   font-weight: bold;
 }
 
 .no-user-selected {
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 400px;
   font-size: 1.2rem;
-  color: gray;
+  color: #888;
   text-align: center;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+}
+
+.user-activities-admin{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.cont-act-card-adm {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 20px;
+  flex-wrap: wrap;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.activity-card-admin {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  min-width: 240px;
+  max-width: 240px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 
